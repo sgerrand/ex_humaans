@@ -49,6 +49,24 @@ defmodule Humaans.BankAccountsTest do
       assert hd(response).created_at == "2020-01-28T08:44:42.000Z"
       assert hd(response).updated_at == "2020-01-29T14:52:21.000Z"
     end
+
+    test "returns error when resource is not found" do
+      expect(Humaans.MockClient, :get, fn _path, _params ->
+        {:ok, %{status: 404, body: %{"error" => "Bank Account not found"}}}
+      end)
+
+      assert {:error, {404, %{"error" => "Bank Account not found"}}} ==
+               Humaans.BankAccounts.list()
+    end
+
+    test "returns error when request fails" do
+      expect(Humaans.MockClient, :get, fn _path, _params ->
+        {:error, "something unexpected happened"}
+      end)
+
+      assert {:error, "something unexpected happened"} ==
+               Humaans.BankAccounts.list()
+    end
   end
 
   describe "create/1" do
