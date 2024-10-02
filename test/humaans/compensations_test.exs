@@ -7,7 +7,7 @@ defmodule Humaans.CompensationsTest do
   setup :verify_on_exit!
 
   describe "list/1" do
-    test "returns a list of compensation types" do
+    test "returns a list of compensations" do
       expect(Humaans.MockClient, :get, fn path, _params ->
         assert path == "/compensations"
 
@@ -74,7 +74,7 @@ defmodule Humaans.CompensationsTest do
   end
 
   describe "create/1" do
-    test "creates a new compensation type" do
+    test "creates a new compensation" do
       params = %{
         personId: "IL3vneCYhIx0xrR6um2sy2nW",
         compensationTypeId: "aejf1oD4bZWNtEEnbFwrYGVg",
@@ -124,7 +124,7 @@ defmodule Humaans.CompensationsTest do
   end
 
   describe "retrieve/1" do
-    test "retrieves a compensation type" do
+    test "retrieves a compensation" do
       expect(Humaans.MockClient, :get, fn path ->
         assert path == "/compensations/m54mmpqDwthFwiiMcY0ptJdz"
 
@@ -165,7 +165,7 @@ defmodule Humaans.CompensationsTest do
   end
 
   describe "update/2" do
-    test "updates a compensation type" do
+    test "updates a compensation" do
       params = %{
         compensationTypeId: "aejf1oD4bZWNtEEnbFwrYGVg",
         amount: "70000",
@@ -217,7 +217,7 @@ defmodule Humaans.CompensationsTest do
   end
 
   describe "delete/1" do
-    test "deletes a compensation type" do
+    test "deletes a compensation" do
       expect(Humaans.MockClient, :delete, fn path ->
         assert path == "/compensations/m54mmpqDwthFwiiMcY0ptJdz"
 
