@@ -19,6 +19,8 @@ defmodule Humaans.Resources.Company do
     :updated_at
   ]
 
+  use ExConstructor
+
   @type payment_status :: :requires_action | :past_due | :ok
   @type status :: :terms | :trialing | :expired | :active | :suspended
   @type t :: %__MODULE__{

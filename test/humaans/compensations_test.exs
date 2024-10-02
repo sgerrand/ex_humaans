@@ -39,19 +39,19 @@ defmodule Humaans.CompensationsTest do
       end)
 
       assert {:ok, response} = Humaans.Compensations.list()
-      assert length(response.data) == 1
-      assert hd(response.data).id == "m54mmpqDwthFwiiMcY0ptJdz"
-      assert hd(response.data).personId == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert hd(response.data).compensationTypeId == "aejf1oD4bZWNtEEnbFwrYGVg"
-      assert hd(response.data).amount == "70000"
-      assert hd(response.data).currency == "EUR"
-      assert hd(response.data).period == "annual"
-      assert hd(response.data).note == "Promotion"
-      assert hd(response.data).effectiveDate == "2020-02-15"
-      assert hd(response.data).endDate == nil
-      assert hd(response.data).endReason == nil
-      assert hd(response.data).createdAt == "2020-01-28T08:44:42.000Z"
-      assert hd(response.data).updatedAt == "2020-01-29T14:52:21.000Z"
+      assert length(response) == 1
+      assert hd(response).id == "m54mmpqDwthFwiiMcY0ptJdz"
+      assert hd(response).person_id == "IL3vneCYhIx0xrR6um2sy2nW"
+      assert hd(response).compensation_type_id == "aejf1oD4bZWNtEEnbFwrYGVg"
+      assert hd(response).amount == "70000"
+      assert hd(response).currency == "EUR"
+      assert hd(response).period == "annual"
+      assert hd(response).note == "Promotion"
+      assert hd(response).effective_date == "2020-02-15"
+      assert hd(response).end_date == nil
+      assert hd(response).end_reason == nil
+      assert hd(response).created_at == "2020-01-28T08:44:42.000Z"
+      assert hd(response).updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 
@@ -91,17 +91,17 @@ defmodule Humaans.CompensationsTest do
 
       assert {:ok, response} = Humaans.Compensations.create(params)
       assert response.id == "m54mmpqDwthFwiiMcY0ptJdz"
-      assert response.personId == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.compensationTypeId == "aejf1oD4bZWNtEEnbFwrYGVg"
+      assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
+      assert response.compensation_type_id == "aejf1oD4bZWNtEEnbFwrYGVg"
       assert response.amount == "70000"
       assert response.currency == "EUR"
       assert response.period == "annual"
       assert response.note == nil
-      assert response.effectiveDate == "2020-02-15"
-      assert response.endDate == nil
-      assert response.endReason == nil
-      assert response.createdAt == "2020-01-28T08:44:42.000Z"
-      assert response.updatedAt == "2020-01-29T14:52:21.000Z"
+      assert response.effective_date == "2020-02-15"
+      assert response.end_date == nil
+      assert response.end_reason == nil
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 
@@ -132,17 +132,17 @@ defmodule Humaans.CompensationsTest do
 
       assert {:ok, response} = Humaans.Compensations.retrieve("m54mmpqDwthFwiiMcY0ptJdz")
       assert response.id == "m54mmpqDwthFwiiMcY0ptJdz"
-      assert response.personId == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.compensationTypeId == "aejf1oD4bZWNtEEnbFwrYGVg"
+      assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
+      assert response.compensation_type_id == "aejf1oD4bZWNtEEnbFwrYGVg"
       assert response.amount == "70000"
       assert response.currency == "EUR"
       assert response.period == "annual"
       assert response.note == "Promotion"
-      assert response.effectiveDate == "2020-02-15"
-      assert response.endDate == nil
-      assert response.endReason == nil
-      assert response.createdAt == "2020-01-28T08:44:42.000Z"
-      assert response.updatedAt == "2020-01-29T14:52:21.000Z"
+      assert response.effective_date == "2020-02-15"
+      assert response.end_date == nil
+      assert response.end_reason == nil
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 
@@ -184,17 +184,17 @@ defmodule Humaans.CompensationsTest do
                Humaans.Compensations.update("m54mmpqDwthFwiiMcY0ptJdz", params)
 
       assert response.id == "m54mmpqDwthFwiiMcY0ptJdz"
-      assert response.personId == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.compensationTypeId == "aejf1oD4bZWNtEEnbFwrYGVg"
+      assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
+      assert response.compensation_type_id == "aejf1oD4bZWNtEEnbFwrYGVg"
       assert response.amount == "70000"
       assert response.currency == "EUR"
       assert response.period == "annual"
       assert response.note == "Promotion"
-      assert response.effectiveDate == "2020-02-15"
-      assert response.endDate == nil
-      assert response.endReason == nil
-      assert response.createdAt == "2020-01-28T08:44:42.000Z"
-      assert response.updatedAt == "2020-01-29T14:52:21.000Z"
+      assert response.effective_date == "2020-02-15"
+      assert response.end_date == nil
+      assert response.end_reason == nil
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 

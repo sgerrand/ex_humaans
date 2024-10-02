@@ -47,8 +47,24 @@ defmodule Humaans.CompensationTypes do
     |> handle_response()
   end
 
+  defp handle_response({:ok, %{status: status, body: %{data: data}}}) when status in 200..299 do
+    {response, _rest} =
+      Enum.map_reduce(data, [], fn i, acc ->
+        {CompensationType.new(i), [CompensationType.new(i) | acc]}
+      end)
+
+    {:ok, response}
+  end
+
+  defp handle_response({:ok, %{status: status, body: %{deleted: deleted, id: id}}})
+       when status in 200..299 do
+    {:ok, %{deleted: deleted, id: id}}
+  end
+
   defp handle_response({:ok, %{status: status, body: body}}) when status in 200..299 do
-    {:ok, body}
+    response = CompensationType.new(body)
+
+    {:ok, response}
   end
 
   defp handle_response({:ok, %{status: status, body: body}}) do

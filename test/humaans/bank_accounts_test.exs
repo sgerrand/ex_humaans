@@ -37,17 +37,17 @@ defmodule Humaans.BankAccountsTest do
       end)
 
       assert {:ok, response} = Humaans.BankAccounts.list()
-      assert length(response.data) == 1
-      assert hd(response.data).id == "Ivl8mvdLO8ux7T1h1DjGtClc"
-      assert hd(response.data).personId == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert hd(response.data).bankName == "Mondo"
-      assert hd(response.data).nameOnAccount == "Kelsey Wicks"
-      assert hd(response.data).accountNumber == "12345678"
-      assert hd(response.data).swiftCode == nil
-      assert hd(response.data).sortCode == "00-00-00"
-      assert hd(response.data).routingNumber == nil
-      assert hd(response.data).createdAt == "2020-01-28T08:44:42.000Z"
-      assert hd(response.data).updatedAt == "2020-01-29T14:52:21.000Z"
+      assert length(response) == 1
+      assert hd(response).id == "Ivl8mvdLO8ux7T1h1DjGtClc"
+      assert hd(response).person_id == "IL3vneCYhIx0xrR6um2sy2nW"
+      assert hd(response).bank_name == "Mondo"
+      assert hd(response).name_on_account == "Kelsey Wicks"
+      assert hd(response).account_number == "12345678"
+      assert hd(response).swift_code == nil
+      assert hd(response).sort_code == "00-00-00"
+      assert hd(response).routing_number == nil
+      assert hd(response).created_at == "2020-01-28T08:44:42.000Z"
+      assert hd(response).updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 
@@ -70,8 +70,9 @@ defmodule Humaans.BankAccountsTest do
       end)
 
       assert {:ok, response} = Humaans.BankAccounts.create(params)
-      assert response["id"] == "new_id"
-      assert response["bankName"] == "New Bank"
+      assert response.id == "new_id"
+      assert response.bank_name == "New Bank"
+      assert response.account_number == "12345678"
     end
   end
 
@@ -100,15 +101,15 @@ defmodule Humaans.BankAccountsTest do
 
       assert {:ok, response} = Humaans.BankAccounts.retrieve("Ivl8mvdLO8ux7T1h1DjGtClc")
       assert response.id == "Ivl8mvdLO8ux7T1h1DjGtClc"
-      assert response.personId == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.bankName == "Mondo"
-      assert response.nameOnAccount == "Kelsey Wicks"
-      assert response.accountNumber == "12345678"
-      assert response.swiftCode == nil
-      assert response.sortCode == "00-00-00"
-      assert response.routingNumber == nil
-      assert response.createdAt == "2020-01-28T08:44:42.000Z"
-      assert response.updatedAt == "2020-01-29T14:52:21.000Z"
+      assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
+      assert response.bank_name == "Mondo"
+      assert response.name_on_account == "Kelsey Wicks"
+      assert response.account_number == "12345678"
+      assert response.swift_code == nil
+      assert response.sort_code == "00-00-00"
+      assert response.routing_number == nil
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 
@@ -139,15 +140,15 @@ defmodule Humaans.BankAccountsTest do
 
       assert {:ok, response} = Humaans.BankAccounts.update("Ivl8mvdLO8ux7T1h1DjGtClc", params)
       assert response.id == "Ivl8mvdLO8ux7T1h1DjGtClc"
-      assert response.personId == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.bankName == "N1"
-      assert response.nameOnAccount == "Kelsey Wicks"
-      assert response.accountNumber == "12345678"
-      assert response.swiftCode == nil
-      assert response.sortCode == "00-00-00"
-      assert response.routingNumber == nil
-      assert response.createdAt == "2020-01-28T08:44:42.000Z"
-      assert response.updatedAt == "2020-01-29T14:52:21.000Z"
+      assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
+      assert response.bank_name == "N1"
+      assert response.name_on_account == "Kelsey Wicks"
+      assert response.account_number == "12345678"
+      assert response.swift_code == nil
+      assert response.sort_code == "00-00-00"
+      assert response.routing_number == nil
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 

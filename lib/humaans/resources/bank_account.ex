@@ -16,6 +16,8 @@ defmodule Humaans.Resources.BankAccount do
     :updated_at
   ]
 
+  use ExConstructor
+
   @type t :: %__MODULE__{
           id: binary | nil,
           person_id: binary | nil,

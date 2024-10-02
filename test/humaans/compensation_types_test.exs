@@ -33,13 +33,13 @@ defmodule Humaans.CompensationTypesTest do
       end)
 
       assert {:ok, response} = Humaans.CompensationTypes.list()
-      assert length(response.data) == 1
-      assert hd(response.data).id == "ldOQU3pLI5i8Y9k2rJbrXbFc"
-      assert hd(response.data).companyId == "T7uqPFK7am4lFTZm39AmNuay"
-      assert hd(response.data).name == "Salary"
-      assert hd(response.data).baseType == "salary"
-      assert hd(response.data).createdAt == "2020-01-28T08:44:42.000Z"
-      assert hd(response.data).updatedAt == "2020-01-29T14:52:21.000Z"
+      assert length(response) == 1
+      assert hd(response).id == "ldOQU3pLI5i8Y9k2rJbrXbFc"
+      assert hd(response).company_id == "T7uqPFK7am4lFTZm39AmNuay"
+      assert hd(response).name == "Salary"
+      assert hd(response).base_type == "salary"
+      assert hd(response).created_at == "2020-01-28T08:44:42.000Z"
+      assert hd(response).updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 
@@ -68,11 +68,11 @@ defmodule Humaans.CompensationTypesTest do
 
       assert {:ok, response} = Humaans.CompensationTypes.create(params)
       assert response.id == "ldOQU3pLI5i8Y9k2rJbrXbFc"
-      assert response.companyId == "T7uqPFK7am4lFTZm39AmNuay"
+      assert response.company_id == "T7uqPFK7am4lFTZm39AmNuay"
       assert response.name == "Salary"
-      assert response.baseType == "salary"
-      assert response.createdAt == "2020-01-28T08:44:42.000Z"
-      assert response.updatedAt == "2020-01-29T14:52:21.000Z"
+      assert response.base_type == "salary"
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 
@@ -97,11 +97,11 @@ defmodule Humaans.CompensationTypesTest do
 
       assert {:ok, response} = Humaans.CompensationTypes.retrieve("ldOQU3pLI5i8Y9k2rJbrXbFc")
       assert response.id == "ldOQU3pLI5i8Y9k2rJbrXbFc"
-      assert response.companyId == "T7uqPFK7am4lFTZm39AmNuay"
+      assert response.company_id == "T7uqPFK7am4lFTZm39AmNuay"
       assert response.name == "Salary"
-      assert response.baseType == "salary"
-      assert response.createdAt == "2020-01-28T08:44:42.000Z"
-      assert response.updatedAt == "2020-01-29T14:52:21.000Z"
+      assert response.base_type == "salary"
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 
@@ -130,11 +130,11 @@ defmodule Humaans.CompensationTypesTest do
                Humaans.CompensationTypes.update("ldOQU3pLI5i8Y9k2rJbrXbFc", params)
 
       assert response.id == "ldOQU3pLI5i8Y9k2rJbrXbFc"
-      assert response.companyId == "T7uqPFK7am4lFTZm39AmNuay"
+      assert response.company_id == "T7uqPFK7am4lFTZm39AmNuay"
       assert response.name == "New Salary"
-      assert response.baseType == "salary"
-      assert response.createdAt == "2020-01-28T08:44:42.000Z"
-      assert response.updatedAt == "2020-01-29T14:52:21.000Z"
+      assert response.base_type == "salary"
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
   end
 

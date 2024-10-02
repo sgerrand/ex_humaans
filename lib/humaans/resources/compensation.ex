@@ -18,6 +18,8 @@ defmodule Humaans.Resources.Compensation do
     :updated_at
   ]
 
+  use ExConstructor
+
   @type base_type :: :salary | :bonus | :commission | :equity | :custom
   @type t :: %__MODULE__{
           id: binary,
