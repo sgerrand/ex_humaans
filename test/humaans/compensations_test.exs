@@ -15,23 +15,23 @@ defmodule Humaans.CompensationsTest do
          %{
            status: 200,
            body: %{
-             total: 1,
-             limit: 100,
-             skip: 0,
-             data: [
+             "total" => 1,
+             "limit" => 100,
+             "skip" => 0,
+             "data" => [
                %{
-                 id: "m54mmpqDwthFwiiMcY0ptJdz",
-                 personId: "IL3vneCYhIx0xrR6um2sy2nW",
-                 compensationTypeId: "aejf1oD4bZWNtEEnbFwrYGVg",
-                 amount: "70000",
-                 currency: "EUR",
-                 period: "annual",
-                 note: "Promotion",
-                 effectiveDate: "2020-02-15",
-                 endDate: nil,
-                 endReason: nil,
-                 createdAt: "2020-01-28T08:44:42.000Z",
-                 updatedAt: "2020-01-29T14:52:21.000Z"
+                 "id" => "m54mmpqDwthFwiiMcY0ptJdz",
+                 "personId" => "IL3vneCYhIx0xrR6um2sy2nW",
+                 "compensationTypeId" => "aejf1oD4bZWNtEEnbFwrYGVg",
+                 "amount" => "70000",
+                 "currency" => "EUR",
+                 "period" => "annual",
+                 "note" => "Promotion",
+                 "effectiveDate" => "2020-02-15",
+                 "endDate" => nil,
+                 "endReason" => nil,
+                 "createdAt" => "2020-01-28T08:44:42.000Z",
+                 "updatedAt" => "2020-01-29T14:52:21.000Z"
                }
              ]
            }
@@ -91,18 +91,18 @@ defmodule Humaans.CompensationsTest do
          %{
            status: 201,
            body: %{
-             id: "m54mmpqDwthFwiiMcY0ptJdz",
-             personId: "IL3vneCYhIx0xrR6um2sy2nW",
-             compensationTypeId: "aejf1oD4bZWNtEEnbFwrYGVg",
-             amount: "70000",
-             currency: "EUR",
-             period: "annual",
-             note: nil,
-             effectiveDate: "2020-02-15",
-             endDate: nil,
-             endReason: nil,
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z"
+             "id" => "m54mmpqDwthFwiiMcY0ptJdz",
+             "personId" => "IL3vneCYhIx0xrR6um2sy2nW",
+             "compensationTypeId" => "aejf1oD4bZWNtEEnbFwrYGVg",
+             "amount" => "70000",
+             "currency" => "EUR",
+             "period" => "annual",
+             "note" => nil,
+             "effectiveDate" => "2020-02-15",
+             "endDate" => nil,
+             "endReason" => nil,
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z"
            }
          }}
       end)
@@ -132,18 +132,18 @@ defmodule Humaans.CompensationsTest do
          %{
            status: 200,
            body: %{
-             id: "m54mmpqDwthFwiiMcY0ptJdz",
-             personId: "IL3vneCYhIx0xrR6um2sy2nW",
-             compensationTypeId: "aejf1oD4bZWNtEEnbFwrYGVg",
-             amount: "70000",
-             currency: "EUR",
-             period: "annual",
-             note: "Promotion",
-             effectiveDate: "2020-02-15",
-             endDate: nil,
-             endReason: nil,
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z"
+             "id" => "m54mmpqDwthFwiiMcY0ptJdz",
+             "personId" => "IL3vneCYhIx0xrR6um2sy2nW",
+             "compensationTypeId" => "aejf1oD4bZWNtEEnbFwrYGVg",
+             "amount" => "70000",
+             "currency" => "EUR",
+             "period" => "annual",
+             "note" => "Promotion",
+             "effectiveDate" => "2020-02-15",
+             "endDate" => nil,
+             "endReason" => nil,
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z"
            }
          }}
       end)
@@ -182,18 +182,18 @@ defmodule Humaans.CompensationsTest do
          %{
            status: 200,
            body: %{
-             id: "m54mmpqDwthFwiiMcY0ptJdz",
-             personId: "IL3vneCYhIx0xrR6um2sy2nW",
-             compensationTypeId: "aejf1oD4bZWNtEEnbFwrYGVg",
-             amount: "70000",
-             currency: "EUR",
-             period: "annual",
-             note: "Promotion",
-             effectiveDate: "2020-02-15",
-             endDate: nil,
-             endReason: nil,
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z"
+             "id" => "m54mmpqDwthFwiiMcY0ptJdz",
+             "personId" => "IL3vneCYhIx0xrR6um2sy2nW",
+             "compensationTypeId" => "aejf1oD4bZWNtEEnbFwrYGVg",
+             "amount" => "70000",
+             "currency" => "EUR",
+             "period" => "annual",
+             "note" => "Promotion",
+             "effectiveDate" => "2020-02-15",
+             "endDate" => nil,
+             "endReason" => nil,
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z"
            }
          }}
       end)
@@ -221,7 +221,7 @@ defmodule Humaans.CompensationsTest do
       expect(Humaans.MockClient, :delete, fn path ->
         assert path == "/compensations/m54mmpqDwthFwiiMcY0ptJdz"
 
-        {:ok, %{status: 200, body: %{id: "m54mmpqDwthFwiiMcY0ptJdz", deleted: true}}}
+        {:ok, %{status: 200, body: %{"id" => "m54mmpqDwthFwiiMcY0ptJdz", "deleted" => true}}}
       end)
 
       assert {:ok, response} = Humaans.Compensations.delete("m54mmpqDwthFwiiMcY0ptJdz")

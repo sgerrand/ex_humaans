@@ -15,21 +15,21 @@ defmodule Humaans.BankAccountsTest do
          %{
            status: 200,
            body: %{
-             total: 1,
-             limit: 100,
-             skip: 0,
-             data: [
+             "total" => 1,
+             "limit" => 100,
+             "skip" => 0,
+             "data" => [
                %{
-                 id: "Ivl8mvdLO8ux7T1h1DjGtClc",
-                 personId: "IL3vneCYhIx0xrR6um2sy2nW",
-                 bankName: "Mondo",
-                 nameOnAccount: "Kelsey Wicks",
-                 accountNumber: "12345678",
-                 swiftCode: nil,
-                 sortCode: "00-00-00",
-                 routingNumber: nil,
-                 createdAt: "2020-01-28T08:44:42.000Z",
-                 updatedAt: "2020-01-29T14:52:21.000Z"
+                 "id" => "Ivl8mvdLO8ux7T1h1DjGtClc",
+                 "personId" => "IL3vneCYhIx0xrR6um2sy2nW",
+                 "bankName" => "Mondo",
+                 "nameOnAccount" => "Kelsey Wicks",
+                 "accountNumber" => "12345678",
+                 "swiftCode" => nil,
+                 "sortCode" => "00-00-00",
+                 "routingNumber" => nil,
+                 "createdAt" => "2020-01-28T08:44:42.000Z",
+                 "updatedAt" => "2020-01-29T14:52:21.000Z"
                }
              ]
            }
@@ -103,16 +103,16 @@ defmodule Humaans.BankAccountsTest do
          %{
            status: 200,
            body: %{
-             id: "Ivl8mvdLO8ux7T1h1DjGtClc",
-             personId: "IL3vneCYhIx0xrR6um2sy2nW",
-             bankName: "Mondo",
-             nameOnAccount: "Kelsey Wicks",
-             accountNumber: "12345678",
-             swiftCode: nil,
-             sortCode: "00-00-00",
-             routingNumber: nil,
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z"
+             "id" => "Ivl8mvdLO8ux7T1h1DjGtClc",
+             "personId" => "IL3vneCYhIx0xrR6um2sy2nW",
+             "bankName" => "Mondo",
+             "nameOnAccount" => "Kelsey Wicks",
+             "accountNumber" => "12345678",
+             "swiftCode" => nil,
+             "sortCode" => "00-00-00",
+             "routingNumber" => nil,
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z"
            }
          }}
       end)
@@ -142,16 +142,16 @@ defmodule Humaans.BankAccountsTest do
          %{
            status: 200,
            body: %{
-             id: "Ivl8mvdLO8ux7T1h1DjGtClc",
-             personId: "IL3vneCYhIx0xrR6um2sy2nW",
-             bankName: "N1",
-             nameOnAccount: "Kelsey Wicks",
-             accountNumber: "12345678",
-             swiftCode: nil,
-             sortCode: "00-00-00",
-             routingNumber: nil,
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z"
+             "id" => "Ivl8mvdLO8ux7T1h1DjGtClc",
+             "personId" => "IL3vneCYhIx0xrR6um2sy2nW",
+             "bankName" => "N1",
+             "nameOnAccount" => "Kelsey Wicks",
+             "accountNumber" => "12345678",
+             "swiftCode" => nil,
+             "sortCode" => "00-00-00",
+             "routingNumber" => nil,
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z"
            }
          }}
       end)
@@ -175,7 +175,7 @@ defmodule Humaans.BankAccountsTest do
       expect(Humaans.MockClient, :delete, fn path ->
         assert path == "/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
 
-        {:ok, %{status: 200, body: %{id: "Ivl8mvdLO8ux7T1h1DjGtClc", deleted: true}}}
+        {:ok, %{status: 200, body: %{"id" => "Ivl8mvdLO8ux7T1h1DjGtClc", "deleted" => true}}}
       end)
 
       assert {:ok, response} = Humaans.BankAccounts.delete("Ivl8mvdLO8ux7T1h1DjGtClc")

@@ -15,21 +15,21 @@ defmodule Humaans.CompaniesTest do
          %{
            status: 200,
            body: %{
-             total: 1,
-             limit: 100,
-             skip: 0,
-             data: [
+             "total" => 1,
+             "limit" => 100,
+             "skip" => 0,
+             "data" => [
                %{
-                 id: "uoWtfpDIMI2IZ8doGK7kkCwS",
-                 name: "Acme",
-                 domains: [],
-                 trialEndDate: "2020-01-30",
-                 status: "active",
-                 paymentStatus: "ok",
-                 package: "growth",
-                 createdAt: "2020-01-28T08:44:42.000Z",
-                 updatedAt: "2020-01-29T14:52:21.000Z",
-                 isTimesheetEnabled: true
+                 "id" => "uoWtfpDIMI2IZ8doGK7kkCwS",
+                 "name" => "Acme",
+                 "domains" => [],
+                 "trialEndDate" => "2020-01-30",
+                 "status" => "active",
+                 "paymentStatus" => "ok",
+                 "package" => "growth",
+                 "createdAt" => "2020-01-28T08:44:42.000Z",
+                 "updatedAt" => "2020-01-29T14:52:21.000Z",
+                 "isTimesheetEnabled" => true
                }
              ]
            }
@@ -78,16 +78,16 @@ defmodule Humaans.CompaniesTest do
          %{
            status: 200,
            body: %{
-             id: "uoWtfpDIMI2IZ8doGK7kkCwS",
-             name: "Acme",
-             domains: [],
-             trialEndDate: "2020-01-30",
-             status: "active",
-             paymentStatus: "ok",
-             package: "growth",
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z",
-             isTimesheetEnabled: true
+             "id" => "uoWtfpDIMI2IZ8doGK7kkCwS",
+             "name" => "Acme",
+             "domains" => [],
+             "trialEndDate" => "2020-01-30",
+             "status" => "active",
+             "paymentStatus" => "ok",
+             "package" => "growth",
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z",
+             "isTimesheetEnabled" => true
            }
          }}
       end)
@@ -117,16 +117,16 @@ defmodule Humaans.CompaniesTest do
          %{
            status: 200,
            body: %{
-             id: "uoWtfpDIMI2IZ8doGK7kkCwS",
-             name: "Meac",
-             domains: [],
-             trialEndDate: "2020-01-30",
-             status: "active",
-             paymentStatus: "ok",
-             package: "growth",
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z",
-             isTimesheetEnabled: true
+             "id" => "uoWtfpDIMI2IZ8doGK7kkCwS",
+             "name" => "Meac",
+             "domains" => [],
+             "trialEndDate" => "2020-01-30",
+             "status" => "active",
+             "paymentStatus" => "ok",
+             "package" => "growth",
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z",
+             "isTimesheetEnabled" => true
            }
          }}
       end)

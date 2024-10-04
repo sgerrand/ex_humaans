@@ -32,8 +32,9 @@ defmodule Humaans.Companies do
     |> handle_response()
   end
 
-  defp handle_response({:ok, %{status: status, body: %{data: data}}}) when status in 200..299 do
-    {response, _rest} =
+  defp handle_response({:ok, %{status: status, body: %{"data" => data}}})
+       when status in 200..299 do
+    {_r, response} =
       Enum.map_reduce(data, [], fn i, acc ->
         {Company.new(i), [Company.new(i) | acc]}
       end)

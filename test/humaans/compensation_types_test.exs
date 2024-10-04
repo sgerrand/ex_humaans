@@ -15,17 +15,17 @@ defmodule Humaans.CompensationTypesTest do
          %{
            status: 200,
            body: %{
-             total: 1,
-             limit: 100,
-             skip: 0,
-             data: [
+             "total" => 1,
+             "limit" => 100,
+             "skip" => 0,
+             "data" => [
                %{
-                 id: "ldOQU3pLI5i8Y9k2rJbrXbFc",
-                 companyId: "T7uqPFK7am4lFTZm39AmNuay",
-                 name: "Salary",
-                 baseType: "salary",
-                 createdAt: "2020-01-28T08:44:42.000Z",
-                 updatedAt: "2020-01-29T14:52:21.000Z"
+                 "id" => "ldOQU3pLI5i8Y9k2rJbrXbFc",
+                 "companyId" => "T7uqPFK7am4lFTZm39AmNuay",
+                 "name" => "Salary",
+                 "baseType" => "salary",
+                 "createdAt" => "2020-01-28T08:44:42.000Z",
+                 "updatedAt" => "2020-01-29T14:52:21.000Z"
                }
              ]
            }
@@ -74,12 +74,12 @@ defmodule Humaans.CompensationTypesTest do
          %{
            status: 201,
            body: %{
-             id: "ldOQU3pLI5i8Y9k2rJbrXbFc",
-             companyId: "T7uqPFK7am4lFTZm39AmNuay",
-             name: "Salary",
-             baseType: "salary",
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z"
+             "id" => "ldOQU3pLI5i8Y9k2rJbrXbFc",
+             "companyId" => "T7uqPFK7am4lFTZm39AmNuay",
+             "name" => "Salary",
+             "baseType" => "salary",
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z"
            }
          }}
       end)
@@ -103,12 +103,12 @@ defmodule Humaans.CompensationTypesTest do
          %{
            status: 200,
            body: %{
-             id: "ldOQU3pLI5i8Y9k2rJbrXbFc",
-             companyId: "T7uqPFK7am4lFTZm39AmNuay",
-             name: "Salary",
-             baseType: "salary",
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z"
+             "id" => "ldOQU3pLI5i8Y9k2rJbrXbFc",
+             "companyId" => "T7uqPFK7am4lFTZm39AmNuay",
+             "name" => "Salary",
+             "baseType" => "salary",
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z"
            }
          }}
       end)
@@ -134,12 +134,12 @@ defmodule Humaans.CompensationTypesTest do
          %{
            status: 200,
            body: %{
-             id: "ldOQU3pLI5i8Y9k2rJbrXbFc",
-             companyId: "T7uqPFK7am4lFTZm39AmNuay",
-             name: "New Salary",
-             baseType: "salary",
-             createdAt: "2020-01-28T08:44:42.000Z",
-             updatedAt: "2020-01-29T14:52:21.000Z"
+             "id" => "ldOQU3pLI5i8Y9k2rJbrXbFc",
+             "companyId" => "T7uqPFK7am4lFTZm39AmNuay",
+             "name" => "New Salary",
+             "baseType" => "salary",
+             "createdAt" => "2020-01-28T08:44:42.000Z",
+             "updatedAt" => "2020-01-29T14:52:21.000Z"
            }
          }}
       end)
@@ -161,7 +161,7 @@ defmodule Humaans.CompensationTypesTest do
       expect(Humaans.MockClient, :delete, fn path ->
         assert path == "/compensation-types/ldOQU3pLI5i8Y9k2rJbrXbFc"
 
-        {:ok, %{status: 200, body: %{id: "ldOQU3pLI5i8Y9k2rJbrXbFc", deleted: true}}}
+        {:ok, %{status: 200, body: %{"id" => "ldOQU3pLI5i8Y9k2rJbrXbFc", "deleted" => true}}}
       end)
 
       assert {:ok, response} = Humaans.CompensationTypes.delete("ldOQU3pLI5i8Y9k2rJbrXbFc")
