@@ -13,7 +13,7 @@ defmodule Humaans.Client.Req do
   def new do
     Req.new(
       base_url: @base_url,
-      auth: {:bearer, api_key()},
+      auth: {:bearer, access_token()},
       headers: [{"Accept", "application/json"}]
     )
   end
@@ -53,8 +53,8 @@ defmodule Humaans.Client.Req do
     |> Req.patch(url: path, params: params)
   end
 
-  defp api_key do
-    System.get_env("HUMAANS_API_KEY") ||
-      raise "Environment variable HUMAANS_API_KEY is not set"
+  defp access_token do
+    System.get_env("HUMAANS_ACCESS_TOKEN") ||
+      raise "Environment variable HUMAANS_ACCESS_TOKEN is not set"
   end
 end
