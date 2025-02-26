@@ -9,52 +9,52 @@ defmodule Humaans.Client.Req do
 
   @base_url "https://app.humaans.io/api"
 
-  @spec new() :: Req.Request.t()
-  def new do
-    Req.new(
-      base_url: @base_url,
-      auth: {:bearer, api_key()},
-      headers: [{"Accept", "application/json"}]
-    )
-  end
-
   @impl true
   @spec delete(path :: String.t()) :: Response.t()
   def delete(path) do
-    new()
+    build_client()
     |> Req.delete(url: path)
   end
 
   @impl true
   @spec get(path :: String.t()) :: Response.t()
   def get(path) do
-    new()
+    build_client()
     |> Req.get(url: path)
   end
 
   @impl true
   @spec get(path :: String.t(), params :: keyword()) :: Response.t()
   def get(path, params) do
-    new()
+    build_client()
     |> Req.get(url: path, params: params)
   end
 
   @impl true
   @spec post(path :: String.t(), params :: keyword()) :: Response.t()
   def post(path, params \\ []) do
-    new()
+    build_client()
     |> Req.post(url: path, params: params)
   end
 
   @impl true
   @spec patch(path :: String.t(), params :: keyword()) :: Response.t()
   def patch(path, params \\ []) do
-    new()
+    build_client()
     |> Req.patch(url: path, params: params)
   end
 
-  defp api_key do
-    System.get_env("HUMAANS_API_KEY") ||
-      raise "Environment variable HUMAANS_API_KEY is not set"
+  defp build_client do
+    case Application.fetch_env(:humaans, :access_token) do
+      :error ->
+        raise "No :access_token configuration was found"
+
+      {:ok, access_token} ->
+        Req.new(
+          base_url: @base_url,
+          auth: {:bearer, access_token},
+          headers: [{"Accept", "application/json"}]
+        )
+    end
   end
 end

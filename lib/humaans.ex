@@ -1,6 +1,8 @@
 defmodule Humaans do
   @moduledoc """
-  A client for the Humaans API.
+  A HTTP client for the Humaans API.
+
+  [Humaans API Docs](https://docs.humaans.io/api/)
   """
 
   @base_url "https://app.humaans.io/api"
@@ -8,11 +10,11 @@ defmodule Humaans do
   @doc """
   Creates a new client with the given base URL and API key.
   """
-  @spec new(api_key :: String.t()) :: map()
-  def new(api_key) do
+  @spec new(access_token :: String.t()) :: map()
+  def new(access_token) do
     Req.new(
       base_url: @base_url,
-      auth: {:bearer, api_key},
+      auth: {:bearer, access_token},
       headers: [{"Accept", "application/json"}]
     )
   end
