@@ -1,5 +1,7 @@
 # Humaans
 
+[![Hex Version](https://img.shields.io/hexpm/v/humaans.svg)](https://hex.pm/packages/humaans) [![Hex Docs](https://img.shields.io/badge/docs-hexpm-blue.svg)](https://hexdocs.pm/humaans/)
+
 An Elixir client for the [Humaans API][humaans-api-docs].
 
 ## Installation
