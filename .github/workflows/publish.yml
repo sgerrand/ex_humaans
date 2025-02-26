@@ -38,7 +38,7 @@ jobs:
         git config --global user.name "github-actions[bot]"
 
     - name: Setup Elixir
-      uses: erlef/setup-elixir@v1
+      uses: erlef/setup-beam@v1
       with:
         version-file: '.tool-versions'
         version-type: 'strict'
