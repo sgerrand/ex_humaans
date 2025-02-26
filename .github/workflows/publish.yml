@@ -38,6 +38,7 @@ jobs:
         git config --global user.name "github-actions[bot]"
 
     - name: Setup Elixir
+      id: setup-beam
       uses: erlef/setup-beam@v1
       with:
         version-file: '.tool-versions'
@@ -47,8 +48,8 @@ jobs:
       uses: actions/cache@v4
       with:
         path: deps
-        key: ${{ runner.os }}-publish-mix-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-publish-mix-
+        key: ${{ runner.os }}-publish-mix-${{ steps.setup-beam.elixir-version }}-${{ steps.setup-beam.otp-version }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-publish-mix-${{ steps.setup-beam.elixir-version }}-${{ steps.setup-beam.otp-version }}-
 
     - name: Install deps
       run: mix deps.get
