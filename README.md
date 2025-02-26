@@ -24,3 +24,12 @@ To use this client with the Humaans API, you'll need to complete the following s
    ```elixir
    config :humaans, access_token: "REPLACE_THIS_WITH_YOUR_ACCESS_TOKEN"
    ```
+
+### Example
+
+Once you have configured your instance of Humaans, you're ready to start making
+requests:
+
+```elixir
+{:ok, people} = Humaans.People.list()
+```
