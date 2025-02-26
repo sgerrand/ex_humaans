@@ -1,6 +1,8 @@
 defmodule Humaans do
   @moduledoc """
-  A client for the Humaans API.
+  A HTTP client for the Humaans API.
+
+  [Humaans API Docs](https://docs.humaans.io/api/)
   """
 
   @base_url "https://app.humaans.io/api"
