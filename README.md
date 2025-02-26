@@ -1,6 +1,6 @@
 # Humaans
 
-An Elixir client for the [Humaans API](https://docs.humaans.io/api/).
+An Elixir client for the [Humaans API][humaans-api-docs].
 
 ## Installation
 
@@ -37,3 +37,5 @@ requests:
 ## License
 
 Humaans is [released under the MIT license](LICENSE).
+
+[humaans-api-docs]: https://docs.humaans.io/api/
