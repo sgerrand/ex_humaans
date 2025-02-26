@@ -33,3 +33,7 @@ requests:
 ```elixir
 {:ok, people} = Humaans.People.list()
 ```
+
+## License
+
+Humaans is [released under the MIT license](LICENSE).
