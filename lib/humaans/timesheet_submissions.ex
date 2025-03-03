@@ -3,47 +3,45 @@ defmodule Humaans.TimesheetSubmissions do
   Handles operations related to timesheet submissions.
   """
 
-  alias Humaans.Resources.TimesheetSubmission
+  alias Humaans.{Client, Resources.TimesheetSubmission}
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
   @type list_response :: {:ok, [%TimesheetSubmission{}]} | {:error, any()}
   @type response :: {:ok, %TimesheetSubmission{}} | {:error, any()}
 
-  @callback list(map()) :: {:ok, map()} | {:error, any()}
-  @callback create(map()) :: {:ok, map()} | {:error, any()}
-  @callback retrieve(String.t()) :: {:ok, map()} | {:error, any()}
-  @callback update(String.t(), map()) :: {:ok, map()} | {:error, any()}
-  @callback delete(String.t()) :: {:ok, map()} | {:error, any()}
+  @callback list(client :: map(), map()) :: {:ok, map()} | {:error, any()}
+  @callback create(client :: map(), map()) :: {:ok, map()} | {:error, any()}
+  @callback retrieve(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
+  @callback update(client :: map(), String.t(), map()) :: {:ok, map()} | {:error, any()}
+  @callback delete(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
 
-  @client Application.compile_env!(:humaans, :client)
-
-  @spec list(params :: keyword()) :: list_response()
-  def list(params \\ %{}) do
-    @client.get("/timesheet-submissions", params)
+  @spec list(client :: map(), params :: keyword()) :: list_response()
+  def list(client, params \\ %{}) do
+    Client.get(client, "/timesheet-submissions", params)
     |> handle_response()
   end
 
-  @spec create(params :: keyword()) :: response()
-  def create(params) do
-    @client.post("/timesheet-submissions", params)
+  @spec create(client :: map(), params :: keyword()) :: response()
+  def create(client, params) do
+    Client.post(client, "/timesheet-submissions", params)
     |> handle_response()
   end
 
-  @spec retrieve(id :: String.t()) :: response()
-  def retrieve(id) do
-    @client.get("/timesheet-submissions/#{id}")
+  @spec retrieve(client :: map(), id :: String.t()) :: response()
+  def retrieve(client, id) do
+    Client.get(client, "/timesheet-submissions/#{id}")
     |> handle_response()
   end
 
-  @spec update(id :: String.t(), params :: keyword()) :: response()
-  def update(id, params) do
-    @client.patch("/timesheet-submissions/#{id}", params)
+  @spec update(client :: map(), id :: String.t(), params :: keyword()) :: response()
+  def update(client, id, params) do
+    Client.patch(client, "/timesheet-submissions/#{id}", params)
     |> handle_response()
   end
 
-  @spec delete(id :: String.t()) :: delete_response()
-  def delete(id) do
-    @client.delete("/timesheet-submissions/#{id}")
+  @spec delete(client :: map(), id :: String.t()) :: delete_response()
+  def delete(client, id) do
+    Client.delete(client, "/timesheet-submissions/#{id}")
     |> handle_response()
   end
 

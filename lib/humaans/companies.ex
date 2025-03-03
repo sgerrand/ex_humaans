@@ -1,34 +1,32 @@
 defmodule Humaans.Companies do
   @moduledoc """
-  Handles operations related to bank accounts.
+  Handles operations related to companies.
   """
 
-  alias Humaans.Resources.Company
+  alias Humaans.{Client, Resources.Company}
 
   @type list_response :: {:ok, [%Company{}]} | {:error, any()}
   @type response :: {:ok, %Company{}} | {:error, any()}
 
-  @callback list(map()) :: {:ok, map()} | {:error, any()}
-  @callback get(String.t()) :: {:ok, map()} | {:error, any()}
-  @callback update(String.t(), map()) :: {:ok, map()} | {:error, any()}
+  @callback list(client :: map(), map()) :: {:ok, map()} | {:error, any()}
+  @callback get(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
+  @callback update(client :: map(), String.t(), map()) :: {:ok, map()} | {:error, any()}
 
-  @client Application.compile_env!(:humaans, :client)
-
-  @spec list(params :: keyword()) :: list_response()
-  def list(params \\ %{}) do
-    @client.get("/companies", params)
+  @spec list(client :: map(), params :: keyword()) :: list_response()
+  def list(client, params \\ %{}) do
+    Client.get(client, "/companies", params)
     |> handle_response()
   end
 
-  @spec get(id :: String.t()) :: response()
-  def get(id) do
-    @client.get("/companies/#{id}")
+  @spec get(client :: map(), id :: String.t()) :: response()
+  def get(client, id) do
+    Client.get(client, "/companies/#{id}")
     |> handle_response()
   end
 
-  @spec update(id :: String.t(), params :: keyword()) :: response()
-  def update(id, params) do
-    @client.patch("/companies/#{id}", params)
+  @spec update(client :: map(), id :: String.t(), params :: keyword()) :: response()
+  def update(client, id, params) do
+    Client.patch(client, "/companies/#{id}", params)
     |> handle_response()
   end
 

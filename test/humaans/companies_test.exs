@@ -8,7 +8,10 @@ defmodule Humaans.CompaniesTest do
 
   describe "list/1" do
     test "returns a list of companies" do
-      expect(Humaans.MockClient, :get, fn path, _params ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, path, _params ->
+        assert client_param == client
         assert path == "/companies"
 
         {:ok,
@@ -36,7 +39,7 @@ defmodule Humaans.CompaniesTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.Companies.list()
+      assert {:ok, response} = Humaans.Companies.list(client)
       assert length(response) == 1
       assert hd(response).id == "uoWtfpDIMI2IZ8doGK7kkCwS"
       assert hd(response).name == "Acme"
@@ -51,27 +54,36 @@ defmodule Humaans.CompaniesTest do
     end
 
     test "returns error when resource is not found" do
-      expect(Humaans.MockClient, :get, fn _path, _params ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+        assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Company not found"}}}
       end)
 
       assert {:error, {404, %{"error" => "Company not found"}}} ==
-               Humaans.Companies.list()
+               Humaans.Companies.list(client)
     end
 
     test "returns error when request fails" do
-      expect(Humaans.MockClient, :get, fn _path, _params ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+        assert client_param == client
         {:error, "something unexpected happened"}
       end)
 
       assert {:error, "something unexpected happened"} ==
-               Humaans.Companies.list()
+               Humaans.Companies.list(client)
     end
   end
 
   describe "retrieve/1" do
     test "retrieves a company" do
-      expect(Humaans.MockClient, :get, fn path ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, path ->
+        assert client_param == client
         assert path == "/companies/123"
 
         {:ok,
@@ -92,7 +104,7 @@ defmodule Humaans.CompaniesTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.Companies.get("123")
+      assert {:ok, response} = Humaans.Companies.get(client, "123")
       assert response.id == "uoWtfpDIMI2IZ8doGK7kkCwS"
       assert response.name == "Acme"
       assert response.domains == []
@@ -108,9 +120,11 @@ defmodule Humaans.CompaniesTest do
 
   describe "update/2" do
     test "updates a company" do
+      client = %{req: Req.new()}
       params = %{"name" => "Meac"}
 
-      expect(Humaans.MockClient, :patch, fn path, ^params ->
+      expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
+        assert client_param == client
         assert path == "/companies/123"
 
         {:ok,
@@ -131,7 +145,7 @@ defmodule Humaans.CompaniesTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.Companies.update("123", params)
+      assert {:ok, response} = Humaans.Companies.update(client, "123", params)
       assert response.id == "uoWtfpDIMI2IZ8doGK7kkCwS"
       assert response.name == "Meac"
       assert response.domains == []

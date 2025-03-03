@@ -5,18 +5,18 @@ defmodule Humaans.Client do
 
   @impl_module Application.compile_env!(:humaans, :client)
 
-  @callback delete(nonempty_binary()) :: Response.t()
-  defdelegate delete(path), to: @impl_module
+  @callback delete(client :: map(), nonempty_binary()) :: Response.t()
+  defdelegate delete(client, path), to: @impl_module
 
-  @callback get(nonempty_binary()) :: Response.t()
-  defdelegate get(path), to: @impl_module
+  @callback get(client :: map(), nonempty_binary()) :: Response.t()
+  defdelegate get(client, path), to: @impl_module
 
-  @callback get(nonempty_binary(), keyword()) :: Response.t()
-  defdelegate get(path, params), to: @impl_module
+  @callback get(client :: map(), nonempty_binary(), keyword()) :: Response.t()
+  defdelegate get(client, path, params), to: @impl_module
 
-  @callback post(nonempty_binary(), keyword()) :: Response.t()
-  defdelegate post(path, params \\ []), to: @impl_module
+  @callback post(client :: map(), nonempty_binary(), keyword()) :: Response.t()
+  defdelegate post(client, path, params \\ []), to: @impl_module
 
-  @callback patch(nonempty_binary(), keyword()) :: Response.t()
-  defdelegate patch(path, params \\ []), to: @impl_module
+  @callback patch(client :: map(), nonempty_binary(), keyword()) :: Response.t()
+  defdelegate patch(client, path, params \\ []), to: @impl_module
 end
