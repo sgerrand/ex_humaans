@@ -42,4 +42,53 @@ defmodule Humaans do
         )
     }
   end
+
+  @doc """
+  Access the People API.
+
+  Returns the module that contains functions for working with people resources.
+  """
+  def people, do: Humaans.People
+
+  @doc """
+  Access the Bank Accounts API.
+
+  Returns the module that contains functions for working with bank account resources.
+  """
+  def bank_accounts, do: Humaans.BankAccounts
+
+  @doc """
+  Access the Companies API.
+
+  Returns the module that contains functions for working with company resources.
+  """
+  def companies, do: Humaans.Companies
+
+  @doc """
+  Access the Compensation Types API.
+
+  Returns the module that contains functions for working with compensation type resources.
+  """
+  def compensation_types, do: Humaans.CompensationTypes
+
+  @doc """
+  Access the Compensations API.
+
+  Returns the module that contains functions for working with compensation resources.
+  """
+  def compensations, do: Humaans.Compensations
+
+  @doc """
+  Access the Timesheet Entries API.
+
+  Returns the module that contains functions for working with timesheet entry resources.
+  """
+  def timesheet_entries, do: Humaans.TimesheetEntries
+
+  @doc """
+  Access the Timesheet Submissions API.
+
+  Returns the module that contains functions for working with timesheet submission resources.
+  """
+  def timesheet_submissions, do: Humaans.TimesheetSubmissions
 end
