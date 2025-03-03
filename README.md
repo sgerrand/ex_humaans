@@ -21,9 +21,9 @@ end
 
 To use this client with the Humaans API, you'll need to generate an API access token in the Humaans application.
 
-### Client-based approach (recommended)
+### Client-based approach
 
-The recommended way to use this library is with the client-based approach:
+The recommended way to use this library is to instantiate a client first:
 
 ```elixir
 # Create a client with your access token
