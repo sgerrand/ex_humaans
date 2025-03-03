@@ -6,6 +6,11 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## 0.2.0 - 2025-03-03
+
+### Changed  - **Breaking change**: Switched to a client-based approach instead of global configuration - Added convenience accessor functions for resource modules  ### Usage changes  Instead of using global configuration:   Now use the client-based approach:
+
+
 ## 0.1.0 - 2025-02-26
 
 Initial release. :rocket:
