@@ -8,7 +8,10 @@ defmodule Humaans.CompensationsTest do
 
   describe "list/1" do
     test "returns a list of compensations" do
-      expect(Humaans.MockClient, :get, fn path, _params ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, path, _params ->
+        assert client_param == client
         assert path == "/compensations"
 
         {:ok,
@@ -38,7 +41,7 @@ defmodule Humaans.CompensationsTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.Compensations.list()
+      assert {:ok, response} = Humaans.Compensations.list(client)
       assert length(response) == 1
       assert hd(response).id == "m54mmpqDwthFwiiMcY0ptJdz"
       assert hd(response).person_id == "IL3vneCYhIx0xrR6um2sy2nW"
@@ -55,26 +58,34 @@ defmodule Humaans.CompensationsTest do
     end
 
     test "returns error when resource is not found" do
-      expect(Humaans.MockClient, :get, fn _path, _params ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+        assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Compensation not found"}}}
       end)
 
       assert {:error, {404, %{"error" => "Compensation not found"}}} ==
-               Humaans.Compensations.list()
+               Humaans.Compensations.list(client)
     end
 
     test "returns error when request fails" do
-      expect(Humaans.MockClient, :get, fn _path, _params ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+        assert client_param == client
         {:error, "something unexpected happened"}
       end)
 
       assert {:error, "something unexpected happened"} ==
-               Humaans.Compensations.list()
+               Humaans.Compensations.list(client)
     end
   end
 
   describe "create/1" do
     test "creates a new compensation" do
+      client = %{req: Req.new()}
+
       params = %{
         personId: "IL3vneCYhIx0xrR6um2sy2nW",
         compensationTypeId: "aejf1oD4bZWNtEEnbFwrYGVg",
@@ -84,7 +95,8 @@ defmodule Humaans.CompensationsTest do
         effectiveDate: "2020-02-15"
       }
 
-      expect(Humaans.MockClient, :post, fn path, ^params ->
+      expect(Humaans.MockClient, :post, fn client_param, path, ^params ->
+        assert client_param == client
         assert path == "/compensations"
 
         {:ok,
@@ -107,7 +119,7 @@ defmodule Humaans.CompensationsTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.Compensations.create(params)
+      assert {:ok, response} = Humaans.Compensations.create(client, params)
       assert response.id == "m54mmpqDwthFwiiMcY0ptJdz"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
       assert response.compensation_type_id == "aejf1oD4bZWNtEEnbFwrYGVg"
@@ -125,7 +137,10 @@ defmodule Humaans.CompensationsTest do
 
   describe "retrieve/1" do
     test "retrieves a compensation" do
-      expect(Humaans.MockClient, :get, fn path ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, path ->
+        assert client_param == client
         assert path == "/compensations/m54mmpqDwthFwiiMcY0ptJdz"
 
         {:ok,
@@ -148,7 +163,7 @@ defmodule Humaans.CompensationsTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.Compensations.retrieve("m54mmpqDwthFwiiMcY0ptJdz")
+      assert {:ok, response} = Humaans.Compensations.retrieve(client, "m54mmpqDwthFwiiMcY0ptJdz")
       assert response.id == "m54mmpqDwthFwiiMcY0ptJdz"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
       assert response.compensation_type_id == "aejf1oD4bZWNtEEnbFwrYGVg"
@@ -166,6 +181,8 @@ defmodule Humaans.CompensationsTest do
 
   describe "update/2" do
     test "updates a compensation" do
+      client = %{req: Req.new()}
+
       params = %{
         compensationTypeId: "aejf1oD4bZWNtEEnbFwrYGVg",
         amount: "70000",
@@ -175,7 +192,8 @@ defmodule Humaans.CompensationsTest do
         effectiveDate: "2020-02-15"
       }
 
-      expect(Humaans.MockClient, :patch, fn path, ^params ->
+      expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
+        assert client_param == client
         assert path == "/compensations/m54mmpqDwthFwiiMcY0ptJdz"
 
         {:ok,
@@ -199,7 +217,7 @@ defmodule Humaans.CompensationsTest do
       end)
 
       assert {:ok, response} =
-               Humaans.Compensations.update("m54mmpqDwthFwiiMcY0ptJdz", params)
+               Humaans.Compensations.update(client, "m54mmpqDwthFwiiMcY0ptJdz", params)
 
       assert response.id == "m54mmpqDwthFwiiMcY0ptJdz"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
@@ -218,13 +236,16 @@ defmodule Humaans.CompensationsTest do
 
   describe "delete/1" do
     test "deletes a compensation" do
-      expect(Humaans.MockClient, :delete, fn path ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :delete, fn client_param, path ->
+        assert client_param == client
         assert path == "/compensations/m54mmpqDwthFwiiMcY0ptJdz"
 
         {:ok, %{status: 200, body: %{"id" => "m54mmpqDwthFwiiMcY0ptJdz", "deleted" => true}}}
       end)
 
-      assert {:ok, response} = Humaans.Compensations.delete("m54mmpqDwthFwiiMcY0ptJdz")
+      assert {:ok, response} = Humaans.Compensations.delete(client, "m54mmpqDwthFwiiMcY0ptJdz")
       assert response.id == "m54mmpqDwthFwiiMcY0ptJdz"
       assert response.deleted == true
     end

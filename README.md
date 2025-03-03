@@ -19,22 +19,46 @@ end
 
 ## Usage
 
-To use this client with the Humaans API, you'll need to complete the following steps:
-1. Generate an API access token in Humaans.
-2. Add this access token to your application configuration (e.g. in
-   `config/config.exs`) as follows:
-   ```elixir
-   config :humaans, access_token: "REPLACE_THIS_WITH_YOUR_ACCESS_TOKEN"
-   ```
+To use this client with the Humaans API, you'll need to generate an API access token in the Humaans application.
 
-### Example
+### Client-based approach
 
-Once you have configured your instance of Humaans, you're ready to start making
-requests:
+The recommended way to use this library is to instantiate a client first:
 
 ```elixir
-{:ok, people} = Humaans.People.list()
+# Create a client with your access token
+client = Humaans.new(access_token: "YOUR_ACCESS_TOKEN")
+
+# Make API requests passing the client as the first argument
+{:ok, people} = Humaans.People.list(client)
+{:ok, person} = Humaans.People.retrieve(client, "person_id")
+{:ok, company} = Humaans.Companies.retrieve(client, "company_id")
 ```
+
+This approach allows you to create multiple clients with different access tokens and use them independently.
+
+### Module access helpers
+
+The library provides convenience functions to access the different resource modules:
+
+```elixir
+client = Humaans.new(access_token: "YOUR_ACCESS_TOKEN")
+
+# Use the module access helpers
+{:ok, people} = Humaans.people().list(client)
+{:ok, accounts} = Humaans.bank_accounts().list(client)
+{:ok, companies} = Humaans.companies().list(client)
+```
+
+### Available resources
+
+- `Humaans.People` - Work with people resources
+- `Humaans.BankAccounts` - Work with bank account resources
+- `Humaans.Companies` - Work with company resources
+- `Humaans.CompensationTypes` - Work with compensation type resources
+- `Humaans.Compensations` - Work with compensation resources
+- `Humaans.TimesheetEntries` - Work with timesheet entry resources
+- `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
 
 ## License
 

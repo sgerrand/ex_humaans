@@ -8,7 +8,10 @@ defmodule Humaans.BankAccountsTest do
 
   describe "list/1" do
     test "returns a list of bank accounts" do
-      expect(Humaans.MockClient, :get, fn path, _params ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, path, _params ->
+        assert client_param == client
         assert path == "/bank-accounts"
 
         {:ok,
@@ -36,7 +39,7 @@ defmodule Humaans.BankAccountsTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.BankAccounts.list()
+      assert {:ok, response} = Humaans.BankAccounts.list(client)
       assert length(response) == 1
       assert hd(response).id == "Ivl8mvdLO8ux7T1h1DjGtClc"
       assert hd(response).person_id == "IL3vneCYhIx0xrR6um2sy2nW"
@@ -51,33 +54,42 @@ defmodule Humaans.BankAccountsTest do
     end
 
     test "returns error when resource is not found" do
-      expect(Humaans.MockClient, :get, fn _path, _params ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+        assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Bank Account not found"}}}
       end)
 
       assert {:error, {404, %{"error" => "Bank Account not found"}}} ==
-               Humaans.BankAccounts.list()
+               Humaans.BankAccounts.list(client)
     end
 
     test "returns error when request fails" do
-      expect(Humaans.MockClient, :get, fn _path, _params ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+        assert client_param == client
         {:error, "something unexpected happened"}
       end)
 
       assert {:error, "something unexpected happened"} ==
-               Humaans.BankAccounts.list()
+               Humaans.BankAccounts.list(client)
     end
   end
 
   describe "create/1" do
     test "creates a new bank account" do
+      client = %{req: Req.new()}
+
       params = %{
         "personId" => "123",
         "bankName" => "New Bank",
         "accountNumber" => "12345678"
       }
 
-      expect(Humaans.MockClient, :post, fn path, ^params ->
+      expect(Humaans.MockClient, :post, fn client_param, path, ^params ->
+        assert client_param == client
         assert path == "/bank-accounts"
 
         {:ok,
@@ -87,7 +99,7 @@ defmodule Humaans.BankAccountsTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.BankAccounts.create(params)
+      assert {:ok, response} = Humaans.BankAccounts.create(client, params)
       assert response.id == "new_id"
       assert response.bank_name == "New Bank"
       assert response.account_number == "12345678"
@@ -96,7 +108,10 @@ defmodule Humaans.BankAccountsTest do
 
   describe "retrieve/1" do
     test "retrieves a bank account" do
-      expect(Humaans.MockClient, :get, fn path ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :get, fn client_param, path ->
+        assert client_param == client
         assert path == "/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
 
         {:ok,
@@ -117,7 +132,7 @@ defmodule Humaans.BankAccountsTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.BankAccounts.retrieve("Ivl8mvdLO8ux7T1h1DjGtClc")
+      assert {:ok, response} = Humaans.BankAccounts.retrieve(client, "Ivl8mvdLO8ux7T1h1DjGtClc")
       assert response.id == "Ivl8mvdLO8ux7T1h1DjGtClc"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
       assert response.bank_name == "Mondo"
@@ -133,9 +148,11 @@ defmodule Humaans.BankAccountsTest do
 
   describe "update/2" do
     test "updates a bank account" do
+      client = %{req: Req.new()}
       params = %{"bankName" => "N1"}
 
-      expect(Humaans.MockClient, :patch, fn path, ^params ->
+      expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
+        assert client_param == client
         assert path == "/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
 
         {:ok,
@@ -156,7 +173,9 @@ defmodule Humaans.BankAccountsTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.BankAccounts.update("Ivl8mvdLO8ux7T1h1DjGtClc", params)
+      assert {:ok, response} =
+               Humaans.BankAccounts.update(client, "Ivl8mvdLO8ux7T1h1DjGtClc", params)
+
       assert response.id == "Ivl8mvdLO8ux7T1h1DjGtClc"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
       assert response.bank_name == "N1"
@@ -172,13 +191,16 @@ defmodule Humaans.BankAccountsTest do
 
   describe "delete/1" do
     test "deletes a bank account" do
-      expect(Humaans.MockClient, :delete, fn path ->
+      client = %{req: Req.new()}
+
+      expect(Humaans.MockClient, :delete, fn client_param, path ->
+        assert client_param == client
         assert path == "/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
 
         {:ok, %{status: 200, body: %{"id" => "Ivl8mvdLO8ux7T1h1DjGtClc", "deleted" => true}}}
       end)
 
-      assert {:ok, response} = Humaans.BankAccounts.delete("Ivl8mvdLO8ux7T1h1DjGtClc")
+      assert {:ok, response} = Humaans.BankAccounts.delete(client, "Ivl8mvdLO8ux7T1h1DjGtClc")
       assert response.id == "Ivl8mvdLO8ux7T1h1DjGtClc"
       assert response.deleted == true
     end

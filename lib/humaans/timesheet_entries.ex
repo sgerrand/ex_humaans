@@ -1,49 +1,141 @@
 defmodule Humaans.TimesheetEntries do
   @moduledoc """
-  Handles operations related to timesheet entries.
+  This module provides functions for managing timesheet entry resources in the
+  Humaans API. Timesheet entries represent individual time records for a person,
+  such as hours worked on a specific date.
   """
 
-  alias Humaans.Resources.TimesheetEntry
+  alias Humaans.{Client, Resources.TimesheetEntry}
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
   @type list_response :: {:ok, [%TimesheetEntry{}]} | {:error, any()}
   @type response :: {:ok, %TimesheetEntry{}} | {:error, any()}
 
-  @callback list(map()) :: {:ok, map()} | {:error, any()}
-  @callback create(map()) :: {:ok, map()} | {:error, any()}
-  @callback retrieve(String.t()) :: {:ok, map()} | {:error, any()}
-  @callback update(String.t(), map()) :: {:ok, map()} | {:error, any()}
-  @callback delete(String.t()) :: {:ok, map()} | {:error, any()}
+  @callback list(client :: map(), map()) :: {:ok, map()} | {:error, any()}
+  @callback create(client :: map(), map()) :: {:ok, map()} | {:error, any()}
+  @callback retrieve(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
+  @callback update(client :: map(), String.t(), map()) :: {:ok, map()} | {:error, any()}
+  @callback delete(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
 
-  @client Application.compile_env!(:humaans, :client)
+  @doc """
+  Lists all timesheet entry resources.
 
-  @spec list(params :: keyword()) :: list_response()
-  def list(params \\ %{}) do
-    @client.get("/timesheet-entries", params)
+  Returns a list of timesheet entry resources that match the optional filters provided in `params`.
+
+  ## Parameters
+
+    * `client` - Client map created with `Humaans.new/1`
+    * `params` - Optional parameters for filtering the results (default: `%{}`)
+
+  ## Examples
+
+      client = Humaans.new(access_token: "your_access_token")
+
+      # List all timesheet entries
+      {:ok, entries} = Humaans.TimesheetEntries.list(client)
+
+      # List with filtering parameters
+      {:ok, entries} = Humaans.TimesheetEntries.list(client, %{personId: "person_id"})
+
+  """
+  @spec list(client :: map(), params :: keyword()) :: list_response()
+  def list(client, params \\ %{}) do
+    Client.get(client, "/timesheet-entries", params)
     |> handle_response()
   end
 
-  @spec create(params :: keyword()) :: response()
-  def create(params) do
-    @client.post("/timesheet-entries", params)
+  @doc """
+  Creates a new timesheet entry resource.
+
+  ## Parameters
+
+    * `client` - Client map created with `Humaans.new/1`
+    * `params` - Map of parameters for the new timesheet entry
+
+  ## Examples
+
+      client = Humaans.new(access_token: "your_access_token")
+
+      params = %{
+        personId: "person_id",
+        date: "2023-01-10",
+        startTime: "09:00:00",
+        endTime: "17:00:00"
+      }
+
+      {:ok, entry} = Humaans.TimesheetEntries.create(client, params)
+
+  """
+  @spec create(client :: map(), params :: keyword()) :: response()
+  def create(client, params) do
+    Client.post(client, "/timesheet-entries", params)
     |> handle_response()
   end
 
-  @spec retrieve(id :: String.t()) :: response()
-  def retrieve(id) do
-    @client.get("/timesheet-entries/#{id}")
+  @doc """
+  Retrieves a specific timesheet entry by ID.
+
+  ## Parameters
+
+    * `client` - Client map created with `Humaans.new/1`
+    * `id` - String ID of the timesheet entry to retrieve
+
+  ## Examples
+
+      client = Humaans.new(access_token: "your_access_token")
+
+      {:ok, entry} = Humaans.TimesheetEntries.retrieve(client, "entry_id")
+
+  """
+  @spec retrieve(client :: map(), id :: String.t()) :: response()
+  def retrieve(client, id) do
+    Client.get(client, "/timesheet-entries/#{id}")
     |> handle_response()
   end
 
-  @spec update(id :: String.t(), params :: keyword()) :: response()
-  def update(id, params) do
-    @client.patch("/timesheet-entries/#{id}", params)
+  @doc """
+  Updates a specific timesheet entry by ID.
+
+  ## Parameters
+
+    * `client` - Client map created with `Humaans.new/1`
+    * `id` - String ID of the timesheet entry to update
+    * `params` - Map of parameters to update
+
+  ## Examples
+
+      client = Humaans.new(access_token: "your_access_token")
+
+      params = %{startTime: "10:00:00", endTime: "18:00:00"}
+
+      {:ok, updated_entry} = Humaans.TimesheetEntries.update(client, "entry_id", params)
+
+  """
+  @spec update(client :: map(), id :: String.t(), params :: keyword()) :: response()
+  def update(client, id, params) do
+    Client.patch(client, "/timesheet-entries/#{id}", params)
     |> handle_response()
   end
 
-  @spec delete(id :: String.t()) :: delete_response()
-  def delete(id) do
-    @client.delete("/timesheet-entries/#{id}")
+  @doc """
+  Deletes a specific timesheet entry by ID.
+
+  ## Parameters
+
+    * `client` - Client map created with `Humaans.new/1`
+    * `id` - String ID of the timesheet entry to delete
+
+  ## Examples
+
+      client = Humaans.new(access_token: "your_access_token")
+
+      {:ok, result} = Humaans.TimesheetEntries.delete(client, "entry_id")
+      # result contains %{id: "entry_id", deleted: true}
+
+  """
+  @spec delete(client :: map(), id :: String.t()) :: delete_response()
+  def delete(client, id) do
+    Client.delete(client, "/timesheet-entries/#{id}")
     |> handle_response()
   end
 
