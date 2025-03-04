@@ -11,6 +11,14 @@ permissions:
   contents: read
 
 jobs:
+  required:
+    name: Required
+    needs: [dependencies, docs, formatting, test]
+
+    steps:
+      - name: Status of workflow jobs
+        run: echo 'All jobs in this workflow have successfully run'
+
   dependencies:
     name: Dependencies
     runs-on: ubuntu-latest
