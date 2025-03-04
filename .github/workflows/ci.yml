@@ -14,6 +14,7 @@ jobs:
   required:
     name: Required
     needs: [dependencies, docs, formatting, test]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Status of workflow jobs
