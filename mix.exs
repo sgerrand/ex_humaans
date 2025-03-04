@@ -25,7 +25,7 @@ defmodule Humaans.MixProject do
         main: "Humaans",
         source_ref: "v#{@version}",
         source_url: @repo_url,
-        extras: ["README.md"]
+        extras: ["LICENSE", "README.md"]
       ]
     ]
   end
