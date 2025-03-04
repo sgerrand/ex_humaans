@@ -6,6 +6,11 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## 0.2.1 - 2025-03-04
+
+Provide default implementation for Humaans.Client.
+
+
 ## 0.2.0 - 2025-03-03
 
 ### Changed
