@@ -6,10 +6,13 @@ defmodule Humaans.BankAccountsTest do
 
   setup :verify_on_exit!
 
-  describe "list/1" do
-    test "returns a list of bank accounts" do
-      client = %{req: Req.new()}
+  setup_all do
+    client = %{req: Req.new()}
+    [client: client]
+  end
 
+  describe "list/1" do
+    test "returns a list of bank accounts", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, path, _params ->
         assert client_param == client
         assert path == "/bank-accounts"
@@ -53,9 +56,7 @@ defmodule Humaans.BankAccountsTest do
       assert hd(response).updated_at == "2020-01-29T14:52:21.000Z"
     end
 
-    test "returns error when resource is not found" do
-      client = %{req: Req.new()}
-
+    test "returns error when resource is not found", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
         assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Bank Account not found"}}}
@@ -65,9 +66,7 @@ defmodule Humaans.BankAccountsTest do
                Humaans.BankAccounts.list(client)
     end
 
-    test "returns error when request fails" do
-      client = %{req: Req.new()}
-
+    test "returns error when request fails", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
         assert client_param == client
         {:error, "something unexpected happened"}
@@ -79,9 +78,7 @@ defmodule Humaans.BankAccountsTest do
   end
 
   describe "create/1" do
-    test "creates a new bank account" do
-      client = %{req: Req.new()}
-
+    test "creates a new bank account", %{client: client} do
       params = %{
         "personId" => "123",
         "bankName" => "New Bank",
@@ -107,9 +104,7 @@ defmodule Humaans.BankAccountsTest do
   end
 
   describe "retrieve/1" do
-    test "retrieves a bank account" do
-      client = %{req: Req.new()}
-
+    test "retrieves a bank account", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, path ->
         assert client_param == client
         assert path == "/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
@@ -147,8 +142,7 @@ defmodule Humaans.BankAccountsTest do
   end
 
   describe "update/2" do
-    test "updates a bank account" do
-      client = %{req: Req.new()}
+    test "updates a bank account", %{client: client} do
       params = %{"bankName" => "N1"}
 
       expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
@@ -190,9 +184,7 @@ defmodule Humaans.BankAccountsTest do
   end
 
   describe "delete/1" do
-    test "deletes a bank account" do
-      client = %{req: Req.new()}
-
+    test "deletes a bank account", %{client: client} do
       expect(Humaans.MockClient, :delete, fn client_param, path ->
         assert client_param == client
         assert path == "/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"

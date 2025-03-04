@@ -6,10 +6,13 @@ defmodule Humaans.PeopleTest do
 
   setup :verify_on_exit!
 
-  describe "list/1" do
-    test "returns a list of people" do
-      client = %{req: Req.new()}
+  setup_all do
+    client = %{req: Req.new()}
+    [client: client]
+  end
 
+  describe "list/1" do
+    test "returns a list of people", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, path, _params ->
         assert client_param == client
         assert path == "/people"
@@ -202,9 +205,7 @@ defmodule Humaans.PeopleTest do
       assert hd(response).updated_at == "2020-01-29T14:52:21.000Z"
     end
 
-    test "returns error when resource is not found" do
-      client = %{req: Req.new()}
-
+    test "returns error when resource is not found", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
         assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Person not found"}}}
@@ -214,9 +215,7 @@ defmodule Humaans.PeopleTest do
                Humaans.People.list(client)
     end
 
-    test "returns error when request fails" do
-      client = %{req: Req.new()}
-
+    test "returns error when request fails", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
         assert client_param == client
         {:error, "something unexpected happened"}
@@ -228,9 +227,7 @@ defmodule Humaans.PeopleTest do
   end
 
   describe "create/1" do
-    test "creates a new person" do
-      client = %{req: Req.new()}
-
+    test "creates a new person", %{client: client} do
       params = %{
         "firstName" => "Kelsey",
         "lastName" => "Wicks",
@@ -287,9 +284,7 @@ defmodule Humaans.PeopleTest do
   end
 
   describe "retrieve/1" do
-    test "retrieves a person" do
-      client = %{req: Req.new()}
-
+    test "retrieves a person", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, path ->
         assert client_param == client
         assert path == "/people/Ivl8mvdLO8ux7T1h1DjGtClc"
@@ -476,8 +471,7 @@ defmodule Humaans.PeopleTest do
   end
 
   describe "update/2" do
-    test "updates a person" do
-      client = %{req: Req.new()}
+    test "updates a person", %{client: client} do
       params = %{"middleName" => "some middle name"}
 
       expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
@@ -619,9 +613,7 @@ defmodule Humaans.PeopleTest do
   end
 
   describe "delete/1" do
-    test "deletes a person" do
-      client = %{req: Req.new()}
-
+    test "deletes a person", %{client: client} do
       expect(Humaans.MockClient, :delete, fn client_param, path ->
         assert client_param == client
         assert path == "/people/Ivl8mvdLO8ux7T1h1DjGtClc"

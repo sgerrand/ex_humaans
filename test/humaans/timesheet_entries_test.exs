@@ -6,10 +6,13 @@ defmodule Humaans.TimesheetEntriesTest do
 
   setup :verify_on_exit!
 
-  describe "list/1" do
-    test "returns a list of timesheet submissions" do
-      client = %{req: Req.new()}
+  setup_all do
+    client = %{req: Req.new()}
+    [client: client]
+  end
 
+  describe "list/1" do
+    test "returns a list of timesheet submissions", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, path, _params ->
         assert client_param == client
         assert path == "/timesheet-entries"
@@ -61,9 +64,7 @@ defmodule Humaans.TimesheetEntriesTest do
       assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
 
-    test "returns error when resource is not found" do
-      client = %{req: Req.new()}
-
+    test "returns error when resource is not found", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
         assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Timesheet Entry not found"}}}
@@ -73,9 +74,7 @@ defmodule Humaans.TimesheetEntriesTest do
                Humaans.TimesheetEntries.list(client)
     end
 
-    test "returns error when request fails" do
-      client = %{req: Req.new()}
-
+    test "returns error when request fails", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
         assert client_param == client
         {:error, "something unexpected happened"}
@@ -87,8 +86,7 @@ defmodule Humaans.TimesheetEntriesTest do
   end
 
   describe "create/1" do
-    test "creates a new timesheet submission" do
-      client = %{req: Req.new()}
+    test "creates a new timesheet submission", %{client: client} do
       params = %{personId: "IL3vneCYhIx0xrR6um2sy2nW", date: "2020-04-01", startTime: "09:00:00"}
 
       expect(Humaans.MockClient, :post, fn client_param, path, ^params ->
@@ -117,9 +115,7 @@ defmodule Humaans.TimesheetEntriesTest do
   end
 
   describe "retrieve/1" do
-    test "retrieves a timesheet submission" do
-      client = %{req: Req.new()}
-
+    test "retrieves a timesheet submission", %{client: client} do
       expect(Humaans.MockClient, :get, fn client_param, path ->
         assert client_param == client
         assert path == "/timesheet-entries/0vUGk85FkSDHXfeOTnXqkk4d"
@@ -166,8 +162,7 @@ defmodule Humaans.TimesheetEntriesTest do
   end
 
   describe "update/2" do
-    test "updates a timesheet submission" do
-      client = %{req: Req.new()}
+    test "updates a timesheet submission", %{client: client} do
       params = %{status: "pending"}
 
       expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
@@ -213,9 +208,7 @@ defmodule Humaans.TimesheetEntriesTest do
   end
 
   describe "delete/1" do
-    test "deletes a timesheet submission" do
-      client = %{req: Req.new()}
-
+    test "deletes a timesheet submission", %{client: client} do
       expect(Humaans.MockClient, :delete, fn client_param, path ->
         assert client_param == client
         assert path == "/timesheet-entries/Ivl8mvdLO8ux7T1h1DjGtClc"
