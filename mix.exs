@@ -21,12 +21,7 @@ defmodule Humaans.MixProject do
       name: "Humaans",
       source_url: @repo_url,
       homepage_url: @repo_url,
-      docs: [
-        main: "readme",
-        source_ref: "v#{@version}",
-        source_url: @repo_url,
-        extras: ["README.md", "CHANGELOG.md", "LICENSE"]
-      ]
+      docs: docs()
     ]
   end
 
@@ -53,6 +48,15 @@ defmodule Humaans.MixProject do
     [
       licenses: ["MIT"],
       links: %{"GitHub" => @repo_url}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      source_ref: "v#{@version}",
+      source_url: @repo_url,
+      extras: ["README.md", "CHANGELOG.md", "LICENSE"]
     ]
   end
 end
