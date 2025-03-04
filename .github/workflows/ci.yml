@@ -65,7 +65,7 @@ jobs:
         restore-keys: ${{ runner.os }}-${{ steps.setup-beam.otp-version }}-${{ steps.setup-beam.elixir-version }}-
     - name: Install and compile dependencies
       if: steps.cache-deps.outputs.cache-hit != 'true'
-      run: mix do deps.get --only test, deps.compile
+      run: mix do deps.get --only ${{ env.MIX_ENV }}, deps.compile
     - name: Check code format
       run: mix format --check-formatted
 
@@ -108,7 +108,7 @@ jobs:
         restore-keys: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-
     - name: Install and compile dependencies
       if: steps.cache-deps.outputs.cache-hit != 'true'
-      run: mix do deps.get --only test, deps.compile
+      run: mix do deps.get --only ${{ env.MIX_ENV }}, deps.compile
     - name: Compile code
       run: mix compile
     - name: Run tests
