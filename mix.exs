@@ -22,7 +22,7 @@ defmodule Humaans.MixProject do
       source_url: @repo_url,
       homepage_url: @repo_url,
       docs: [
-        main: "Humaans",
+        main: "readme",
         source_ref: "v#{@version}",
         source_url: @repo_url,
         extras: ["LICENSE", "README.md"]
