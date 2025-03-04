@@ -19,10 +19,9 @@ defmodule Humaans.MixProject do
 
       # Docs
       name: "Humaans",
-      docs: [
-        source_ref: "v#{@version}",
-        source_url: @repo_url
-      ]
+      source_url: @repo_url,
+      homepage_url: @repo_url,
+      docs: docs()
     ]
   end
 
@@ -48,7 +47,19 @@ defmodule Humaans.MixProject do
   defp package do
     [
       licenses: ["MIT"],
-      links: %{"GitHub" => @repo_url}
+      links: %{
+        "GitHub" => @repo_url,
+        "Changelog" => "https://hexdocs.pm/humaans/changelog.html"
+      }
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      source_ref: "v#{@version}",
+      source_url: @repo_url,
+      extras: ["README.md", "CHANGELOG.md", "LICENSE"]
     ]
   end
 end
