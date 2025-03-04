@@ -35,4 +35,3 @@ client = Humaans.new(access_token: "YOUR_ACCESS_TOKEN")
 ## 0.1.0 - 2025-02-26
 
 Initial release. :rocket:
-
