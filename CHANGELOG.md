@@ -8,8 +8,9 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.2.1 - 2025-03-04
 
-Provide default implementation for Humaans.Client.
+### Changed
 
+- Provide default implementation for Humaans.Client.
 
 ## 0.2.0 - 2025-03-03
 
@@ -34,4 +35,3 @@ client = Humaans.new(access_token: "YOUR_ACCESS_TOKEN")
 ## 0.1.0 - 2025-02-26
 
 Initial release. :rocket:
-
