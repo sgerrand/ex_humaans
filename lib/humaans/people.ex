@@ -4,7 +4,7 @@ defmodule Humaans.People do
   API.
   """
 
-  alias Humaans.{Client, Resources.Person}
+  alias Humaans.{Client, Resources.Person, ResponseHandler}
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
   @type list_response :: {:ok, [%Person{}]} | {:error, any()}
@@ -40,7 +40,7 @@ defmodule Humaans.People do
   @spec list(client :: map(), params :: keyword()) :: list_response()
   def list(client, params \\ %{}) do
     Client.get(client, "/people", params)
-    |> handle_response()
+    |> ResponseHandler.handle_list_response(Person)
   end
 
   @doc """
@@ -67,7 +67,7 @@ defmodule Humaans.People do
   @spec create(client :: map(), params :: keyword()) :: response()
   def create(client, params) do
     Client.post(client, "/people", params)
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(Person)
   end
 
   @doc """
@@ -88,7 +88,7 @@ defmodule Humaans.People do
   @spec retrieve(client :: map(), id :: String.t()) :: response()
   def retrieve(client, id) do
     Client.get(client, "/people/#{id}")
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(Person)
   end
 
   @doc """
@@ -112,7 +112,7 @@ defmodule Humaans.People do
   @spec update(client :: map(), id :: String.t(), params :: keyword()) :: response()
   def update(client, id, params) do
     Client.patch(client, "/people/#{id}", params)
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(Person)
   end
 
   @doc """
@@ -134,33 +134,6 @@ defmodule Humaans.People do
   @spec delete(client :: map(), id :: String.t()) :: delete_response()
   def delete(client, id) do
     Client.delete(client, "/people/#{id}")
-    |> handle_response()
+    |> ResponseHandler.handle_delete_response()
   end
-
-  defp handle_response({:ok, %{status: status, body: %{"data" => data}}})
-       when status in 200..299 do
-    {_r, response} =
-      Enum.map_reduce(data, [], fn i, acc ->
-        {Person.new(i), [Person.new(i) | acc]}
-      end)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: %{"deleted" => deleted, "id" => id}}})
-       when status in 200..299 do
-    {:ok, %{deleted: deleted, id: id}}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) when status in 200..299 do
-    response = Person.new(body)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) do
-    {:error, {status, body}}
-  end
-
-  defp handle_response({:error, _} = error), do: error
 end
