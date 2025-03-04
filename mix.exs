@@ -19,9 +19,13 @@ defmodule Humaans.MixProject do
 
       # Docs
       name: "Humaans",
+      source_url: @repo_url,
+      homepage_url: @repo_url,
       docs: [
+        main: "Humaans",
         source_ref: "v#{@version}",
-        source_url: @repo_url
+        source_url: @repo_url,
+        extras: ["README.md"]
       ]
     ]
   end
