@@ -8,7 +8,10 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.2.2 - 2025-03-04
 
-* Enhancements\n    * Improved ExDoc configuration for HexDocs\n    * Added changelog to package metadata for Hex.pm
+### Enhancements
+
+- Improved ExDoc configuration for HexDocs
+- Added changelog to package metadata for Hex.pm
 
 
 ## 0.2.1 - 2025-03-04
