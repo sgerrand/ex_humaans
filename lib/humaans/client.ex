@@ -3,7 +3,7 @@ defmodule Humaans.Client do
 
   alias Humaans.Response
 
-  @impl_module Application.compile_env!(:humaans, :client)
+  @impl_module Application.compile_env(:humaans, :client, Humaans.Client.Req)
 
   @callback delete(client :: map(), nonempty_binary()) :: Response.t()
   defdelegate delete(client, path), to: @impl_module
