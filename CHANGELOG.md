@@ -8,7 +8,9 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.3.0 - 2025-03-04
 
-### Changes\n- Introduce ResponseHandler to centrally manage how API responses are handled.
+### Changes
+
+- Introduce `ResponseHandler` to centrally manage how API responses are handled.
 
 
 ## 0.2.2 - 2025-03-04
