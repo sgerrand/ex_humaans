@@ -5,7 +5,7 @@ defmodule Humaans.TimesheetEntries do
   such as hours worked on a specific date.
   """
 
-  alias Humaans.{Client, Resources.TimesheetEntry}
+  alias Humaans.{Client, Resources.TimesheetEntry, ResponseHandler}
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
   @type list_response :: {:ok, [%TimesheetEntry{}]} | {:error, any()}
@@ -41,7 +41,7 @@ defmodule Humaans.TimesheetEntries do
   @spec list(client :: map(), params :: keyword()) :: list_response()
   def list(client, params \\ %{}) do
     Client.get(client, "/timesheet-entries", params)
-    |> handle_response()
+    |> ResponseHandler.handle_list_response(TimesheetEntry)
   end
 
   @doc """
@@ -69,7 +69,7 @@ defmodule Humaans.TimesheetEntries do
   @spec create(client :: map(), params :: keyword()) :: response()
   def create(client, params) do
     Client.post(client, "/timesheet-entries", params)
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(TimesheetEntry)
   end
 
   @doc """
@@ -90,7 +90,7 @@ defmodule Humaans.TimesheetEntries do
   @spec retrieve(client :: map(), id :: String.t()) :: response()
   def retrieve(client, id) do
     Client.get(client, "/timesheet-entries/#{id}")
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(TimesheetEntry)
   end
 
   @doc """
@@ -114,7 +114,7 @@ defmodule Humaans.TimesheetEntries do
   @spec update(client :: map(), id :: String.t(), params :: keyword()) :: response()
   def update(client, id, params) do
     Client.patch(client, "/timesheet-entries/#{id}", params)
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(TimesheetEntry)
   end
 
   @doc """
@@ -136,33 +136,6 @@ defmodule Humaans.TimesheetEntries do
   @spec delete(client :: map(), id :: String.t()) :: delete_response()
   def delete(client, id) do
     Client.delete(client, "/timesheet-entries/#{id}")
-    |> handle_response()
+    |> ResponseHandler.handle_delete_response()
   end
-
-  defp handle_response({:ok, %{status: status, body: %{"data" => data}}})
-       when status in 200..299 do
-    {_r, response} =
-      Enum.map_reduce(data, [], fn i, acc ->
-        {TimesheetEntry.new(i), [TimesheetEntry.new(i) | acc]}
-      end)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: %{"deleted" => deleted, "id" => id}}})
-       when status in 200..299 do
-    {:ok, %{deleted: deleted, id: id}}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) when status in 200..299 do
-    response = TimesheetEntry.new(body)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) do
-    {:error, {status, body}}
-  end
-
-  defp handle_response({:error, _} = error), do: error
 end

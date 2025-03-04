@@ -5,7 +5,7 @@ defmodule Humaans.CompensationTypes do
   compensation such as salary, bonus, commission, etc.
   """
 
-  alias Humaans.{Client, Resources.CompensationType}
+  alias Humaans.{Client, Resources.CompensationType, ResponseHandler}
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
   @type list_response :: {:ok, [%CompensationType{}]} | {:error, any()}
@@ -41,7 +41,7 @@ defmodule Humaans.CompensationTypes do
   @spec list(client :: map(), params :: keyword()) :: list_response()
   def list(client, params \\ %{}) do
     Client.get(client, "/compensation-types", params)
-    |> handle_response()
+    |> ResponseHandler.handle_list_response(CompensationType)
   end
 
   @doc """
@@ -69,7 +69,7 @@ defmodule Humaans.CompensationTypes do
   @spec create(client :: map(), params :: keyword()) :: response()
   def create(client, params) do
     Client.post(client, "/compensation-types", params)
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(CompensationType)
   end
 
   @doc """
@@ -90,7 +90,7 @@ defmodule Humaans.CompensationTypes do
   @spec retrieve(client :: map(), id :: String.t()) :: response()
   def retrieve(client, id) do
     Client.get(client, "/compensation-types/#{id}")
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(CompensationType)
   end
 
   @doc """
@@ -114,7 +114,7 @@ defmodule Humaans.CompensationTypes do
   @spec update(client :: map(), id :: String.t(), params :: keyword()) :: response()
   def update(client, id, params) do
     Client.patch(client, "/compensation-types/#{id}", params)
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(CompensationType)
   end
 
   @doc """
@@ -136,33 +136,6 @@ defmodule Humaans.CompensationTypes do
   @spec delete(client :: map(), id :: String.t()) :: delete_response()
   def delete(client, id) do
     Client.delete(client, "/compensation-types/#{id}")
-    |> handle_response()
+    |> ResponseHandler.handle_delete_response()
   end
-
-  defp handle_response({:ok, %{status: status, body: %{"data" => data}}})
-       when status in 200..299 do
-    {_r, response} =
-      Enum.map_reduce(data, [], fn i, acc ->
-        {CompensationType.new(i), [CompensationType.new(i) | acc]}
-      end)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: %{"deleted" => deleted, "id" => id}}})
-       when status in 200..299 do
-    {:ok, %{deleted: deleted, id: id}}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) when status in 200..299 do
-    response = CompensationType.new(body)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) do
-    {:error, {status, body}}
-  end
-
-  defp handle_response({:error, _} = error), do: error
 end

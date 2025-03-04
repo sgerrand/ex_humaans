@@ -4,7 +4,7 @@ defmodule Humaans.BankAccounts do
   Humaans API.
   """
 
-  alias Humaans.{Client, Resources.BankAccount}
+  alias Humaans.{Client, Resources.BankAccount, ResponseHandler}
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
   @type list_response :: {:ok, [%BankAccount{}]} | {:error, any()}
@@ -40,7 +40,7 @@ defmodule Humaans.BankAccounts do
   @spec list(client :: map(), params :: keyword()) :: list_response()
   def list(client, params \\ %{}) do
     Client.get(client, "/bank-accounts", params)
-    |> handle_response()
+    |> ResponseHandler.handle_list_response(BankAccount)
   end
 
   @doc """
@@ -69,7 +69,7 @@ defmodule Humaans.BankAccounts do
   @spec create(client :: map(), params :: keyword()) :: response()
   def create(client, params) do
     Client.post(client, "/bank-accounts", params)
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(BankAccount)
   end
 
   @doc """
@@ -90,7 +90,7 @@ defmodule Humaans.BankAccounts do
   @spec retrieve(client :: map(), id :: String.t()) :: response()
   def retrieve(client, id) do
     Client.get(client, "/bank-accounts/#{id}")
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(BankAccount)
   end
 
   @doc """
@@ -114,7 +114,7 @@ defmodule Humaans.BankAccounts do
   @spec update(client :: map(), id :: String.t(), params :: keyword()) :: response()
   def update(client, id, params) do
     Client.patch(client, "/bank-accounts/#{id}", params)
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(BankAccount)
   end
 
   @doc """
@@ -136,33 +136,6 @@ defmodule Humaans.BankAccounts do
   @spec delete(client :: map(), id :: String.t()) :: delete_response()
   def delete(client, id) do
     Client.delete(client, "/bank-accounts/#{id}")
-    |> handle_response()
+    |> ResponseHandler.handle_delete_response()
   end
-
-  defp handle_response({:ok, %{status: status, body: %{"data" => data}}})
-       when status in 200..299 do
-    {_r, response} =
-      Enum.map_reduce(data, [], fn i, acc ->
-        {BankAccount.new(i), [BankAccount.new(i) | acc]}
-      end)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: %{"deleted" => deleted, "id" => id}}})
-       when status in 200..299 do
-    {:ok, %{deleted: deleted, id: id}}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) when status in 200..299 do
-    response = BankAccount.new(body)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) do
-    {:error, {status, body}}
-  end
-
-  defp handle_response({:error, _} = error), do: error
 end

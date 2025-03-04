@@ -5,7 +5,7 @@ defmodule Humaans.Companies do
   retrieved, and updated, but not created or deleted through the API.
   """
 
-  alias Humaans.{Client, Resources.Company}
+  alias Humaans.{Client, Resources.Company, ResponseHandler}
 
   @type list_response :: {:ok, [%Company{}]} | {:error, any()}
   @type response :: {:ok, %Company{}} | {:error, any()}
@@ -38,7 +38,7 @@ defmodule Humaans.Companies do
   @spec list(client :: map(), params :: keyword()) :: list_response()
   def list(client, params \\ %{}) do
     Client.get(client, "/companies", params)
-    |> handle_response()
+    |> ResponseHandler.handle_list_response(Company)
   end
 
   @doc """
@@ -59,7 +59,7 @@ defmodule Humaans.Companies do
   @spec get(client :: map(), id :: String.t()) :: response()
   def get(client, id) do
     Client.get(client, "/companies/#{id}")
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(Company)
   end
 
   @doc """
@@ -83,28 +83,6 @@ defmodule Humaans.Companies do
   @spec update(client :: map(), id :: String.t(), params :: keyword()) :: response()
   def update(client, id, params) do
     Client.patch(client, "/companies/#{id}", params)
-    |> handle_response()
+    |> ResponseHandler.handle_resource_response(Company)
   end
-
-  defp handle_response({:ok, %{status: status, body: %{"data" => data}}})
-       when status in 200..299 do
-    {_r, response} =
-      Enum.map_reduce(data, [], fn i, acc ->
-        {Company.new(i), [Company.new(i) | acc]}
-      end)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) when status in 200..299 do
-    response = Company.new(body)
-
-    {:ok, response}
-  end
-
-  defp handle_response({:ok, %{status: status, body: body}}) do
-    {:error, {status, body}}
-  end
-
-  defp handle_response({:error, _} = error), do: error
 end
