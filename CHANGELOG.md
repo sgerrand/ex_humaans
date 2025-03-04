@@ -6,6 +6,13 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## 0.3.1 - 2025-03-04
+
+### Changed
+- Fixed existing release notes
+- Updated package release workflow
+
+
 ## 0.3.0 - 2025-03-04
 
 ### Changes
