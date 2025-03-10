@@ -2,16 +2,58 @@ defmodule Humaans do
   @moduledoc """
   A HTTP client for the Humaans API.
 
-  [Humaans API Docs](https://docs.humaans.io/api/)
+  This library provides a complete interface to the Humaans API, allowing you to
+  manage people, companies, bank accounts, compensations, timesheet entries, and more.
+  It follows a modular design where the main Humaans module serves as the entry point
+  for creating clients, while specific resource modules handle operations for each
+  resource type.
+
+  [Humaans API Documentation](https://docs.humaans.io/api/)
+
+  ## Architecture
+
+  The library follows a layered architecture:
+  - `Humaans` - Main module that creates configured client instances
+  - Resource modules (People, Companies, etc.) - Handle operations specific to each resource type
+  - HTTP Client - Abstracts the HTTP communication details (configurable)
+
+  ## Configuration Options
+
+  When creating a client with `Humaans.new/1`, you can configure:
+
+  * `:access_token` - Your Humaans API access token (required)
+  * `:base_url` - The base URL for API requests (defaults to "https://app.humaans.io/api")
+  * `:http_client` - The HTTP client module to use (defaults to `Humaans.HTTPClient.Req`)
 
   ## Examples
 
-      # Create a client
+      # Create a default client
       client = Humaans.new(access_token: "some-access-token")
+
+      # Create a client with custom base URL
+      client = Humaans.new(
+        access_token: "some-access-token",
+        base_url: "https://custom-instance.humaans.io/api"
+      )
+
+      # Create a client with custom HTTP client
+      client = Humaans.new(
+        access_token: "some-access-token",
+        http_client: MyCustomHTTPClient
+      )
 
       # Make API calls
       {:ok, people} = Humaans.People.list(client)
       {:ok, person} = Humaans.People.retrieve(client, "123")
+      {:ok, companies} = Humaans.Companies.list(client)
+
+      # Create a new person
+      person_params = %{
+        "firstName" => "Jane",
+        "lastName" => "Doe",
+        "email" => "jane.doe@example.com"
+      }
+      {:ok, new_person} = Humaans.People.create(client, person_params)
   """
 
   @type t :: %__MODULE__{
