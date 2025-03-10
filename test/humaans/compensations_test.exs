@@ -1,21 +1,24 @@
 defmodule Humaans.CompensationsTest do
   use ExUnit.Case, async: true
-  import Mox
+
+  import Mox, only: [expect: 3, verify_on_exit!: 1]
 
   doctest Humaans.Compensations
 
   setup :verify_on_exit!
 
   setup_all do
-    client = %{req: Req.new()}
+    client = Humaans.new(access_token: "some access token", http_client: Humaans.MockHTTPClient)
     [client: client]
   end
 
   describe "list/1" do
     test "returns a list of compensations", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/compensations"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+        assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/compensations"
 
         {:ok,
          %{
@@ -44,24 +47,24 @@ defmodule Humaans.CompensationsTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.Compensations.list(client)
-      assert length(response) == 1
-      assert hd(response).id == "m54mmpqDwthFwiiMcY0ptJdz"
-      assert hd(response).person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert hd(response).compensation_type_id == "aejf1oD4bZWNtEEnbFwrYGVg"
-      assert hd(response).amount == "70000"
-      assert hd(response).currency == "EUR"
-      assert hd(response).period == "annual"
-      assert hd(response).note == "Promotion"
-      assert hd(response).effective_date == "2020-02-15"
-      assert hd(response).end_date == nil
-      assert hd(response).end_reason == nil
-      assert hd(response).created_at == "2020-01-28T08:44:42.000Z"
-      assert hd(response).updated_at == "2020-01-29T14:52:21.000Z"
+      assert {:ok, [response] = responses} = Humaans.Compensations.list(client)
+      assert length(responses) == 1
+      assert response.id == "m54mmpqDwthFwiiMcY0ptJdz"
+      assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
+      assert response.compensation_type_id == "aejf1oD4bZWNtEEnbFwrYGVg"
+      assert response.amount == "70000"
+      assert response.currency == "EUR"
+      assert response.period == "annual"
+      assert response.note == "Promotion"
+      assert response.effective_date == "2020-02-15"
+      assert response.end_date == nil
+      assert response.end_reason == nil
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
 
     test "returns error when resource is not found", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
         assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Compensation not found"}}}
       end)
@@ -71,7 +74,7 @@ defmodule Humaans.CompensationsTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
         assert client_param == client
         {:error, "something unexpected happened"}
       end)
@@ -92,9 +95,12 @@ defmodule Humaans.CompensationsTest do
         effectiveDate: "2020-02-15"
       }
 
-      expect(Humaans.MockClient, :post, fn client_param, path, ^params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/compensations"
+        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :post
+        assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/compensations"
 
         {:ok,
          %{
@@ -134,9 +140,13 @@ defmodule Humaans.CompensationsTest do
 
   describe "retrieve/1" do
     test "retrieves a compensation", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, path ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/compensations/m54mmpqDwthFwiiMcY0ptJdz"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/compensations/m54mmpqDwthFwiiMcY0ptJdz"
 
         {:ok,
          %{
@@ -185,9 +195,14 @@ defmodule Humaans.CompensationsTest do
         effectiveDate: "2020-02-15"
       }
 
-      expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/compensations/m54mmpqDwthFwiiMcY0ptJdz"
+        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :patch
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/compensations/m54mmpqDwthFwiiMcY0ptJdz"
 
         {:ok,
          %{
@@ -229,9 +244,13 @@ defmodule Humaans.CompensationsTest do
 
   describe "delete/1" do
     test "deletes a compensation", %{client: client} do
-      expect(Humaans.MockClient, :delete, fn client_param, path ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/compensations/m54mmpqDwthFwiiMcY0ptJdz"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :delete
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/compensations/m54mmpqDwthFwiiMcY0ptJdz"
 
         {:ok, %{status: 200, body: %{"id" => "m54mmpqDwthFwiiMcY0ptJdz", "deleted" => true}}}
       end)

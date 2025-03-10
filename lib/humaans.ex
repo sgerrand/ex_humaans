@@ -14,6 +14,15 @@ defmodule Humaans do
       {:ok, person} = Humaans.People.retrieve(client, "123")
   """
 
+  @type t :: %__MODULE__{
+          access_token: String.t(),
+          base_url: String.t(),
+          http_client: module()
+        }
+
+  @enforce_keys [:access_token, :base_url, :http_client]
+  defstruct [:access_token, :base_url, :http_client]
+
   @base_url "https://app.humaans.io/api"
 
   @doc """
@@ -32,15 +41,13 @@ defmodule Humaans do
   def new(opts) when is_list(opts) do
     access_token = Keyword.fetch!(opts, :access_token)
     base_url = Keyword.get(opts, :base_url, @base_url)
+    http_client = Keyword.get(opts, :http_client, Humaans.HTTPClient.Req)
 
-    %{
-      req:
-        Req.new(
-          base_url: base_url,
-          auth: {:bearer, access_token},
-          headers: [{"Accept", "application/json"}]
-        )
-    }
+    struct!(__MODULE__,
+      access_token: access_token,
+      base_url: base_url,
+      http_client: http_client
+    )
   end
 
   @doc """

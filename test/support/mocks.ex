@@ -1,1 +1,1 @@
-Mox.defmock(Humaans.MockClient, for: Humaans.Client)
+Mox.defmock(Humaans.MockHTTPClient, for: Humaans.HTTPClient.Behaviour)
