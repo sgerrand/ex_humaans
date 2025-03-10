@@ -14,19 +14,9 @@ defmodule Humaans.HTTPClient.ReqTest do
   describe "request/2" do
     test "configures GET requests correctly without params", %{client: client} do
       response_body = %{"data" => [%{"id" => "123"}]}
-      response = %Req.Response{status: 200, body: response_body, headers: %{}}
+      {response, request_opts} = setup_test(:get, "/people", response_body)
 
-      adapter = fn request ->
-        {request, response}
-      end
-
-      request_opts = [
-        method: :get,
-        base_url: client.base_url,
-        url: "/people",
-        headers: [{"Accept", "application/json"}],
-        adapter: adapter
-      ]
+      request_opts = Keyword.put(request_opts, :base_url, client.base_url)
 
       result = Humaans.HTTPClient.Req.request(client, request_opts)
 
@@ -35,19 +25,9 @@ defmodule Humaans.HTTPClient.ReqTest do
 
     test "configures GET requests correctly with query params", %{client: client} do
       response_body = %{"data" => [%{"id" => "123"}]}
-      response = %Req.Response{status: 200, body: response_body, headers: %{}}
 
-      adapter = fn request ->
-        {request, response}
-      end
-
-      request_opts = [
-        method: :get,
-        url: "/people",
-        headers: [{"Accept", "application/json"}],
-        params: [limit: 10, offset: 0],
-        adapter: adapter
-      ]
+      {response, request_opts} =
+        setup_test(:get, "/people", response_body, 200, params: [limit: 10, offset: 0])
 
       result = Humaans.HTTPClient.Req.request(client, request_opts)
 
@@ -56,21 +36,8 @@ defmodule Humaans.HTTPClient.ReqTest do
 
     test "configures POST requests correctly with JSON body", %{client: client} do
       response_body = %{"id" => "123", "name" => "Test User"}
-      response = %Req.Response{status: 201, body: response_body, headers: %{}}
-
-      adapter = fn request ->
-        {request, response}
-      end
-
       body = %{name: "Test User", email: "test@example.com"}
-
-      request_opts = [
-        method: :post,
-        url: "/people",
-        headers: [{"Accept", "application/json"}],
-        body: body,
-        adapter: adapter
-      ]
+      {response, request_opts} = setup_test(:post, "/people", response_body, 201, body: body)
 
       result = Humaans.HTTPClient.Req.request(client, request_opts)
 
@@ -79,21 +46,8 @@ defmodule Humaans.HTTPClient.ReqTest do
 
     test "configures PATCH requests correctly", %{client: client} do
       response_body = %{"id" => "123", "name" => "Updated User"}
-      response = %Req.Response{status: 200, body: response_body, headers: %{}}
-
-      adapter = fn request ->
-        {request, response}
-      end
-
       body = %{name: "Updated User"}
-
-      request_opts = [
-        method: :patch,
-        url: "/people/123",
-        headers: [{"Accept", "application/json"}],
-        body: body,
-        adapter: adapter
-      ]
+      {response, request_opts} = setup_test(:patch, "/people/123", response_body, 200, body: body)
 
       result = Humaans.HTTPClient.Req.request(client, request_opts)
 
@@ -102,18 +56,7 @@ defmodule Humaans.HTTPClient.ReqTest do
 
     test "configures DELETE requests correctly", %{client: client} do
       response_body = %{"id" => "123", "deleted" => true}
-      response = %Req.Response{status: 200, body: response_body, headers: %{}}
-
-      adapter = fn request ->
-        {request, response}
-      end
-
-      request_opts = [
-        method: :delete,
-        url: "/people/123",
-        headers: [{"Accept", "application/json"}],
-        adapter: adapter
-      ]
+      {response, request_opts} = setup_test(:delete, "/people/123", response_body)
 
       result = Humaans.HTTPClient.Req.request(client, request_opts)
 
@@ -138,5 +81,23 @@ defmodule Humaans.HTTPClient.ReqTest do
 
       assert result == {:error, error_response}
     end
+  end
+
+  defp setup_test(method, url, response_body, status \\ 200, extra_opts \\ []) do
+    response = %Req.Response{status: status, body: response_body, headers: %{}}
+
+    adapter = fn request ->
+      {request, response}
+    end
+
+    request_opts =
+      [
+        method: method,
+        url: url,
+        headers: [{"Accept", "application/json"}],
+        adapter: adapter
+      ] ++ extra_opts
+
+    {response, request_opts}
   end
 end
