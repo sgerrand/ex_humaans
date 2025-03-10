@@ -1,21 +1,24 @@
 defmodule Humaans.TimesheetEntriesTest do
   use ExUnit.Case, async: true
-  import Mox
+
+  import Mox, only: [expect: 3, verify_on_exit!: 1]
 
   doctest Humaans.TimesheetEntries
 
   setup :verify_on_exit!
 
   setup_all do
-    client = %{req: Req.new()}
+    client = Humaans.new(access_token: "some access token", http_client: Humaans.MockHTTPClient)
     [client: client]
   end
 
   describe "list/1" do
     test "returns a list of timesheet submissions", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/timesheet-entries"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+        assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/timesheet-entries"
 
         {:ok,
          %{
@@ -65,7 +68,7 @@ defmodule Humaans.TimesheetEntriesTest do
     end
 
     test "returns error when resource is not found", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
         assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Timesheet Entry not found"}}}
       end)
@@ -75,7 +78,7 @@ defmodule Humaans.TimesheetEntriesTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
         assert client_param == client
         {:error, "something unexpected happened"}
       end)
@@ -89,9 +92,12 @@ defmodule Humaans.TimesheetEntriesTest do
     test "creates a new timesheet submission", %{client: client} do
       params = %{personId: "IL3vneCYhIx0xrR6um2sy2nW", date: "2020-04-01", startTime: "09:00:00"}
 
-      expect(Humaans.MockClient, :post, fn client_param, path, ^params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/timesheet-entries"
+        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :post
+        assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/timesheet-entries"
 
         {:ok,
          %{
@@ -116,9 +122,13 @@ defmodule Humaans.TimesheetEntriesTest do
 
   describe "retrieve/1" do
     test "retrieves a timesheet submission", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, path ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/timesheet-entries/0vUGk85FkSDHXfeOTnXqkk4d"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/timesheet-entries/0vUGk85FkSDHXfeOTnXqkk4d"
 
         {:ok,
          %{
@@ -165,9 +175,14 @@ defmodule Humaans.TimesheetEntriesTest do
     test "updates a timesheet submission", %{client: client} do
       params = %{status: "pending"}
 
-      expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/timesheet-entries/0vUGk85FkSDHXfeOTnXqkk4d"
+        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :patch
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/timesheet-entries/0vUGk85FkSDHXfeOTnXqkk4d"
 
         {:ok,
          %{
@@ -209,15 +224,19 @@ defmodule Humaans.TimesheetEntriesTest do
 
   describe "delete/1" do
     test "deletes a timesheet submission", %{client: client} do
-      expect(Humaans.MockClient, :delete, fn client_param, path ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/timesheet-entries/Ivl8mvdLO8ux7T1h1DjGtClc"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :delete
 
-        {:ok, %{status: 200, body: %{"id" => "Ivl8mvdLO8ux7T1h1DjGtClc", "deleted" => true}}}
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/timesheet-entries/0vUGk85FkSDHXfeOTnXqkk4d"
+
+        {:ok, %{status: 200, body: %{"id" => "0vUGk85FkSDHXfeOTnXqkk4d", "deleted" => true}}}
       end)
 
-      assert {:ok, response} = Humaans.TimesheetEntries.delete(client, "Ivl8mvdLO8ux7T1h1DjGtClc")
-      assert response.id == "Ivl8mvdLO8ux7T1h1DjGtClc"
+      assert {:ok, response} = Humaans.TimesheetEntries.delete(client, "0vUGk85FkSDHXfeOTnXqkk4d")
+      assert response.id == "0vUGk85FkSDHXfeOTnXqkk4d"
       assert response.deleted == true
     end
   end
