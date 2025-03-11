@@ -12,7 +12,7 @@ The package can be installed by adding `humaans` to your list of dependencies in
 ```elixir
 def deps do
   [
-    {:humaans, "~> 0.3"}
+    {:humaans, "~> 0.4"}
   ]
 end
 ```
