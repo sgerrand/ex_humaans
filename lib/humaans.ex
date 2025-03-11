@@ -2,11 +2,11 @@ defmodule Humaans do
   @moduledoc """
   A HTTP client for the Humaans API.
 
-  This library provides a complete interface to the Humaans API, allowing you to
-  manage people, companies, bank accounts, compensations, timesheet entries, and more.
-  It follows a modular design where the main Humaans module serves as the entry point
-  for creating clients, while specific resource modules handle operations for each
-  resource type.
+  This library provides an interface to the Humaans API, allowing you to manage
+  people, companies, bank accounts, compensations, timesheet entries, and more.
+  It follows a modular design where the main `Humaans` module serves as the
+  entry point for creating clients, while specific resource modules handle
+  operations for each resource type.
 
   [Humaans API Documentation](https://docs.humaans.io/api/)
 
@@ -14,8 +14,8 @@ defmodule Humaans do
 
   The library follows a layered architecture:
   - `Humaans` - Main module that creates configured client instances
-  - Resource modules (People, Companies, etc.) - Handle operations specific to each resource type
-  - HTTP Client - Abstracts the HTTP communication details (configurable)
+  - Resource modules (`People`, `Companies`, etc.) - Handle operations specific to each resource type
+  - HTTP client - Abstracts the HTTP communication details in a configurable manner
 
   ## Configuration Options
 
