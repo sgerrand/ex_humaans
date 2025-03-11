@@ -6,6 +6,13 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## 0.4.0 - 2025-03-11
+
+### Changed
+- Configurable HTTP client module
+- Updated and improved package and module documentation
+
+
 ## 0.3.1 - 2025-03-04
 
 ### Changed
