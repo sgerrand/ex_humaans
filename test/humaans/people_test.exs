@@ -1,21 +1,24 @@
 defmodule Humaans.PeopleTest do
   use ExUnit.Case, async: true
-  import Mox
+
+  import Mox, only: [expect: 3, verify_on_exit!: 1]
 
   doctest Humaans.People
 
   setup :verify_on_exit!
 
   setup_all do
-    client = %{req: Req.new()}
+    client = Humaans.new(access_token: "some access token", http_client: Humaans.MockHTTPClient)
     [client: client]
   end
 
   describe "list/1" do
     test "returns a list of people", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/people"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+        assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/people"
 
         {:ok,
          %{
@@ -145,68 +148,68 @@ defmodule Humaans.PeopleTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.People.list(client)
-      assert length(response) == 1
-      assert hd(response).id == "VMB1yzL5uL8VvNNCJc9rykJz"
-      assert hd(response).company_id == "T7uqPFK7am4lFTZm39AmNuay"
-      assert hd(response).first_name == "Kelsey"
-      assert hd(response).middle_name == nil
-      assert hd(response).last_name == "Wicks"
-      assert hd(response).preferred_name == nil
-      assert hd(response).email == "kelsey@acme.com"
-      assert hd(response).remote_city == nil
-      assert hd(response).remote_region_code == nil
-      assert hd(response).remote_country_code == nil
-      assert hd(response).remote_timezone == nil
-      assert hd(response).personal_email == "kwicks@example.com"
-      assert hd(response).phone_number == "+4479460001"
-      assert hd(response).formatted_phone_number == "+44 7946 0001"
-      assert hd(response).personal_phone_number == nil
-      assert hd(response).formatted_personal_phone_number == nil
-      assert hd(response).gender == "Female"
-      assert hd(response).birthday == "1989-07-28"
-      assert hd(response).profile_photo_id == "Hgi5auXaKsjn2MjuYo1PDk3W"
+      assert {:ok, [response] = responses} = Humaans.People.list(client)
+      assert length(responses) == 1
+      assert response.id == "VMB1yzL5uL8VvNNCJc9rykJz"
+      assert response.company_id == "T7uqPFK7am4lFTZm39AmNuay"
+      assert response.first_name == "Kelsey"
+      assert response.middle_name == nil
+      assert response.last_name == "Wicks"
+      assert response.preferred_name == nil
+      assert response.email == "kelsey@acme.com"
+      assert response.remote_city == nil
+      assert response.remote_region_code == nil
+      assert response.remote_country_code == nil
+      assert response.remote_timezone == nil
+      assert response.personal_email == "kwicks@example.com"
+      assert response.phone_number == "+4479460001"
+      assert response.formatted_phone_number == "+44 7946 0001"
+      assert response.personal_phone_number == nil
+      assert response.formatted_personal_phone_number == nil
+      assert response.gender == "Female"
+      assert response.birthday == "1989-07-28"
+      assert response.profile_photo_id == "Hgi5auXaKsjn2MjuYo1PDk3W"
 
-      assert hd(response).profile_photo
+      assert response.profile_photo
              |> Map.keys()
              |> length == 2
 
-      assert hd(response).profile_photo["id"] == "Hgi5auXaKsjn2MjuYo1PDk3W"
+      assert response.profile_photo["id"] == "Hgi5auXaKsjn2MjuYo1PDk3W"
 
-      assert hd(response).profile_photo["variants"]
+      assert response.profile_photo["variants"]
              |> Map.keys()
              |> length == 8
 
-      assert hd(response).profile_photo["variants"]["104"] ==
+      assert response.profile_photo["variants"]["104"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@104.jpg"
 
-      assert hd(response).profile_photo["variants"]["136"] ==
+      assert response.profile_photo["variants"]["136"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@136.jpg"
 
-      assert hd(response).profile_photo["variants"]["156"] ==
+      assert response.profile_photo["variants"]["156"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@156.jpg"
 
-      assert hd(response).profile_photo["variants"]["204"] ==
+      assert response.profile_photo["variants"]["204"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@204.jpg"
 
-      assert hd(response).profile_photo["variants"]["320"] ==
+      assert response.profile_photo["variants"]["320"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@320.jpg"
 
-      assert hd(response).profile_photo["variants"]["480"] ==
+      assert response.profile_photo["variants"]["480"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@480.jpg"
 
-      assert hd(response).profile_photo["variants"]["64"] ==
+      assert response.profile_photo["variants"]["64"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@64.jpg"
 
-      assert hd(response).profile_photo["variants"]["96"] ==
+      assert response.profile_photo["variants"]["96"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@96.jpg"
 
-      assert hd(response).created_at == "2020-01-28T08:44:42.000Z"
-      assert hd(response).updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
 
     test "returns error when resource is not found", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
         assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Person not found"}}}
       end)
@@ -216,7 +219,7 @@ defmodule Humaans.PeopleTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
         assert client_param == client
         {:error, "something unexpected happened"}
       end)
@@ -241,9 +244,12 @@ defmodule Humaans.PeopleTest do
         "employmentStartDate" => "2018-03-10"
       }
 
-      expect(Humaans.MockClient, :post, fn client_param, path, ^params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/people"
+        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :post
+        assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/people"
 
         {:ok,
          %{
@@ -285,9 +291,13 @@ defmodule Humaans.PeopleTest do
 
   describe "retrieve/1" do
     test "retrieves a person", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, path ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/people/Ivl8mvdLO8ux7T1h1DjGtClc"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/people/Ivl8mvdLO8ux7T1h1DjGtClc"
 
         {:ok,
          %{
@@ -474,9 +484,14 @@ defmodule Humaans.PeopleTest do
     test "updates a person", %{client: client} do
       params = %{"middleName" => "some middle name"}
 
-      expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/people/VMB1yzL5uL8VvNNCJc9rykJz"
+        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :patch
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/people/VMB1yzL5uL8VvNNCJc9rykJz"
 
         {:ok,
          %{
@@ -614,9 +629,13 @@ defmodule Humaans.PeopleTest do
 
   describe "delete/1" do
     test "deletes a person", %{client: client} do
-      expect(Humaans.MockClient, :delete, fn client_param, path ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/people/Ivl8mvdLO8ux7T1h1DjGtClc"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :delete
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/people/Ivl8mvdLO8ux7T1h1DjGtClc"
 
         {:ok, %{status: 200, body: %{"id" => "Ivl8mvdLO8ux7T1h1DjGtClc", "deleted" => true}}}
       end)

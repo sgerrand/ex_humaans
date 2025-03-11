@@ -1,21 +1,24 @@
 defmodule Humaans.BankAccountsTest do
   use ExUnit.Case, async: true
-  import Mox
+
+  import Mox, only: [expect: 3, verify_on_exit!: 1]
 
   doctest Humaans.BankAccounts
 
   setup :verify_on_exit!
 
   setup_all do
-    client = %{req: Req.new()}
+    client = Humaans.new(access_token: "some access token", http_client: Humaans.MockHTTPClient)
     [client: client]
   end
 
   describe "list/1" do
     test "returns a list of bank accounts", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/bank-accounts"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+        assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/bank-accounts"
 
         {:ok,
          %{
@@ -42,22 +45,22 @@ defmodule Humaans.BankAccountsTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.BankAccounts.list(client)
-      assert length(response) == 1
-      assert hd(response).id == "Ivl8mvdLO8ux7T1h1DjGtClc"
-      assert hd(response).person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert hd(response).bank_name == "Mondo"
-      assert hd(response).name_on_account == "Kelsey Wicks"
-      assert hd(response).account_number == "12345678"
-      assert hd(response).swift_code == nil
-      assert hd(response).sort_code == "00-00-00"
-      assert hd(response).routing_number == nil
-      assert hd(response).created_at == "2020-01-28T08:44:42.000Z"
-      assert hd(response).updated_at == "2020-01-29T14:52:21.000Z"
+      assert {:ok, [response] = responses} = Humaans.BankAccounts.list(client)
+      assert length(responses) == 1
+      assert response.id == "Ivl8mvdLO8ux7T1h1DjGtClc"
+      assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
+      assert response.bank_name == "Mondo"
+      assert response.name_on_account == "Kelsey Wicks"
+      assert response.account_number == "12345678"
+      assert response.swift_code == nil
+      assert response.sort_code == "00-00-00"
+      assert response.routing_number == nil
+      assert response.created_at == "2020-01-28T08:44:42.000Z"
+      assert response.updated_at == "2020-01-29T14:52:21.000Z"
     end
 
     test "returns error when resource is not found", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
         assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Bank Account not found"}}}
       end)
@@ -67,7 +70,7 @@ defmodule Humaans.BankAccountsTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, _path, _params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
         assert client_param == client
         {:error, "something unexpected happened"}
       end)
@@ -85,9 +88,12 @@ defmodule Humaans.BankAccountsTest do
         "accountNumber" => "12345678"
       }
 
-      expect(Humaans.MockClient, :post, fn client_param, path, ^params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/bank-accounts"
+        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :post
+        assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/bank-accounts"
 
         {:ok,
          %{
@@ -105,9 +111,13 @@ defmodule Humaans.BankAccountsTest do
 
   describe "retrieve/1" do
     test "retrieves a bank account", %{client: client} do
-      expect(Humaans.MockClient, :get, fn client_param, path ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
 
         {:ok,
          %{
@@ -145,9 +155,14 @@ defmodule Humaans.BankAccountsTest do
     test "updates a bank account", %{client: client} do
       params = %{"bankName" => "N1"}
 
-      expect(Humaans.MockClient, :patch, fn client_param, path, ^params ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
+        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :patch
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
 
         {:ok,
          %{
@@ -185,9 +200,13 @@ defmodule Humaans.BankAccountsTest do
 
   describe "delete/1" do
     test "deletes a bank account", %{client: client} do
-      expect(Humaans.MockClient, :delete, fn client_param, path ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert path == "/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :delete
+
+        assert Keyword.fetch!(opts, :url) ==
+                 "https://app.humaans.io/api/bank-accounts/Ivl8mvdLO8ux7T1h1DjGtClc"
 
         {:ok, %{status: 200, body: %{"id" => "Ivl8mvdLO8ux7T1h1DjGtClc", "deleted" => true}}}
       end)
