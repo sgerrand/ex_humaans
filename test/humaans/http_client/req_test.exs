@@ -1,11 +1,13 @@
 defmodule Humaans.HTTPClient.ReqTest do
   use ExUnit.Case, async: true
 
+  alias Humaans.HTTPClient.Req, as: HumaansReq
+
   setup do
     client = %Humaans{
       access_token: "test-token",
       base_url: "https://app.humaans.io/api",
-      http_client: Humaans.HTTPClient.Req
+      http_client: HumaansReq
     }
 
     [client: client]
@@ -18,7 +20,7 @@ defmodule Humaans.HTTPClient.ReqTest do
 
       request_opts = Keyword.put(request_opts, :base_url, client.base_url)
 
-      result = Humaans.HTTPClient.Req.request(client, request_opts)
+      result = HumaansReq.request(client, request_opts)
 
       assert result == {:ok, response}
     end
@@ -29,7 +31,7 @@ defmodule Humaans.HTTPClient.ReqTest do
       {response, request_opts} =
         setup_test(:get, "/people", response_body, 200, params: [limit: 10, offset: 0])
 
-      result = Humaans.HTTPClient.Req.request(client, request_opts)
+      result = HumaansReq.request(client, request_opts)
 
       assert result == {:ok, response}
     end
@@ -39,7 +41,7 @@ defmodule Humaans.HTTPClient.ReqTest do
       body = %{name: "Test User", email: "test@example.com"}
       {response, request_opts} = setup_test(:post, "/people", response_body, 201, body: body)
 
-      result = Humaans.HTTPClient.Req.request(client, request_opts)
+      result = HumaansReq.request(client, request_opts)
 
       assert result == {:ok, response}
     end
@@ -49,7 +51,7 @@ defmodule Humaans.HTTPClient.ReqTest do
       body = %{name: "Updated User"}
       {response, request_opts} = setup_test(:patch, "/people/123", response_body, 200, body: body)
 
-      result = Humaans.HTTPClient.Req.request(client, request_opts)
+      result = HumaansReq.request(client, request_opts)
 
       assert result == {:ok, response}
     end
@@ -58,7 +60,7 @@ defmodule Humaans.HTTPClient.ReqTest do
       response_body = %{"id" => "123", "deleted" => true}
       {response, request_opts} = setup_test(:delete, "/people/123", response_body)
 
-      result = Humaans.HTTPClient.Req.request(client, request_opts)
+      result = HumaansReq.request(client, request_opts)
 
       assert result == {:ok, response}
     end
@@ -77,7 +79,7 @@ defmodule Humaans.HTTPClient.ReqTest do
         adapter: adapter
       ]
 
-      result = Humaans.HTTPClient.Req.request(client, request_opts)
+      result = HumaansReq.request(client, request_opts)
 
       assert result == {:error, error_response}
     end
