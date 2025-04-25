@@ -49,6 +49,14 @@ defmodule Humaans.HTTPClient.Req do
   """
   @impl true
   def request(client, opts) do
+    opts =
+      Enum.reduce(opts, [], fn opt, acc ->
+        case opt do
+          {:body, body} -> [{:json, body} | acc]
+          {key, val} -> [{key, val} | acc]
+        end
+      end)
+
     Req.new(
       base_url: client.base_url,
       auth: {:bearer, client.access_token}
