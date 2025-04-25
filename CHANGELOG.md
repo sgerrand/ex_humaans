@@ -6,6 +6,12 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## 0.4.1 - 2025-04-25
+
+### Changes
+-Fixed incorrect encoding of request body for HTTP patch, post and put methods.
+
+
 ## 0.4.0 - 2025-03-11
 
 ### Changed
