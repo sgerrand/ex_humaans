@@ -49,10 +49,13 @@ defmodule Humaans.HTTPClient.Req do
   """
   @impl true
   def request(client, opts) do
+    method = Keyword.get(opts, :method)
+
     opts =
       Enum.reduce(opts, [], fn opt, acc ->
         case opt do
-          {:body, body} -> [{:json, body} | acc]
+          {:body, body} when method in [:patch, :post, :put] -> [{:json, body} | acc]
+          {:body, body} -> [{:body, body} | acc]
           {key, val} -> [{key, val} | acc]
         end
       end)
