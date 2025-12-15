@@ -50,7 +50,7 @@ jobs:
       run: mix docs --warnings-as-errors
 
   test:
-    name: Tests (Elixir ${{ matrix.elixir }} / OTP ${{ matrix.otp }})
+    name: ${{ matrix.name || format('Tests (Elixir {0} / OTP {1})', matrix.elixir, matrix.otp) }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -70,6 +70,7 @@ jobs:
           - elixir: '1.18'
             otp: '27'
             lint: true
+            name: 'Linting'
 
     env:
       MIX_ENV: test
