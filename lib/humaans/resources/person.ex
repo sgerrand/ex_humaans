@@ -3,6 +3,7 @@ defmodule Humaans.Resources.Person do
   Representation of a Person resource.
   """
 
+  # credo:disable-for-next-line Credo.Check.Warning.StructFieldAmount
   defstruct [
     :id,
     :company_id,
