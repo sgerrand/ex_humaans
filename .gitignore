@@ -27,3 +27,7 @@ humaans-*.tar
 
 # Ignore Expublish artefacts
 RELEASE.md
+
+# Where coding agents store their local config.
+/.claude/
+/.codex/
