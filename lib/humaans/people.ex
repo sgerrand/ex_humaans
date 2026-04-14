@@ -6,9 +6,9 @@ defmodule Humaans.People do
 
   alias Humaans.{Client, Resources.Person, ResponseHandler}
 
-  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
-  @type list_response :: {:ok, [%Person{}]} | {:error, any()}
-  @type response :: {:ok, %Person{}} | {:error, any()}
+  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
+  @type list_response :: {:ok, [%Person{}]} | {:error, Humaans.Error.t()}
+  @type response :: {:ok, %Person{}} | {:error, Humaans.Error.t()}
 
   @doc """
   Lists all people resources.

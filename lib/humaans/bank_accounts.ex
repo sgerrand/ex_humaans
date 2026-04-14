@@ -6,9 +6,9 @@ defmodule Humaans.BankAccounts do
 
   alias Humaans.{Client, Resources.BankAccount, ResponseHandler}
 
-  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
-  @type list_response :: {:ok, [%BankAccount{}]} | {:error, any()}
-  @type response :: {:ok, %BankAccount{}} | {:error, any()}
+  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
+  @type list_response :: {:ok, [%BankAccount{}]} | {:error, Humaans.Error.t()}
+  @type response :: {:ok, %BankAccount{}} | {:error, Humaans.Error.t()}
 
   @doc """
   Lists all bank account resources.

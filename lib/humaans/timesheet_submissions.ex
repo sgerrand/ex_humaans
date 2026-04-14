@@ -8,9 +8,9 @@ defmodule Humaans.TimesheetSubmissions do
 
   alias Humaans.{Client, Resources.TimesheetSubmission, ResponseHandler}
 
-  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
-  @type list_response :: {:ok, [%TimesheetSubmission{}]} | {:error, any()}
-  @type response :: {:ok, %TimesheetSubmission{}} | {:error, any()}
+  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
+  @type list_response :: {:ok, [%TimesheetSubmission{}]} | {:error, Humaans.Error.t()}
+  @type response :: {:ok, %TimesheetSubmission{}} | {:error, Humaans.Error.t()}
 
   @doc """
   Lists all timesheet submission resources.

@@ -26,14 +26,19 @@ defmodule Humaans.ResponseHandlerTest do
     test "correctly handles error response" do
       response = {:ok, %{status: 422, body: %{"error" => "validation_failed"}}}
 
-      assert {:error, {422, %{"error" => "validation_failed"}}} =
+      assert {:error,
+              %Humaans.Error{
+                type: :api_error,
+                status: 422,
+                body: %{"error" => "validation_failed"}
+              }} =
                ResponseHandler.handle_list_response(response, MockResource)
     end
 
     test "passes through connection errors" do
       response = {:error, %{reason: :timeout}}
 
-      assert {:error, %{reason: :timeout}} =
+      assert {:error, %Humaans.Error{type: :network_error, reason: %{reason: :timeout}}} =
                ResponseHandler.handle_list_response(response, MockResource)
     end
   end
@@ -49,14 +54,15 @@ defmodule Humaans.ResponseHandlerTest do
     test "correctly handles error response" do
       response = {:ok, %{status: 404, body: %{"error" => "not_found"}}}
 
-      assert {:error, {404, %{"error" => "not_found"}}} =
+      assert {:error,
+              %Humaans.Error{type: :api_error, status: 404, body: %{"error" => "not_found"}}} =
                ResponseHandler.handle_resource_response(response, MockResource)
     end
 
     test "passes through connection errors" do
       response = {:error, %{reason: :nxdomain}}
 
-      assert {:error, %{reason: :nxdomain}} =
+      assert {:error, %Humaans.Error{type: :network_error, reason: %{reason: :nxdomain}}} =
                ResponseHandler.handle_resource_response(response, MockResource)
     end
   end
@@ -72,14 +78,15 @@ defmodule Humaans.ResponseHandlerTest do
     test "correctly handles error response" do
       response = {:ok, %{status: 403, body: %{"error" => "forbidden"}}}
 
-      assert {:error, {403, %{"error" => "forbidden"}}} =
+      assert {:error,
+              %Humaans.Error{type: :api_error, status: 403, body: %{"error" => "forbidden"}}} =
                ResponseHandler.handle_delete_response(response)
     end
 
     test "passes through connection errors" do
       response = {:error, %{reason: :econnrefused}}
 
-      assert {:error, %{reason: :econnrefused}} =
+      assert {:error, %Humaans.Error{type: :network_error, reason: %{reason: :econnrefused}}} =
                ResponseHandler.handle_delete_response(response)
     end
   end
@@ -102,14 +109,15 @@ defmodule Humaans.ResponseHandlerTest do
     test "correctly handles error response" do
       response = {:ok, %{status: 500, body: %{"error" => "server_error"}}}
 
-      assert {:error, {500, %{"error" => "server_error"}}} =
+      assert {:error,
+              %Humaans.Error{type: :api_error, status: 500, body: %{"error" => "server_error"}}} =
                ResponseHandler.handle_response(response, fn _ -> "processed" end)
     end
 
     test "passes through connection errors" do
       response = {:error, "connection_error"}
 
-      assert {:error, "connection_error"} =
+      assert {:error, %Humaans.Error{type: :network_error, reason: "connection_error"}} =
                ResponseHandler.handle_response(response, fn _ -> "processed" end)
     end
   end

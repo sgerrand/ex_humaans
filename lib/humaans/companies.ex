@@ -7,8 +7,8 @@ defmodule Humaans.Companies do
 
   alias Humaans.{Client, Resources.Company, ResponseHandler}
 
-  @type list_response :: {:ok, [%Company{}]} | {:error, any()}
-  @type response :: {:ok, %Company{}} | {:error, any()}
+  @type list_response :: {:ok, [%Company{}]} | {:error, Humaans.Error.t()}
+  @type response :: {:ok, %Company{}} | {:error, Humaans.Error.t()}
 
   @doc """
   Lists all company resources.

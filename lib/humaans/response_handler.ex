@@ -19,7 +19,7 @@ defmodule Humaans.ResponseHandler do
 
   """
   @spec handle_list_response({:ok, map()} | {:error, any()}, module()) ::
-          {:ok, [struct()]} | {:error, any()}
+          {:ok, [struct()]} | {:error, Humaans.Error.t()}
   def handle_list_response(response, resource_module) do
     handle_response(response, fn data ->
       {_r, resources} =
@@ -47,7 +47,7 @@ defmodule Humaans.ResponseHandler do
 
   """
   @spec handle_resource_response({:ok, map()} | {:error, any()}, module()) ::
-          {:ok, struct()} | {:error, any()}
+          {:ok, struct()} | {:error, Humaans.Error.t()}
   def handle_resource_response(response, resource_module) do
     handle_response(response, fn body ->
       resource_module.new(body)
@@ -68,7 +68,7 @@ defmodule Humaans.ResponseHandler do
 
   """
   @spec handle_delete_response({:ok, map()} | {:error, any()}) ::
-          {:ok, %{deleted: boolean(), id: String.t()}} | {:error, any()}
+          {:ok, %{deleted: boolean(), id: String.t()}} | {:error, Humaans.Error.t()}
   def handle_delete_response(response) do
     case response do
       {:ok, %{status: status, body: %{"deleted" => deleted, "id" => id}}}
@@ -90,7 +90,7 @@ defmodule Humaans.ResponseHandler do
 
   """
   @spec handle_response({:ok, map()} | {:error, any()}, (any() -> any())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok, any()} | {:error, Humaans.Error.t()}
   def handle_response(response, success_handler) do
     case response do
       {:ok, %{status: status, body: %{"data" => data}}} when status in 200..299 ->
@@ -100,10 +100,10 @@ defmodule Humaans.ResponseHandler do
         {:ok, success_handler.(body)}
 
       {:ok, %{status: status, body: body}} ->
-        {:error, {status, body}}
+        {:error, %Humaans.Error{type: :api_error, status: status, body: body}}
 
-      {:error, _} = error ->
-        error
+      {:error, reason} ->
+        {:error, %Humaans.Error{type: :network_error, reason: reason}}
     end
   end
 end

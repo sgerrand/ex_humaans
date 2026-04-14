@@ -65,7 +65,7 @@ defmodule Humaans.CompaniesTest do
         {:ok, %{status: 404, body: %{"error" => "Company not found"}}}
       end)
 
-      assert {:error, {404, %{"error" => "Company not found"}}} ==
+      assert {:error, %Humaans.Error{type: :api_error, status: 404}} =
                Humaans.Companies.list(client)
     end
 
@@ -75,7 +75,8 @@ defmodule Humaans.CompaniesTest do
         {:error, "something unexpected happened"}
       end)
 
-      assert {:error, "something unexpected happened"} ==
+      assert {:error,
+              %Humaans.Error{type: :network_error, reason: "something unexpected happened"}} =
                Humaans.Companies.list(client)
     end
   end
