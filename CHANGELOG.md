@@ -6,6 +6,13 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## [0.4.2](https://github.com/sgerrand/ex_humaans/compare/v0.4.1...v0.4.2) (2026-04-14)
+
+
+### Bug Fixes
+
+* **ci:** Disable credo check on API response struct ([#56](https://github.com/sgerrand/ex_humaans/issues/56)) ([85c1c76](https://github.com/sgerrand/ex_humaans/commit/85c1c76bc9ee69313c65668761fb200e0d49203c))
+
 ## 0.4.1 - 2025-04-25
 
 ### Changes
