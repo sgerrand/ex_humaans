@@ -10,12 +10,6 @@ defmodule Humaans.People do
   @type list_response :: {:ok, [%Person{}]} | {:error, any()}
   @type response :: {:ok, %Person{}} | {:error, any()}
 
-  @callback list(client :: map(), map()) :: {:ok, map()} | {:error, any()}
-  @callback create(client :: map(), map()) :: {:ok, map()} | {:error, any()}
-  @callback retrieve(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
-  @callback update(client :: map(), String.t(), map()) :: {:ok, map()} | {:error, any()}
-  @callback delete(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
-
   @doc """
   Lists all people resources.
 

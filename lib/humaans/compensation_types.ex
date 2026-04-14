@@ -11,12 +11,6 @@ defmodule Humaans.CompensationTypes do
   @type list_response :: {:ok, [%CompensationType{}]} | {:error, any()}
   @type response :: {:ok, %CompensationType{}} | {:error, any()}
 
-  @callback list(client :: map(), map()) :: {:ok, map()} | {:error, any()}
-  @callback create(client :: map(), map()) :: {:ok, map()} | {:error, any()}
-  @callback retrieve(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
-  @callback update(client :: map(), String.t(), map()) :: {:ok, map()} | {:error, any()}
-  @callback delete(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
-
   @doc """
   Lists all compensation type resources.
 

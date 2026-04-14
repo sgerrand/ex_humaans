@@ -11,12 +11,6 @@ defmodule Humaans.TimesheetEntries do
   @type list_response :: {:ok, [%TimesheetEntry{}]} | {:error, any()}
   @type response :: {:ok, %TimesheetEntry{}} | {:error, any()}
 
-  @callback list(client :: map(), map()) :: {:ok, map()} | {:error, any()}
-  @callback create(client :: map(), map()) :: {:ok, map()} | {:error, any()}
-  @callback retrieve(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
-  @callback update(client :: map(), String.t(), map()) :: {:ok, map()} | {:error, any()}
-  @callback delete(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
-
   @doc """
   Lists all timesheet entry resources.
 

@@ -10,10 +10,6 @@ defmodule Humaans.Companies do
   @type list_response :: {:ok, [%Company{}]} | {:error, any()}
   @type response :: {:ok, %Company{}} | {:error, any()}
 
-  @callback list(client :: map(), map()) :: {:ok, map()} | {:error, any()}
-  @callback get(client :: map(), String.t()) :: {:ok, map()} | {:error, any()}
-  @callback update(client :: map(), String.t(), map()) :: {:ok, map()} | {:error, any()}
-
   @doc """
   Lists all company resources.
 
