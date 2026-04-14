@@ -60,6 +60,32 @@ client = Humaans.new(access_token: "YOUR_ACCESS_TOKEN")
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
 
+## Development
+
+### Requirements
+
+- Elixir ~> 1.15
+- [Homebrew](https://brew.sh) (for installing development tools)
+
+### Setup
+
+Run the setup script to install development tools and git hooks:
+
+```shell
+bin/setup
+```
+
+This installs `actionlint`, `check-jsonschema`, `lefthook`, and `markdownlint-cli2` via Homebrew, then configures the pre-commit hooks.
+
+### Commands
+
+| Command | Description |
+| --- | --- |
+| `mix setup` | Install dependencies |
+| `mix test` | Run the test suite |
+| `mix credo` | Run the linter |
+| `mix format` | Format source files |
+
 ## License
 
 Humaans is [released under the MIT license](LICENSE).
