@@ -60,6 +60,19 @@ defmodule Humaans do
   This library emits [`:telemetry`](https://hexdocs.pm/telemetry) events for all
   API requests. See `Humaans.Telemetry` for the full list of events, measurements,
   and metadata.
+
+  ## Pagination
+
+  Use `Humaans.Pagination` to iterate through large result sets without loading
+  everything into memory:
+
+      # Stream all people 50 at a time
+      client
+      |> Humaans.Pagination.stream(&Humaans.People.list/2, page_size: 50)
+      |> Enum.each(fn person -> IO.puts(person.first_name) end)
+
+      # Fetch a specific page
+      {:ok, result} = Humaans.Pagination.page(client, &Humaans.People.list/2, 2, page_size: 25)
   """
 
   @type t :: %__MODULE__{
@@ -146,4 +159,12 @@ defmodule Humaans do
   Returns the module that contains functions for working with timesheet submission resources.
   """
   def timesheet_submissions, do: Humaans.TimesheetSubmissions
+
+  @doc """
+  Access pagination helpers.
+
+  Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
+  page and `stream/3` for lazily iterating all results.
+  """
+  def pagination, do: Humaans.Pagination
 end
