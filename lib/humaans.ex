@@ -54,6 +54,12 @@ defmodule Humaans do
         "email" => "jane.doe@example.com"
       }
       {:ok, new_person} = Humaans.People.create(client, person_params)
+
+  ## Telemetry
+
+  This library emits [`:telemetry`](https://hexdocs.pm/telemetry) events for all
+  API requests. See `Humaans.Telemetry` for the full list of events, measurements,
+  and metadata.
   """
 
   @type t :: %__MODULE__{

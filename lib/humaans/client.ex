@@ -157,6 +157,18 @@ defmodule Humaans.Client do
     url = build_url(client, path)
     opts = Keyword.merge([headers: headers, method: method, url: url], opts)
 
-    client.http_client.request(client, opts)
+    metadata = %{method: method, path: path, url: url}
+
+    :telemetry.span([:humaans, :request], metadata, fn ->
+      result = client.http_client.request(client, opts)
+
+      stop_metadata =
+        case result do
+          {:ok, %{status: status}} -> Map.put(metadata, :status, status)
+          {:error, _} -> Map.put(metadata, :error, true)
+        end
+
+      {result, stop_metadata}
+    end)
   end
 end
