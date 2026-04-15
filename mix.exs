@@ -13,9 +13,6 @@ defmodule Humaans.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [
-        "coveralls.lcov": :test
-      ],
 
       # Hex
       package: package(),
@@ -32,6 +29,14 @@ defmodule Humaans.MixProject do
   def application do
     [
       extra_applications: [:logger]
+    ]
+  end
+
+  def cli do
+    [
+      preferred_envs: [
+        "coveralls.lcov": :test
+      ]
     ]
   end
 
