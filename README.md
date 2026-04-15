@@ -9,13 +9,15 @@ An Elixir client for the [Humaans API][humaans-api-docs].
 The package can be installed by adding `humaans` to your list of dependencies in
 `mix.exs`:
 
+<!-- x-release-please-start-version -->
 ```elixir
 def deps do
   [
-    {:humaans, "~> 0.4"}
+    {:humaans, "~> 0.5.0"}
   ]
 end
 ```
+<!-- x-release-please-end -->
 
 ## Usage
 
