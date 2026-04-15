@@ -231,6 +231,24 @@ defmodule Humaans.PeopleTest do
   end
 
   describe "create/1" do
+    test "returns api_error on validation failure", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:ok, %{status: 422, body: %{"error" => "validation_failed", "fields" => ["email"]}}}
+      end)
+
+      assert {:error, %Humaans.Error{type: :api_error, status: 422}} =
+               Humaans.People.create(client, %{"firstName" => "Jane"})
+    end
+
+    test "returns network_error on connection failure", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:error, :timeout}
+      end)
+
+      assert {:error, %Humaans.Error{type: :network_error, reason: :timeout}} =
+               Humaans.People.create(client, %{"firstName" => "Jane"})
+    end
+
     test "creates a new person", %{client: client} do
       params = %{
         "firstName" => "Kelsey",
@@ -291,6 +309,33 @@ defmodule Humaans.PeopleTest do
   end
 
   describe "retrieve/1" do
+    test "returns api_error when person is not found", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:ok, %{status: 404, body: %{"error" => "Person not found"}}}
+      end)
+
+      assert {:error, %Humaans.Error{type: :api_error, status: 404}} =
+               Humaans.People.retrieve(client, "nonexistent-id")
+    end
+
+    test "returns api_error when unauthorized", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:ok, %{status: 401, body: %{"error" => "unauthorized"}}}
+      end)
+
+      assert {:error, %Humaans.Error{type: :api_error, status: 401}} =
+               Humaans.People.retrieve(client, "some-id")
+    end
+
+    test "returns network_error on connection failure", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:error, :econnrefused}
+      end)
+
+      assert {:error, %Humaans.Error{type: :network_error, reason: :econnrefused}} =
+               Humaans.People.retrieve(client, "some-id")
+    end
+
     test "retrieves a person", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
@@ -482,6 +527,24 @@ defmodule Humaans.PeopleTest do
   end
 
   describe "update/2" do
+    test "returns api_error when person is not found", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:ok, %{status: 404, body: %{"error" => "Person not found"}}}
+      end)
+
+      assert {:error, %Humaans.Error{type: :api_error, status: 404}} =
+               Humaans.People.update(client, "nonexistent-id", %{"firstName" => "Jane"})
+    end
+
+    test "returns network_error on connection failure", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:error, :timeout}
+      end)
+
+      assert {:error, %Humaans.Error{type: :network_error, reason: :timeout}} =
+               Humaans.People.update(client, "some-id", %{"firstName" => "Jane"})
+    end
+
     test "updates a person", %{client: client} do
       params = %{"middleName" => "some middle name"}
 
@@ -629,6 +692,33 @@ defmodule Humaans.PeopleTest do
   end
 
   describe "delete/1" do
+    test "returns api_error when person is not found", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:ok, %{status: 404, body: %{"error" => "Person not found"}}}
+      end)
+
+      assert {:error, %Humaans.Error{type: :api_error, status: 404}} =
+               Humaans.People.delete(client, "nonexistent-id")
+    end
+
+    test "returns api_error when forbidden", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:ok, %{status: 403, body: %{"error" => "forbidden"}}}
+      end)
+
+      assert {:error, %Humaans.Error{type: :api_error, status: 403}} =
+               Humaans.People.delete(client, "some-id")
+    end
+
+    test "returns network_error on connection failure", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn _client_param, _opts ->
+        {:error, :econnrefused}
+      end)
+
+      assert {:error, %Humaans.Error{type: :network_error, reason: :econnrefused}} =
+               Humaans.People.delete(client, "some-id")
+    end
+
     test "deletes a person", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
