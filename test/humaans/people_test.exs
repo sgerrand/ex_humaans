@@ -167,7 +167,7 @@ defmodule Humaans.PeopleTest do
       assert response.personal_phone_number == nil
       assert response.formatted_personal_phone_number == nil
       assert response.gender == "Female"
-      assert response.birthday == "1989-07-28"
+      assert response.birthday == ~D[1989-07-28]
       assert response.profile_photo_id == "Hgi5auXaKsjn2MjuYo1PDk3W"
 
       assert response.profile_photo
@@ -204,8 +204,8 @@ defmodule Humaans.PeopleTest do
       assert response.profile_photo["variants"]["96"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@96.jpg"
 
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do
@@ -285,8 +285,8 @@ defmodule Humaans.PeopleTest do
       assert response.birthday == nil
       assert response.profile_photo_id == nil
       assert response.profile_photo == nil
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -439,7 +439,7 @@ defmodule Humaans.PeopleTest do
       assert response.personal_phone_number == nil
       assert response.formatted_personal_phone_number == nil
       assert response.gender == "Female"
-      assert response.birthday == "1989-07-28"
+      assert response.birthday == ~D[1989-07-28]
       assert response.profile_photo_id == "Hgi5auXaKsjn2MjuYo1PDk3W"
 
       assert response.profile_photo
@@ -476,8 +476,8 @@ defmodule Humaans.PeopleTest do
       assert response.profile_photo["variants"]["96"] ==
                "https://storage.googleapis.com/humaans-public-prd/Hgi5auXaKsjn2MjuYo1PDk3W@96.jpg"
 
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -623,8 +623,8 @@ defmodule Humaans.PeopleTest do
       assert response.last_name == "Wicks"
       assert response.preferred_name == nil
       assert response.preferred_name == nil
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 

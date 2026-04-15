@@ -14,16 +14,62 @@ defmodule Humaans.Resources.TimesheetEntry do
     :updated_at
   ]
 
-  use ExConstructor
+  use ExConstructor, :build
+
+  def new(data) do
+    data
+    |> build()
+    |> parse_date(:date)
+    |> parse_datetime(:created_at)
+    |> parse_datetime(:updated_at)
+  end
 
   @type t :: %__MODULE__{
           id: binary,
           person_id: binary,
-          date: binary,
+          date: Date.t() | nil,
           start_time: binary,
           end_time: binary,
           duration: %{hours: integer, minutes: integer} | nil,
-          created_at: binary,
-          updated_at: binary
+          created_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
+
+  defp parse_date(struct, field) do
+    case Map.get(struct, field) do
+      nil ->
+        struct
+
+      "" ->
+        struct
+
+      value when is_binary(value) ->
+        case Date.from_iso8601(value) do
+          {:ok, date} -> Map.put(struct, field, date)
+          {:error, _} -> struct
+        end
+
+      _ ->
+        struct
+    end
+  end
+
+  defp parse_datetime(struct, field) do
+    case Map.get(struct, field) do
+      nil ->
+        struct
+
+      "" ->
+        struct
+
+      value when is_binary(value) ->
+        case DateTime.from_iso8601(value) do
+          {:ok, datetime, _offset} -> Map.put(struct, field, datetime)
+          {:error, _} -> struct
+        end
+
+      _ ->
+        struct
+    end
+  end
 end

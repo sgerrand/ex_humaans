@@ -55,8 +55,8 @@ defmodule Humaans.BankAccountsTest do
       assert response.swift_code == nil
       assert response.sort_code == "00-00-00"
       assert response.routing_number == nil
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do
@@ -147,8 +147,8 @@ defmodule Humaans.BankAccountsTest do
       assert response.swift_code == nil
       assert response.sort_code == "00-00-00"
       assert response.routing_number == nil
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -194,8 +194,8 @@ defmodule Humaans.BankAccountsTest do
       assert response.swift_code == nil
       assert response.sort_code == "00-00-00"
       assert response.routing_number == nil
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 

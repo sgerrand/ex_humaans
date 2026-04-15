@@ -19,7 +19,15 @@ defmodule Humaans.Resources.Company do
     :updated_at
   ]
 
-  use ExConstructor
+  use ExConstructor, :build
+
+  def new(data) do
+    data
+    |> build()
+    |> parse_date(:trial_end_date)
+    |> parse_datetime(:created_at)
+    |> parse_datetime(:updated_at)
+  end
 
   @type payment_status :: :requires_action | :past_due | :ok
   @type status :: :terms | :trialing | :expired | :active | :suspended
@@ -27,7 +35,7 @@ defmodule Humaans.Resources.Company do
           id: binary | nil,
           name: binary | nil,
           domains: [String.t()] | nil,
-          trial_end_date: binary | nil,
+          trial_end_date: Date.t() | nil,
           status: status(),
           payment_status: payment_status(),
           package: binary | nil,
@@ -35,7 +43,45 @@ defmodule Humaans.Resources.Company do
           autogenerate_employee_id: boolean,
           autogenerate_employee_id_for_new_hires: boolean,
           next_employee_id: pos_integer,
-          created_at: binary | nil,
-          updated_at: binary | nil
+          created_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
+
+  defp parse_date(struct, field) do
+    case Map.get(struct, field) do
+      nil ->
+        struct
+
+      "" ->
+        struct
+
+      value when is_binary(value) ->
+        case Date.from_iso8601(value) do
+          {:ok, date} -> Map.put(struct, field, date)
+          {:error, _} -> struct
+        end
+
+      _ ->
+        struct
+    end
+  end
+
+  defp parse_datetime(struct, field) do
+    case Map.get(struct, field) do
+      nil ->
+        struct
+
+      "" ->
+        struct
+
+      value when is_binary(value) ->
+        case DateTime.from_iso8601(value) do
+          {:ok, datetime, _offset} -> Map.put(struct, field, datetime)
+          {:error, _} -> struct
+        end
+
+      _ ->
+        struct
+    end
+  end
 end

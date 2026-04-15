@@ -50,13 +50,13 @@ defmodule Humaans.CompaniesTest do
       assert response.id == "uoWtfpDIMI2IZ8doGK7kkCwS"
       assert response.name == "Acme"
       assert response.domains == []
-      assert response.trial_end_date == "2020-01-30"
+      assert response.trial_end_date == ~D[2020-01-30]
       assert response.status == "active"
       assert response.payment_status == "ok"
       assert response.package == "growth"
       assert response.is_timesheet_enabled == true
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do
@@ -111,13 +111,13 @@ defmodule Humaans.CompaniesTest do
       assert response.id == "uoWtfpDIMI2IZ8doGK7kkCwS"
       assert response.name == "Acme"
       assert response.domains == []
-      assert response.trial_end_date == "2020-01-30"
+      assert response.trial_end_date == ~D[2020-01-30]
       assert response.status == "active"
       assert response.payment_status == "ok"
       assert response.package == "growth"
       assert response.is_timesheet_enabled == true
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -154,13 +154,13 @@ defmodule Humaans.CompaniesTest do
       assert response.id == "uoWtfpDIMI2IZ8doGK7kkCwS"
       assert response.name == "Meac"
       assert response.domains == []
-      assert response.trial_end_date == "2020-01-30"
+      assert response.trial_end_date == ~D[2020-01-30]
       assert response.status == "active"
       assert response.payment_status == "ok"
       assert response.package == "growth"
       assert response.is_timesheet_enabled == true
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 end

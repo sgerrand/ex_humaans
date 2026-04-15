@@ -16,7 +16,14 @@ defmodule Humaans.Resources.BankAccount do
     :updated_at
   ]
 
-  use ExConstructor
+  use ExConstructor, :build
+
+  def new(data) do
+    data
+    |> build()
+    |> parse_datetime(:created_at)
+    |> parse_datetime(:updated_at)
+  end
 
   @type t :: %__MODULE__{
           id: binary | nil,
@@ -27,7 +34,26 @@ defmodule Humaans.Resources.BankAccount do
           swift_code: binary | nil,
           sort_code: binary | nil,
           routing_number: binary | nil,
-          created_at: binary | nil,
-          updated_at: binary | nil
+          created_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
+
+  defp parse_datetime(struct, field) do
+    case Map.get(struct, field) do
+      nil ->
+        struct
+
+      "" ->
+        struct
+
+      value when is_binary(value) ->
+        case DateTime.from_iso8601(value) do
+          {:ok, datetime, _offset} -> Map.put(struct, field, datetime)
+          {:error, _} -> struct
+        end
+
+      _ ->
+        struct
+    end
+  end
 end
