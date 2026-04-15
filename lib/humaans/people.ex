@@ -6,7 +6,11 @@ defmodule Humaans.People do
 
   use Humaans.Resource,
     path: "/people",
-    struct: Humaans.Resources.Person
+    struct: Humaans.Resources.Person,
+    doc_params: [
+      create: ~s(%{firstName: "Jane", lastName: "Doe", email: "jane@example.com"}),
+      update: ~s(%{firstName: "Janet"})
+    ]
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
   @type list_response :: {:ok, [%Humaans.Resources.Person{}]} | {:error, Humaans.Error.t()}

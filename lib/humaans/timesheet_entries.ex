@@ -7,7 +7,11 @@ defmodule Humaans.TimesheetEntries do
 
   use Humaans.Resource,
     path: "/timesheet-entries",
-    struct: Humaans.Resources.TimesheetEntry
+    struct: Humaans.Resources.TimesheetEntry,
+    doc_params: [
+      create:
+        ~s(%{personId: "person_abc", date: "2024-06-01", startTime: "09:00", endTime: "17:00"})
+    ]
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
   @type list_response ::

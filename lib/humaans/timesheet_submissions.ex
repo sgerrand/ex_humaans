@@ -8,7 +8,10 @@ defmodule Humaans.TimesheetSubmissions do
 
   use Humaans.Resource,
     path: "/timesheet-submissions",
-    struct: Humaans.Resources.TimesheetSubmission
+    struct: Humaans.Resources.TimesheetSubmission,
+    doc_params: [
+      create: ~s(%{personId: "person_abc", startDate: "2024-06-01", endDate: "2024-06-30"})
+    ]
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
   @type list_response ::

@@ -7,7 +7,11 @@ defmodule Humaans.CompensationTypes do
 
   use Humaans.Resource,
     path: "/compensation-types",
-    struct: Humaans.Resources.CompensationType
+    struct: Humaans.Resources.CompensationType,
+    doc_params: [
+      create: ~s(%{name: "Annual Bonus", baseType: "variable"}),
+      update: ~s(%{name: "Performance Bonus"})
+    ]
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
   @type list_response ::

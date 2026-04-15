@@ -6,7 +6,12 @@ defmodule Humaans.BankAccounts do
 
   use Humaans.Resource,
     path: "/bank-accounts",
-    struct: Humaans.Resources.BankAccount
+    struct: Humaans.Resources.BankAccount,
+    doc_params: [
+      create:
+        ~s(%{personId: "person_abc", bankName: "Barclays", accountNumber: "12345678", sortCode: "20-00-00"}),
+      update: ~s(%{bankName: "HSBC"})
+    ]
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
   @type list_response :: {:ok, [%Humaans.Resources.BankAccount{}]} | {:error, Humaans.Error.t()}

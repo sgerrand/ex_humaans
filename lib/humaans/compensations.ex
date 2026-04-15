@@ -8,7 +8,12 @@ defmodule Humaans.Compensations do
 
   use Humaans.Resource,
     path: "/compensations",
-    struct: Humaans.Resources.Compensation
+    struct: Humaans.Resources.Compensation,
+    doc_params: [
+      create:
+        ~s(%{personId: "person_abc", compensationTypeId: "type_abc", amount: 75_000, currency: "GBP", period: "year", effectiveDate: "2024-01-01"}),
+      update: ~s(%{amount: 80_000})
+    ]
 
   @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
   @type list_response :: {:ok, [%Humaans.Resources.Compensation{}]} | {:error, Humaans.Error.t()}
