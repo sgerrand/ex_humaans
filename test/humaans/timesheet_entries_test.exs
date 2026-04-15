@@ -73,7 +73,7 @@ defmodule Humaans.TimesheetEntriesTest do
         {:ok, %{status: 404, body: %{"error" => "Timesheet Entry not found"}}}
       end)
 
-      assert {:error, {404, %{"error" => "Timesheet Entry not found"}}} ==
+      assert {:error, %Humaans.Error{type: :api_error, status: 404}} =
                Humaans.TimesheetEntries.list(client)
     end
 
@@ -83,7 +83,8 @@ defmodule Humaans.TimesheetEntriesTest do
         {:error, "something unexpected happened"}
       end)
 
-      assert {:error, "something unexpected happened"} ==
+      assert {:error,
+              %Humaans.Error{type: :network_error, reason: "something unexpected happened"}} =
                Humaans.TimesheetEntries.list(client)
     end
   end

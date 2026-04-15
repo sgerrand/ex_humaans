@@ -69,7 +69,7 @@ defmodule Humaans.CompensationsTest do
         {:ok, %{status: 404, body: %{"error" => "Compensation not found"}}}
       end)
 
-      assert {:error, {404, %{"error" => "Compensation not found"}}} ==
+      assert {:error, %Humaans.Error{type: :api_error, status: 404}} =
                Humaans.Compensations.list(client)
     end
 
@@ -79,7 +79,8 @@ defmodule Humaans.CompensationsTest do
         {:error, "something unexpected happened"}
       end)
 
-      assert {:error, "something unexpected happened"} ==
+      assert {:error,
+              %Humaans.Error{type: :network_error, reason: "something unexpected happened"}} =
                Humaans.Compensations.list(client)
     end
   end

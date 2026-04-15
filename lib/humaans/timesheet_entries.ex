@@ -7,9 +7,9 @@ defmodule Humaans.TimesheetEntries do
 
   alias Humaans.{Client, Resources.TimesheetEntry, ResponseHandler}
 
-  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
-  @type list_response :: {:ok, [%TimesheetEntry{}]} | {:error, any()}
-  @type response :: {:ok, %TimesheetEntry{}} | {:error, any()}
+  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
+  @type list_response :: {:ok, [%TimesheetEntry{}]} | {:error, Humaans.Error.t()}
+  @type response :: {:ok, %TimesheetEntry{}} | {:error, Humaans.Error.t()}
 
   @doc """
   Lists all timesheet entry resources.

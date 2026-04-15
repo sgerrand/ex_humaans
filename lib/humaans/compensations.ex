@@ -8,9 +8,9 @@ defmodule Humaans.Compensations do
 
   alias Humaans.{Client, Resources.Compensation, ResponseHandler}
 
-  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, any()}
-  @type list_response :: {:ok, [%Compensation{}]} | {:error, any()}
-  @type response :: {:ok, %Compensation{}} | {:error, any()}
+  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
+  @type list_response :: {:ok, [%Compensation{}]} | {:error, Humaans.Error.t()}
+  @type response :: {:ok, %Compensation{}} | {:error, Humaans.Error.t()}
 
   @doc """
   Lists all compensation resources.
