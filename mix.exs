@@ -12,6 +12,10 @@ defmodule Humaans.MixProject do
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        "coveralls.lcov": :test
+      ],
 
       # Hex
       package: package(),
@@ -39,6 +43,7 @@ defmodule Humaans.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:expublish, "~> 2.5", only: [:dev], runtime: false},
+      {:excoveralls, "~> 0.18", only: :test},
       {:mox, "~> 1.0", only: :test}
     ]
   end
