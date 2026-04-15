@@ -1,6 +1,9 @@
 # Humaans
 
-[![Hex Version](https://img.shields.io/hexpm/v/humaans.svg)](https://hex.pm/packages/humaans) [![Hex Docs](https://img.shields.io/badge/docs-hexpm-blue.svg)](https://hexdocs.pm/humaans/)
+[![Build Status](https://github.com/sgerrand/ex_humaans/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/sgerrand/ex_humaans/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/sgerrand/ex_humaans/badge.svg?branch=main)](https://coveralls.io/github/sgerrand/ex_humaans?branch=main)
+[![Hex Version](https://img.shields.io/hexpm/v/humaans.svg)](https://hex.pm/packages/humaans)
+[![Hex Docs](https://img.shields.io/badge/docs-hexpm-blue.svg)](https://hexdocs.pm/humaans/)
 
 An Elixir client for the [Humaans API][humaans-api-docs].
 
