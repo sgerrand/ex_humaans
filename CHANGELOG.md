@@ -6,6 +6,16 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## [0.5.0](https://github.com/sgerrand/ex_humaans/compare/v0.4.2...v0.5.0) (2026-04-15)
+
+
+### Features
+
+* add Humaans.Pagination for page-by-page and streaming iteration ([#77](https://github.com/sgerrand/ex_humaans/issues/77)) ([36b8955](https://github.com/sgerrand/ex_humaans/commit/36b8955459866382c295c6be44faeadfbfb9e7d9))
+* add telemetry instrumentation for API requests ([#75](https://github.com/sgerrand/ex_humaans/issues/75)) ([048be7d](https://github.com/sgerrand/ex_humaans/commit/048be7d40341de2fee8a8f3f00f3820bf91f1ff9))
+* introduce Humaans.Error for structured error handling ([#72](https://github.com/sgerrand/ex_humaans/issues/72)) ([a60d780](https://github.com/sgerrand/ex_humaans/commit/a60d7805fa446366d0314d440bf94717a99d4674))
+* parse ISO 8601 date and datetime strings into native Elixir types ([#74](https://github.com/sgerrand/ex_humaans/issues/74)) ([f3b461e](https://github.com/sgerrand/ex_humaans/commit/f3b461e37e46b204a97f50b4dbea9061cf501128))
+
 ## [0.4.2](https://github.com/sgerrand/ex_humaans/compare/v0.4.1...v0.4.2) (2026-04-14)
 
 
