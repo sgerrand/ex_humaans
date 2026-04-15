@@ -54,7 +54,7 @@ defmodule Humaans.TimesheetEntriesTest do
 
       assert response.id == "0vUGk85FkSDHXfeOTnXqkk4d"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.date == "2020-04-01"
+      assert response.date == ~D[2020-04-01]
       assert response.start_time == "09:00:00"
       assert response.end_time == "12:30:00"
 
@@ -63,8 +63,8 @@ defmodule Humaans.TimesheetEntriesTest do
                "minutes" => 30
              }
 
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do
@@ -114,10 +114,10 @@ defmodule Humaans.TimesheetEntriesTest do
       assert {:ok, response} = Humaans.TimesheetEntries.create(client, params)
       assert response.id == "new_id"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.date == "2020-04-01"
+      assert response.date == ~D[2020-04-01]
       assert response.start_time == "09:00:00"
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -156,19 +156,19 @@ defmodule Humaans.TimesheetEntriesTest do
       assert response.id == "0vUGk85FkSDHXfeOTnXqkk4d"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.date == "2020-04-01"
+      assert response.date == ~D[2020-04-01]
       assert response.start_time == "09:00:00"
       assert response.end_time == "12:30:00"
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
 
       assert response.duration == %{
                "hours" => 127,
                "minutes" => 30
              }
 
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -209,7 +209,7 @@ defmodule Humaans.TimesheetEntriesTest do
 
       assert response.id == "0vUGk85FkSDHXfeOTnXqkk4d"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.date == "2020-04-01"
+      assert response.date == ~D[2020-04-01]
       assert response.start_time == "09:00:00"
       assert response.end_time == "12:30:00"
 
@@ -218,8 +218,8 @@ defmodule Humaans.TimesheetEntriesTest do
                "minutes" => 30
              }
 
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 

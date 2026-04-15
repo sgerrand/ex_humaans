@@ -16,7 +16,16 @@ defmodule Humaans.Resources.BankAccount do
     :updated_at
   ]
 
-  use ExConstructor
+  use ExConstructor, :build
+
+  import Humaans.Resources.Timestamps
+
+  def new(data) do
+    data
+    |> build()
+    |> parse_datetime(:created_at)
+    |> parse_datetime(:updated_at)
+  end
 
   @type t :: %__MODULE__{
           id: binary | nil,
@@ -27,7 +36,7 @@ defmodule Humaans.Resources.BankAccount do
           swift_code: binary | nil,
           sort_code: binary | nil,
           routing_number: binary | nil,
-          created_at: binary | nil,
-          updated_at: binary | nil
+          created_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
 end

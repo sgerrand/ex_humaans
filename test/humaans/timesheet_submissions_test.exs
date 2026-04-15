@@ -55,12 +55,12 @@ defmodule Humaans.TimesheetSubmissionsTest do
       assert length(responses) == 1
       assert response.id == "Qh1bcl6baOIFPBgJjM0I9wNB"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.start_date == "2020-04-01"
-      assert response.end_date == "2020-04-30"
+      assert response.start_date == ~D[2020-04-01]
+      assert response.end_date == ~D[2020-04-30]
       assert response.status == "pending"
-      assert response.submitted_at == "2020-04-30T17:08:29.290Z"
+      assert response.submitted_at == ~U[2020-04-30 17:08:29.290Z]
       assert response.reviewed_by == "ob4xPcVpGGZm043C7xGMfP1U"
-      assert response.reviewed_at == "2020-04-30T17:08:29.290Z"
+      assert response.reviewed_at == ~U[2020-04-30 17:08:29.290Z]
       assert response.changes_requested == "Missing hours from weekend shift."
 
       assert response.duration_as_time == %{
@@ -69,8 +69,8 @@ defmodule Humaans.TimesheetSubmissionsTest do
              }
 
       assert response.duration_as_days == 23
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do
@@ -120,9 +120,9 @@ defmodule Humaans.TimesheetSubmissionsTest do
       assert {:ok, response} = Humaans.TimesheetSubmissions.create(client, params)
       assert response.id == "new_id"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.start_date == "2020-04-01"
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.start_date == ~D[2020-04-01]
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -165,12 +165,12 @@ defmodule Humaans.TimesheetSubmissionsTest do
 
       assert response.id == "Qh1bcl6baOIFPBgJjM0I9wNB"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.start_date == "2020-04-01"
-      assert response.end_date == "2020-04-30"
+      assert response.start_date == ~D[2020-04-01]
+      assert response.end_date == ~D[2020-04-30]
       assert response.status == "pending"
-      assert response.submitted_at == "2020-04-30T17:08:29.290Z"
+      assert response.submitted_at == ~U[2020-04-30 17:08:29.290Z]
       assert response.reviewed_by == "ob4xPcVpGGZm043C7xGMfP1U"
-      assert response.reviewed_at == "2020-04-30T17:08:29.290Z"
+      assert response.reviewed_at == ~U[2020-04-30 17:08:29.290Z]
       assert response.changes_requested == "Missing hours from weekend shift."
 
       assert response.duration_as_time == %{
@@ -179,8 +179,8 @@ defmodule Humaans.TimesheetSubmissionsTest do
              }
 
       assert response.duration_as_days == 23
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -226,12 +226,12 @@ defmodule Humaans.TimesheetSubmissionsTest do
 
       assert response.id == "Qh1bcl6baOIFPBgJjM0I9wNB"
       assert response.person_id == "IL3vneCYhIx0xrR6um2sy2nW"
-      assert response.start_date == "2020-04-01"
-      assert response.end_date == "2020-04-30"
+      assert response.start_date == ~D[2020-04-01]
+      assert response.end_date == ~D[2020-04-30]
       assert response.status == "pending"
-      assert response.submitted_at == "2020-04-30T17:08:29.290Z"
+      assert response.submitted_at == ~U[2020-04-30 17:08:29.290Z]
       assert response.reviewed_by == "ob4xPcVpGGZm043C7xGMfP1U"
-      assert response.reviewed_at == "2020-04-30T17:08:29.290Z"
+      assert response.reviewed_at == ~U[2020-04-30 17:08:29.290Z]
       assert response.changes_requested == "Missing hours from weekend shift."
 
       assert response.duration_as_time == %{
@@ -240,8 +240,8 @@ defmodule Humaans.TimesheetSubmissionsTest do
              }
 
       assert response.duration_as_days == 23
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 

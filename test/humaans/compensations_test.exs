@@ -56,11 +56,11 @@ defmodule Humaans.CompensationsTest do
       assert response.currency == "EUR"
       assert response.period == "annual"
       assert response.note == "Promotion"
-      assert response.effective_date == "2020-02-15"
+      assert response.effective_date == ~D[2020-02-15]
       assert response.end_date == nil
       assert response.end_reason == nil
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do
@@ -131,11 +131,11 @@ defmodule Humaans.CompensationsTest do
       assert response.currency == "EUR"
       assert response.period == "annual"
       assert response.note == nil
-      assert response.effective_date == "2020-02-15"
+      assert response.effective_date == ~D[2020-02-15]
       assert response.end_date == nil
       assert response.end_reason == nil
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -177,11 +177,11 @@ defmodule Humaans.CompensationsTest do
       assert response.currency == "EUR"
       assert response.period == "annual"
       assert response.note == "Promotion"
-      assert response.effective_date == "2020-02-15"
+      assert response.effective_date == ~D[2020-02-15]
       assert response.end_date == nil
       assert response.end_reason == nil
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 
@@ -235,11 +235,11 @@ defmodule Humaans.CompensationsTest do
       assert response.currency == "EUR"
       assert response.period == "annual"
       assert response.note == "Promotion"
-      assert response.effective_date == "2020-02-15"
+      assert response.effective_date == ~D[2020-02-15]
       assert response.end_date == nil
       assert response.end_reason == nil
-      assert response.created_at == "2020-01-28T08:44:42.000Z"
-      assert response.updated_at == "2020-01-29T14:52:21.000Z"
+      assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
+      assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
     end
   end
 

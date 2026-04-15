@@ -18,7 +18,18 @@ defmodule Humaans.Resources.Compensation do
     :updated_at
   ]
 
-  use ExConstructor
+  use ExConstructor, :build
+
+  import Humaans.Resources.Timestamps
+
+  def new(data) do
+    data
+    |> build()
+    |> parse_date(:effective_date)
+    |> parse_date(:end_date)
+    |> parse_datetime(:created_at)
+    |> parse_datetime(:updated_at)
+  end
 
   @type base_type :: :salary | :bonus | :commission | :equity | :custom
   @type t :: %__MODULE__{
@@ -29,10 +40,10 @@ defmodule Humaans.Resources.Compensation do
           currency: binary,
           period: binary,
           note: binary,
-          effective_date: binary,
-          end_date: binary,
+          effective_date: Date.t() | nil,
+          end_date: Date.t() | nil,
           end_reason: binary,
-          created_at: binary,
-          updated_at: binary
+          created_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
 end

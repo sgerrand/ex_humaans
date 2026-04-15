@@ -14,16 +14,26 @@ defmodule Humaans.Resources.TimesheetEntry do
     :updated_at
   ]
 
-  use ExConstructor
+  use ExConstructor, :build
+
+  import Humaans.Resources.Timestamps
+
+  def new(data) do
+    data
+    |> build()
+    |> parse_date(:date)
+    |> parse_datetime(:created_at)
+    |> parse_datetime(:updated_at)
+  end
 
   @type t :: %__MODULE__{
           id: binary,
           person_id: binary,
-          date: binary,
+          date: Date.t() | nil,
           start_time: binary,
           end_time: binary,
           duration: %{hours: integer, minutes: integer} | nil,
-          created_at: binary,
-          updated_at: binary
+          created_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
 end

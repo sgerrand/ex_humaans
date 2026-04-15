@@ -73,7 +73,23 @@ defmodule Humaans.Resources.Person do
     :updated_at
   ]
 
-  use ExConstructor
+  use ExConstructor, :build
+
+  import Humaans.Resources.Timestamps
+
+  def new(data) do
+    data
+    |> build()
+    |> parse_date(:birthday)
+    |> parse_date(:employment_start_date)
+    |> parse_date(:first_working_day)
+    |> parse_date(:employment_end_date)
+    |> parse_date(:last_working_day)
+    |> parse_date(:probation_end_date)
+    |> parse_datetime(:created_at)
+    |> parse_datetime(:updated_at)
+    |> parse_datetime(:seen_documents_at)
+  end
 
   @typep leaving_reason :: :dismissed | :resigned | :redundancy | :contract_ended | :other | nil
   @typep status :: :active | :offboarded | :new_hire
@@ -98,7 +114,7 @@ defmodule Humaans.Resources.Person do
           personal_phone_number: binary | nil,
           formatted_personal_phone_number: binary | nil,
           gender: binary,
-          birthday: binary,
+          birthday: Date.t() | nil,
           profile_photo_id: binary,
           profile_photo: map | nil,
           nationality: binary,
@@ -116,11 +132,11 @@ defmodule Humaans.Resources.Person do
           linked_in: binary,
           twitter: binary,
           github: binary,
-          employment_start_date: binary,
-          first_working_day: binary,
-          employment_end_date: binary | nil,
-          last_working_day: binary | nil,
-          probation_end_date: binary | nil,
+          employment_start_date: Date.t() | nil,
+          first_working_day: Date.t() | nil,
+          employment_end_date: Date.t() | nil,
+          last_working_day: Date.t() | nil,
+          probation_end_date: Date.t() | nil,
           turnover_impact: binary | nil,
           working_days: [working_day()],
           public_holiday_calendar_id: binary,
@@ -137,14 +153,14 @@ defmodule Humaans.Resources.Person do
           is_work_email_hidden: boolean,
           calendar_feed_token: binary | nil,
           role: binary,
-          seen_documents_at: binary | nil,
+          seen_documents_at: DateTime.t() | nil,
           source: binary | nil,
           source_id: binary | nil,
           timezone: binary,
           payroll_provider: binary | nil,
           is_birthday_hidden: boolean,
           demo: boolean,
-          created_at: binary,
-          updated_at: binary
+          created_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
 end

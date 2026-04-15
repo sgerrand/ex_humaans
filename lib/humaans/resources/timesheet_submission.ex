@@ -19,21 +19,34 @@ defmodule Humaans.Resources.TimesheetSubmission do
     :updated_at
   ]
 
-  use ExConstructor
+  use ExConstructor, :build
+
+  import Humaans.Resources.Timestamps
+
+  def new(data) do
+    data
+    |> build()
+    |> parse_date(:start_date)
+    |> parse_date(:end_date)
+    |> parse_datetime(:submitted_at)
+    |> parse_datetime(:reviewed_at)
+    |> parse_datetime(:created_at)
+    |> parse_datetime(:updated_at)
+  end
 
   @type t :: %__MODULE__{
           id: binary,
           person_id: binary,
-          start_date: binary,
-          end_date: binary,
+          start_date: Date.t() | nil,
+          end_date: Date.t() | nil,
           status: :pending | :approved | :rejected,
-          submitted_at: binary,
+          submitted_at: DateTime.t() | nil,
           reviewed_by: binary,
-          reviewed_at: binary,
+          reviewed_at: DateTime.t() | nil,
           changes_requested: binary | nil,
           duration_as_time: %{hours: integer, minutes: integer} | nil,
           duration_as_days: integer | nil,
-          created_at: binary,
-          updated_at: binary
+          created_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
 end

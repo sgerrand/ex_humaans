@@ -19,7 +19,17 @@ defmodule Humaans.Resources.Company do
     :updated_at
   ]
 
-  use ExConstructor
+  use ExConstructor, :build
+
+  import Humaans.Resources.Timestamps
+
+  def new(data) do
+    data
+    |> build()
+    |> parse_date(:trial_end_date)
+    |> parse_datetime(:created_at)
+    |> parse_datetime(:updated_at)
+  end
 
   @type payment_status :: :requires_action | :past_due | :ok
   @type status :: :terms | :trialing | :expired | :active | :suspended
@@ -27,7 +37,7 @@ defmodule Humaans.Resources.Company do
           id: binary | nil,
           name: binary | nil,
           domains: [String.t()] | nil,
-          trial_end_date: binary | nil,
+          trial_end_date: Date.t() | nil,
           status: status(),
           payment_status: payment_status(),
           package: binary | nil,
@@ -35,7 +45,7 @@ defmodule Humaans.Resources.Company do
           autogenerate_employee_id: boolean,
           autogenerate_employee_id_for_new_hires: boolean,
           next_employee_id: pos_integer,
-          created_at: binary | nil,
-          updated_at: binary | nil
+          created_at: DateTime.t() | nil,
+          updated_at: DateTime.t() | nil
         }
 end
