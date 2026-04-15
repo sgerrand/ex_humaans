@@ -5,37 +5,15 @@ defmodule Humaans.Companies do
   retrieved, and updated, but not created or deleted through the API.
   """
 
+  use Humaans.Resource,
+    path: "/companies",
+    struct: Humaans.Resources.Company,
+    actions: [:list, :update]
+
   alias Humaans.{Client, Resources.Company, ResponseHandler}
 
   @type list_response :: {:ok, [%Company{}]} | {:error, Humaans.Error.t()}
   @type response :: {:ok, %Company{}} | {:error, Humaans.Error.t()}
-
-  @doc """
-  Lists all company resources.
-
-  Returns a list of company resources that match the optional filters provided in `params`.
-
-  ## Parameters
-
-    * `client` - Client map created with `Humaans.new/1`
-    * `params` - Optional parameters for filtering the results (default: `%{}`)
-
-  ## Examples
-
-      client = Humaans.new(access_token: "your_access_token")
-
-      # List all companies
-      {:ok, companies} = Humaans.Companies.list(client)
-
-      # List with filtering parameters
-      {:ok, companies} = Humaans.Companies.list(client, %{limit: 10})
-
-  """
-  @spec list(client :: map(), params :: keyword()) :: list_response()
-  def list(client, params \\ %{}) do
-    Client.get(client, "/companies", params)
-    |> ResponseHandler.handle_list_response(Company)
-  end
 
   @doc """
   Retrieves a specific company by ID.
@@ -55,30 +33,6 @@ defmodule Humaans.Companies do
   @spec get(client :: map(), id :: String.t()) :: response()
   def get(client, id) do
     Client.get(client, "/companies/#{id}")
-    |> ResponseHandler.handle_resource_response(Company)
-  end
-
-  @doc """
-  Updates a specific company by ID.
-
-  ## Parameters
-
-    * `client` - Client map created with `Humaans.new/1`
-    * `id` - String ID of the company to update
-    * `params` - Map of parameters to update
-
-  ## Examples
-
-      client = Humaans.new(access_token: "your_access_token")
-
-      params = %{name: "New Company Name"}
-
-      {:ok, updated_company} = Humaans.Companies.update(client, "company_id", params)
-
-  """
-  @spec update(client :: map(), id :: String.t(), params :: keyword()) :: response()
-  def update(client, id, params) do
-    Client.patch(client, "/companies/#{id}", params)
     |> ResponseHandler.handle_resource_response(Company)
   end
 end
