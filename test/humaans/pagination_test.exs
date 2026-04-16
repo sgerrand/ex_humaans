@@ -128,6 +128,19 @@ defmodule Humaans.PaginationTest do
       assert length(results) == 1
     end
 
+    test "halts silently on API error", %{client: client} do
+      Mox.expect(Humaans.MockHTTPClient, :request, fn _client, _opts ->
+        {:ok, %{status: 401, body: %{"error" => "unauthorized"}}}
+      end)
+
+      results =
+        client
+        |> Humaans.Pagination.stream(&Humaans.People.list/2, page_size: 10)
+        |> Enum.to_list()
+
+      assert results == []
+    end
+
     test "is lazy and only fetches pages on demand", %{client: client} do
       # Only one request should be made because we only take 1 item
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, _opts ->
