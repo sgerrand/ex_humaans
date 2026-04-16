@@ -35,6 +35,29 @@ defmodule Humaans.ResourceTest do
     def list(_client, _params), do: {:ok, :overridden}
   end
 
+  # Resource using binary string doc_params — exercises extract_string(s when is_binary)
+  # and the if cp/up doc string branches.
+  defmodule DocParamsResource do
+    use Humaans.Resource,
+      path: "/doc-params-items",
+      struct: Humaans.ResourceTest.TestItem,
+      doc_params: [
+        create: "%{name: \"example\"}",
+        update: "%{name: \"updated\"}"
+      ]
+  end
+
+  # Resource using ~s sigil doc_params — exercises extract_string({:sigil_s, ...}).
+  defmodule SigilDocParamsResource do
+    use Humaans.Resource,
+      path: "/sigil-doc-params-items",
+      struct: Humaans.ResourceTest.TestItem,
+      doc_params: [
+        create: ~s(%{name: "example"}),
+        update: ~s(%{name: "updated"})
+      ]
+  end
+
   setup :verify_on_exit!
 
   setup_all do
@@ -186,6 +209,20 @@ defmodule Humaans.ResourceTest do
   describe "defoverridable" do
     test "generated functions can be overridden", %{client: client} do
       assert {:ok, :overridden} = OverridingResource.list(client, %{})
+    end
+  end
+
+  describe "doc_params option" do
+    test "generates CRUD functions with binary string doc_params" do
+      assert function_exported?(DocParamsResource, :list, 2)
+      assert function_exported?(DocParamsResource, :create, 2)
+      assert function_exported?(DocParamsResource, :update, 3)
+    end
+
+    test "generates CRUD functions with sigil doc_params" do
+      assert function_exported?(SigilDocParamsResource, :list, 2)
+      assert function_exported?(SigilDocParamsResource, :create, 2)
+      assert function_exported?(SigilDocParamsResource, :update, 3)
     end
   end
 end

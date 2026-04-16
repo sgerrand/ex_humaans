@@ -56,6 +56,15 @@ defmodule Humaans.HTTPClient.ReqTest do
       assert result == {:ok, response}
     end
 
+    test "configures PATCH requests without a body", %{client: client} do
+      response_body = %{"id" => "123"}
+      {response, request_opts} = setup_test(:patch, "/people/123", response_body)
+
+      result = HumaansReq.request(client, request_opts)
+
+      assert result == {:ok, response}
+    end
+
     test "configures DELETE requests correctly", %{client: client} do
       response_body = %{"id" => "123", "deleted" => true}
       {response, request_opts} = setup_test(:delete, "/people/123", response_body)

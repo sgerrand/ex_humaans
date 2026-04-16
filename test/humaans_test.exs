@@ -87,4 +87,8 @@ defmodule HumaansTest do
   test "timesheet_submissions/0 returns the TimesheetSubmissions module" do
     assert Humaans.timesheet_submissions() == Humaans.TimesheetSubmissions
   end
+
+  test "pagination/0 returns the Pagination module" do
+    assert Humaans.pagination() == Humaans.Pagination
+  end
 end
