@@ -6,6 +6,13 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## [0.5.1](https://github.com/sgerrand/ex_humaans/compare/v0.5.0...v0.5.1) (2026-04-22)
+
+
+### Bug Fixes
+
+* **deps:** update telemetry from 1.3.0 to 1.4.1, credo to 1.7.18 ([#83](https://github.com/sgerrand/ex_humaans/issues/83)) ([0184955](https://github.com/sgerrand/ex_humaans/commit/0184955efd531a783e81821f420cc08af9e9eb3c))
+
 ## [0.5.0](https://github.com/sgerrand/ex_humaans/compare/v0.4.2...v0.5.0) (2026-04-15)
 
 

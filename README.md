@@ -16,7 +16,7 @@ The package can be installed by adding `humaans` to your list of dependencies in
 ```elixir
 def deps do
   [
-    {:humaans, "~> 0.5.0"}
+    {:humaans, "~> 0.5.1"}
   ]
 end
 ```
