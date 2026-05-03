@@ -17,7 +17,7 @@ defmodule Humaans.PaginationTest do
   describe "page/4" do
     test "fetches page 1 with skip=0", %{client: client} do
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
-        assert opts[:params] == [limit: 10, skip: 0]
+        assert opts[:params] == ["$limit": 10, "$skip": 0]
         {:ok, %{status: 200, body: %{"data" => [@person_fixture]}}}
       end)
 
@@ -31,7 +31,7 @@ defmodule Humaans.PaginationTest do
 
     test "fetches page 2 with correct skip offset", %{client: client} do
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
-        assert opts[:params] == [limit: 10, skip: 10]
+        assert opts[:params] == ["$limit": 10, "$skip": 10]
         {:ok, %{status: 200, body: %{"data" => []}}}
       end)
 
@@ -44,7 +44,7 @@ defmodule Humaans.PaginationTest do
 
     test "uses default page size when not specified", %{client: client} do
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
-        assert opts[:params] == [limit: 20, skip: 0]
+        assert opts[:params] == ["$limit": 20, "$skip": 0]
         {:ok, %{status: 200, body: %{"data" => []}}}
       end)
 
@@ -54,7 +54,7 @@ defmodule Humaans.PaginationTest do
 
     test "passes extra options as query params", %{client: client} do
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
-        assert opts[:params] == [personId: "abc", limit: 10, skip: 0]
+        assert opts[:params] == [personId: "abc", "$limit": 10, "$skip": 0]
         {:ok, %{status: 200, body: %{"data" => []}}}
       end)
 
@@ -78,13 +78,13 @@ defmodule Humaans.PaginationTest do
     test "yields all items across multiple pages", %{client: client} do
       # Page 1: full page of 2
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
-        assert opts[:params] == [limit: 2, skip: 0]
+        assert opts[:params] == ["$limit": 2, "$skip": 0]
         {:ok, %{status: 200, body: %{"data" => [@person_fixture, @person_fixture]}}}
       end)
 
       # Page 2: partial page (last page)
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
-        assert opts[:params] == [limit: 2, skip: 2]
+        assert opts[:params] == ["$limit": 2, "$skip": 2]
         {:ok, %{status: 200, body: %{"data" => [@person_fixture]}}}
       end)
 
@@ -111,12 +111,12 @@ defmodule Humaans.PaginationTest do
 
     test "stops after a full page followed by an empty page", %{client: client} do
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
-        assert opts[:params] == [limit: 1, skip: 0]
+        assert opts[:params] == ["$limit": 1, "$skip": 0]
         {:ok, %{status: 200, body: %{"data" => [@person_fixture]}}}
       end)
 
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
-        assert opts[:params] == [limit: 1, skip: 1]
+        assert opts[:params] == ["$limit": 1, "$skip": 1]
         {:ok, %{status: 200, body: %{"data" => []}}}
       end)
 
