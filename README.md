@@ -75,6 +75,18 @@ client = Humaans.new(access_token: "YOUR_ACCESS_TOKEN")
 
 The default HTTP client retries transient failures (status 408, 429, 500, 502, 503, 504) up to 3 times with exponential backoff, honouring the `Retry-After` header. To opt out, pass `req_options: [retry: false]` to `Humaans.new/1`.
 
+### Snake_case request bodies
+
+You can write request bodies in idiomatic snake_case — `Humaans.Client` converts top-level keys to camelCase before sending them to the API. Already-camelCase keys (atom or string) pass through unchanged, so existing code that uses camelCase continues to work.
+
+```elixir
+# Both of these send {"firstName": "Jane", "lastName": "Doe"}:
+Humaans.People.create(client, %{first_name: "Jane", last_name: "Doe"})
+Humaans.People.create(client, %{firstName: "Jane", lastName: "Doe"})
+```
+
+Only top-level keys are converted; nested maps inside a body are left as-is.
+
 ### Webhooks
 
 Verify HMAC-SHA256 signatures on incoming webhook deliveries with `Humaans.Webhooks.verify_signature/3`. Pass the **raw** request body (not the re-encoded JSON):
