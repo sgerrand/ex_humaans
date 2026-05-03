@@ -4,6 +4,23 @@ defmodule Humaans.Compensations do
   Humaans API. Compensations represent the actual monetary values assigned to a
   person under a specific compensation type (e.g., a specific person's salary or
   bonus).
+
+  ## Filtering by effective date
+
+  In addition to the standard filter parameters, the Compensations endpoint
+  supports `$asOf=YYYY-MM-DD` to return only the compensation records that
+  were effective on the given date. Useful for snapshotting compensation as
+  of a payroll cut-off:
+
+      # Compensations effective on 2026-01-01
+      {:ok, comps} = Humaans.Compensations.list(client, "$asOf": "2026-01-01")
+
+      # Combined with a personId filter
+      {:ok, comps} =
+        Humaans.Compensations.list(client,
+          personId: "person_abc",
+          "$asOf": "2026-01-01"
+        )
   """
 
   use Humaans.Resource,
