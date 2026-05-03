@@ -200,14 +200,6 @@ defmodule Humaans do
   def pagination, do: Humaans.Pagination
 
   @doc """
-  Access webhook helpers.
-
-  Returns `Humaans.Webhooks`, which provides `verify_signature/3` for
-  verifying HMAC-SHA256 webhook signatures.
-  """
-  def webhooks, do: Humaans.Webhooks
-
-  @doc """
   Access the query builder.
 
   Returns `Humaans.Query`, which provides `eq/3`, `in_/3`, `nin/3`, `gt/3`,
@@ -215,4 +207,28 @@ defmodule Humaans do
   filter queries.
   """
   def query, do: Humaans.Query
+
+  @doc """
+  Access the current user's profile.
+
+  Returns `Humaans.Me`, which exposes `get/1` for retrieving the
+  authenticated user's profile.
+  """
+  def me, do: Humaans.Me
+
+  @doc """
+  Access the current access token's metadata.
+
+  Returns `Humaans.TokenInfo`, which exposes `get/1` for retrieving
+  metadata (scopes, personId, etc.) about the current access token.
+  """
+  def token_info, do: Humaans.TokenInfo
+
+  @doc """
+  Access webhook helpers.
+
+  Returns `Humaans.Webhooks`, which provides `verify_signature/3` for
+  verifying HMAC-SHA256 webhook signatures.
+  """
+  def webhooks, do: Humaans.Webhooks
 end
