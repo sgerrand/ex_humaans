@@ -42,6 +42,22 @@ client = Humaans.new(access_token: "YOUR_ACCESS_TOKEN")
 
 This approach allows you to create multiple clients with different access tokens and use them independently.
 
+### Tuning the HTTP client
+
+Pass `:req_options` to `Humaans.new/1` to customise the underlying [Req][req] client (timeouts, retries, plugins, etc.):
+
+```elixir
+client =
+  Humaans.new(
+    access_token: "YOUR_ACCESS_TOKEN",
+    req_options: [connect_options: [timeout: 30_000], retry: :transient]
+  )
+```
+
+For deeper customisation, implement `Humaans.HTTPClient.Behaviour` and pass the module via `:http_client`.
+
+[req]: https://hexdocs.pm/req/
+
 ### Module access helpers
 
 The library provides convenience functions to access the different resource modules:

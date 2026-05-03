@@ -92,6 +92,35 @@ defmodule Humaans.HTTPClient.ReqTest do
 
       assert result == {:error, error_response}
     end
+
+    test "merges client.req_options into the Req config" do
+      # The adapter sees the merged Req.Request and lets us assert that
+      # req_options from the client made it through.
+      adapter = fn request ->
+        send(self(), {:request_options, request.options})
+        {request, %Req.Response{status: 200, body: %{"ok" => true}, headers: %{}}}
+      end
+
+      client = %Humaans{
+        access_token: "tok",
+        base_url: "https://app.humaans.io/api",
+        http_client: HumaansReq,
+        req_options: [connect_options: [timeout: 7_777], retry: false]
+      }
+
+      request_opts = [
+        method: :get,
+        url: "/people",
+        headers: [{"Accept", "application/json"}],
+        adapter: adapter
+      ]
+
+      assert {:ok, _} = HumaansReq.request(client, request_opts)
+
+      assert_received {:request_options, options}
+      assert options[:connect_options] == [timeout: 7_777]
+      assert options[:retry] == false
+    end
   end
 
   defp setup_test(method, url, response_body, status \\ 200, extra_opts \\ []) do
