@@ -245,5 +245,27 @@ defmodule Humaans.ResponseHandlerTest do
       assert {:error, %Humaans.Error{type: :network_error, reason: "connection_error"}} =
                ResponseHandler.handle_response(response, fn _ -> "processed" end)
     end
+
+    test "extracts structured error fields from a 422 body" do
+      body = %{
+        "id" => "req-1",
+        "code" => "ValidationError",
+        "name" => "BadRequest",
+        "message" => "email is required",
+        "issues" => [%{"path" => "email", "message" => "must be present"}]
+      }
+
+      response = {:ok, %{status: 422, body: body}}
+
+      assert {:error,
+              %Humaans.Error{
+                type: :api_error,
+                status: 422,
+                code: "ValidationError",
+                name: "BadRequest",
+                api_message: "email is required",
+                issues: [%{"path" => "email"}]
+              }} = ResponseHandler.handle_response(response, fn _ -> :ok end)
+    end
   end
 end

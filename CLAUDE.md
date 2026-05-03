@@ -46,7 +46,7 @@ Humaans.new/1
 
 **Resource structs** — Live in `lib/humaans/resources/`. Use `ExConstructor` for automatic camelCase→snake_case JSON mapping. `Humaans.Response` holds raw HTTP responses (`status`, `headers`, `body`).
 
-**Response handling** — `Humaans.ResponseHandler` unwraps `{"data": [...]}` envelopes and converts payloads to typed structs.
+**Response handling** — `Humaans.ResponseHandler` unwraps `{"data": [...]}` envelopes and converts payloads to typed structs. On non-2xx responses it builds a `Humaans.Error` via `Humaans.Error.from_api_response/2`, which extracts the API's structured error fields (`code`, `name`, `message`, `issues`) onto the struct while retaining the raw `body`.
 
 ### Testing
 
