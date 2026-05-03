@@ -93,9 +93,89 @@ defmodule Humaans.HTTPClient.ReqTest do
       assert result == {:error, error_response}
     end
 
+    test "retries on 429 and eventually succeeds", %{client: client} do
+      {:ok, counter} = Agent.start_link(fn -> 0 end)
+
+      adapter = fn request ->
+        n = Agent.get_and_update(counter, fn n -> {n + 1, n + 1} end)
+
+        if n <= 2 do
+          {request,
+           %Req.Response{
+             status: 429,
+             body: %{"error" => "rate_limited"},
+             headers: %{"retry-after" => ["0"]}
+           }}
+        else
+          {request, %Req.Response{status: 200, body: %{"ok" => true}, headers: %{}}}
+        end
+      end
+
+      request_opts = [
+        method: :get,
+        url: "/people",
+        headers: [{"Accept", "application/json"}],
+        adapter: adapter,
+        retry_delay: fn _ -> 0 end
+      ]
+
+      assert {:ok, %Req.Response{status: 200}} = HumaansReq.request(client, request_opts)
+      assert Agent.get(counter, & &1) == 3
+    end
+
+    test "stops retrying after max_retries", %{client: client} do
+      {:ok, counter} = Agent.start_link(fn -> 0 end)
+
+      adapter = fn request ->
+        Agent.update(counter, &(&1 + 1))
+
+        {request,
+         %Req.Response{
+           status: 429,
+           body: %{"error" => "rate_limited"},
+           headers: %{"retry-after" => ["0"]}
+         }}
+      end
+
+      request_opts = [
+        method: :get,
+        url: "/people",
+        headers: [{"Accept", "application/json"}],
+        adapter: adapter,
+        retry_delay: fn _ -> 0 end
+      ]
+
+      assert {:ok, %Req.Response{status: 429}} = HumaansReq.request(client, request_opts)
+      assert Agent.get(counter, & &1) == 4
+    end
+
+    test "retry can be disabled via per-request opts", %{client: client} do
+      {:ok, counter} = Agent.start_link(fn -> 0 end)
+
+      adapter = fn request ->
+        Agent.update(counter, &(&1 + 1))
+
+        {request,
+         %Req.Response{
+           status: 429,
+           body: %{"error" => "rate_limited"},
+           headers: %{}
+         }}
+      end
+
+      request_opts = [
+        method: :get,
+        url: "/people",
+        headers: [{"Accept", "application/json"}],
+        adapter: adapter,
+        retry: false
+      ]
+
+      assert {:ok, %Req.Response{status: 429}} = HumaansReq.request(client, request_opts)
+      assert Agent.get(counter, & &1) == 1
+    end
+
     test "merges client.req_options into the Req config" do
-      # The adapter sees the merged Req.Request and lets us assert that
-      # req_options from the client made it through.
       adapter = fn request ->
         send(self(), {:request_options, request.options})
         {request, %Req.Response{status: 200, body: %{"ok" => true}, headers: %{}}}

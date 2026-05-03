@@ -5,6 +5,19 @@ defmodule Humaans.HTTPClient.Req do
   This module is used by default when you create a new Humaans client without
   specifying a custom HTTP client.
 
+  ## Rate-limit retries
+
+  By default this client enables Req's `:transient` retry strategy with
+  `max_retries: 3`. That means responses with status 408, 429, 500, 502, 503,
+  and 504 are automatically retried with exponential backoff, honouring the
+  `Retry-After` header when the API includes one. For the Humaans API the
+  practical effect is that bursty bulk reads no longer fail outright on a
+  single rate-limit hit.
+
+  To opt out, set `retry: false` in your `:req_options`:
+
+      Humaans.new(access_token: "...", req_options: [retry: false])
+
   ## Customization
 
   For most tweaks (timeouts, retries, plugins), pass `:req_options` directly
@@ -75,7 +88,9 @@ defmodule Humaans.HTTPClient.Req do
       |> Keyword.drop([:base_url, :auth])
 
     base =
-      Keyword.merge(req_options,
+      [retry: :transient, max_retries: 3]
+      |> Keyword.merge(req_options)
+      |> Keyword.merge(
         base_url: client.base_url,
         auth: {:bearer, client.access_token}
       )
