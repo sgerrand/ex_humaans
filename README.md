@@ -132,6 +132,8 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.TimeAwayTypes` - Work with time away type resources
 - `Humaans.CustomFields` - Work with custom field definitions
 - `Humaans.CustomValues` - Work with custom value records
+- `Humaans.Me` - Retrieve the authenticated user's profile (`GET /me`)
+- `Humaans.TokenInfo` - Retrieve metadata about the current access token (`GET /token-info`)
 
 ## Development
 
