@@ -27,6 +27,39 @@ defmodule HumaansTest do
       assert client.base_url == "https://app.humaans.io/api"
       assert client.http_client == Humaans.MockHTTPClient
     end
+
+    test "req_options defaults to []" do
+      client = Humaans.new(access_token: "some api key")
+
+      assert client.req_options == []
+    end
+
+    test "req_options accepts a keyword list" do
+      client =
+        Humaans.new(access_token: "some api key", req_options: [retry: false, max_retries: 0])
+
+      assert client.req_options == [retry: false, max_retries: 0]
+    end
+
+    test "req_options coerces nil to []" do
+      client = Humaans.new(access_token: "some api key", req_options: nil)
+
+      assert client.req_options == []
+    end
+
+    test "req_options raises ArgumentError for non-keyword list" do
+      assert_raise ArgumentError, ~r/:req_options must be a keyword list/, fn ->
+        Humaans.new(access_token: "some api key", req_options: %{retry: false})
+      end
+
+      assert_raise ArgumentError, ~r/:req_options must be a keyword list/, fn ->
+        Humaans.new(access_token: "some api key", req_options: "not a list")
+      end
+
+      assert_raise ArgumentError, ~r/:req_options must be a keyword list/, fn ->
+        Humaans.new(access_token: "some api key", req_options: [1, 2, 3])
+      end
+    end
   end
 
   describe "struct" do

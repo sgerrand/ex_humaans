@@ -24,6 +24,9 @@ defmodule Humaans do
   * `:access_token` - Your Humaans API access token (required)
   * `:base_url` - The base URL for API requests (defaults to "https://app.humaans.io/api")
   * `:http_client` - The HTTP client module to use (defaults to `Humaans.HTTPClient.Req`)
+  * `:req_options` - Keyword list merged into the default `Req` client config
+    (e.g. `[connect_options: [timeout: 30_000], retry: :transient]`). Has no
+    effect when `:http_client` is overridden.
 
   ## Examples
 
@@ -40,6 +43,12 @@ defmodule Humaans do
       client = Humaans.new(
         access_token: "some-access-token",
         http_client: MyCustomHTTPClient
+      )
+
+      # Tune timeouts and retries on the default Req client
+      client = Humaans.new(
+        access_token: "some-access-token",
+        req_options: [connect_options: [timeout: 30_000], retry: :transient]
       )
 
       # Make API calls
@@ -78,11 +87,12 @@ defmodule Humaans do
   @type t :: %__MODULE__{
           access_token: String.t(),
           base_url: String.t(),
-          http_client: module()
+          http_client: module(),
+          req_options: keyword()
         }
 
   @enforce_keys [:access_token, :base_url, :http_client]
-  defstruct [:access_token, :base_url, :http_client]
+  defstruct [:access_token, :base_url, :http_client, req_options: []]
 
   @base_url "https://app.humaans.io/api"
 
@@ -92,6 +102,9 @@ defmodule Humaans do
   ## Options
     * `:access_token` - The access token to use for authentication (required)
     * `:base_url` - The base URL for API requests (defaults to #{@base_url})
+    * `:http_client` - HTTP client module (defaults to `Humaans.HTTPClient.Req`)
+    * `:req_options` - Keyword list merged into the default `Req` client
+      config. Ignored when `:http_client` is overridden.
 
   ## Examples
       iex> client = Humaans.new(access_token: "some-access-token")
@@ -103,12 +116,30 @@ defmodule Humaans do
     access_token = Keyword.fetch!(opts, :access_token)
     base_url = Keyword.get(opts, :base_url, @base_url)
     http_client = Keyword.get(opts, :http_client, Humaans.HTTPClient.Req)
+    req_options = validate_req_options(Keyword.get(opts, :req_options, []))
 
     struct!(__MODULE__,
       access_token: access_token,
       base_url: base_url,
-      http_client: http_client
+      http_client: http_client,
+      req_options: req_options
     )
+  end
+
+  defp validate_req_options(nil), do: []
+
+  defp validate_req_options(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError,
+            ":req_options must be a keyword list, got: #{inspect(opts)}"
+    end
+  end
+
+  defp validate_req_options(other) do
+    raise ArgumentError,
+          ":req_options must be a keyword list, got: #{inspect(other)}"
   end
 
   @doc """

@@ -7,9 +7,17 @@ defmodule Humaans.HTTPClient.Req do
 
   ## Customization
 
-  If you need to customize the Req client behavior (such as adding middleware,
-  changing timeouts, etc.), you can implement your own client module that builds
-  on this implementation while adding your specific modifications.
+  For most tweaks (timeouts, retries, plugins), pass `:req_options` directly
+  to `Humaans.new/1`. They are merged into the Req client config:
+
+      Humaans.new(
+        access_token: "...",
+        req_options: [connect_options: [timeout: 30_000], retry: :transient]
+      )
+
+  If you need to wrap or replace the entire request pipeline, implement your
+  own module satisfying `Humaans.HTTPClient.Behaviour` and pass it via
+  `:http_client`:
 
   ```elixir
   defmodule MyCustomReqClient do
@@ -17,11 +25,7 @@ defmodule Humaans.HTTPClient.Req do
 
     @impl true
     def request(client, opts) do
-      Req.new(
-        base_url: client.base_url,
-        auth: {:bearer, client.access_token},
-        connect_options: [timeout: 30_000] # Custom timeout
-      )
+      Req.new(base_url: client.base_url, auth: {:bearer, client.access_token})
       |> Req.merge(opts)
       # Add custom Req plugins or middleware here
       |> Req.request()
@@ -66,10 +70,18 @@ defmodule Humaans.HTTPClient.Req do
           opts
       end
 
-    Req.new(
-      base_url: client.base_url,
-      auth: {:bearer, client.access_token}
-    )
+    req_options =
+      (Map.get(client, :req_options) || [])
+      |> Keyword.drop([:base_url, :auth])
+
+    base =
+      Keyword.merge(req_options,
+        base_url: client.base_url,
+        auth: {:bearer, client.access_token}
+      )
+
+    base
+    |> Req.new()
     |> Req.merge(opts)
     |> Req.request()
   end
