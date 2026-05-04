@@ -78,12 +78,19 @@ defmodule Humaans.Webhooks do
   defp strip_prefix("sha256=" <> rest), do: rest
   defp strip_prefix(other), do: other
 
-  # Constant-time string comparison. :crypto.hash_equals/2 is available since
-  # OTP 25, but only accepts equal-length binaries; the length check has to
-  # happen first (and discloses length, which is unavoidable).
+  import Bitwise, only: [bor: 2, bxor: 2]
+
+  # Constant-time comparison over equal-length binaries. The length check has
+  # to happen first (and discloses length, which is unavoidable).
   defp secure_compare(a, b) when byte_size(a) == byte_size(b) do
-    :crypto.hash_equals(a, b)
+    compare_bytes(a, b, 0) === 0
   end
 
   defp secure_compare(_, _), do: false
+
+  defp compare_bytes(<<x, rest_a::binary>>, <<y, rest_b::binary>>, acc) do
+    compare_bytes(rest_a, rest_b, bor(acc, bxor(x, y)))
+  end
+
+  defp compare_bytes(<<>>, <<>>, acc), do: acc
 end
