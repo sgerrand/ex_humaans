@@ -125,6 +125,8 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.Compensations` - Work with compensation resources
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
+- `Humaans.Me` - Retrieve the authenticated user's profile (`GET /me`)
+- `Humaans.TokenInfo` - Retrieve metadata about the current access token (`GET /token-info`)
 
 ## Development
 
