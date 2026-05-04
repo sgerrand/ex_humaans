@@ -139,7 +139,7 @@ defmodule Humaans.CompaniesTest do
       end)
 
       assert {:ok, %Humaans.Resources.Company{id: "uoWtfpDIMI2IZ8doGK7kkCwS"}} =
-               Humaans.Companies.get(client, "123")
+               apply(Humaans.Companies, :get, [client, "123"])
     end
   end
 
