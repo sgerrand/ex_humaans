@@ -16,6 +16,17 @@ defmodule Humaans.ErrorTest do
                "not_found"
     end
 
+    test "formats api_error with api_message when present" do
+      error = %Humaans.Error{
+        type: :api_error,
+        status: 422,
+        api_message: "Validation failed",
+        body: %{"message" => "Validation failed"}
+      }
+
+      assert Exception.message(error) == "Humaans API error: HTTP 422 - Validation failed"
+    end
+
     test "formats network_error with reason" do
       error = %Humaans.Error{type: :network_error, reason: :econnrefused}
 
@@ -26,6 +37,65 @@ defmodule Humaans.ErrorTest do
       error = %Humaans.Error{type: :network_error, reason: %{reason: :timeout}}
 
       assert Exception.message(error) =~ "timeout"
+    end
+  end
+
+  describe "from_api_response/2" do
+    test "extracts code, name, message, and issues from structured body" do
+      body = %{
+        "id" => "req-1",
+        "code" => "ValidationError",
+        "name" => "BadRequest",
+        "message" => "email is required",
+        "issues" => [%{"path" => "email", "message" => "must be present"}]
+      }
+
+      error = Humaans.Error.from_api_response(422, body)
+
+      assert error.type == :api_error
+      assert error.status == 422
+      assert error.code == "ValidationError"
+      assert error.name == "BadRequest"
+      assert error.api_message == "email is required"
+      assert error.issues == [%{"path" => "email", "message" => "must be present"}]
+      assert error.body == body
+    end
+
+    test "leaves structured fields nil when body lacks them" do
+      body = %{"error" => "something"}
+      error = Humaans.Error.from_api_response(500, body)
+
+      assert error.type == :api_error
+      assert error.status == 500
+      assert error.code == nil
+      assert error.name == nil
+      assert error.api_message == nil
+      assert error.issues == nil
+      assert error.body == body
+    end
+
+    test "ignores non-string code/name/message values" do
+      body = %{"code" => 42, "name" => nil, "message" => %{}}
+      error = Humaans.Error.from_api_response(400, body)
+
+      assert error.code == nil
+      assert error.name == nil
+      assert error.api_message == nil
+    end
+
+    test "ignores non-list issues values" do
+      body = %{"issues" => "not a list"}
+      error = Humaans.Error.from_api_response(400, body)
+      assert error.issues == nil
+    end
+
+    test "handles non-map body" do
+      error = Humaans.Error.from_api_response(502, "Bad Gateway")
+
+      assert error.type == :api_error
+      assert error.status == 502
+      assert error.body == "Bad Gateway"
+      assert error.code == nil
     end
   end
 

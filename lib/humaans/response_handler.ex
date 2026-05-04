@@ -100,7 +100,7 @@ defmodule Humaans.ResponseHandler do
         {:ok, success_handler.(body)}
 
       {:ok, %{status: status, body: body}} ->
-        {:error, %Humaans.Error{type: :api_error, status: status, body: body}}
+        {:error, Humaans.Error.from_api_response(status, body)}
 
       {:error, reason} ->
         {:error, %Humaans.Error{type: :network_error, reason: reason}}
