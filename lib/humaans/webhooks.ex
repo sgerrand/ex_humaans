@@ -56,7 +56,11 @@ defmodule Humaans.Webhooks do
       iex> Humaans.Webhooks.verify_signature("body", nil, "secret")
       {:error, :missing_signature}
   """
-  @spec verify_signature(payload :: binary(), signature :: String.t() | nil, secret :: String.t()) ::
+  @spec verify_signature(
+          payload :: binary(),
+          signature :: String.t() | nil,
+          secret :: String.t() | nil
+        ) ::
           :ok | {:error, :invalid_signature | :missing_signature | :missing_secret}
   def verify_signature(_payload, nil, _secret), do: {:error, :missing_signature}
   def verify_signature(_payload, "", _secret), do: {:error, :missing_signature}
