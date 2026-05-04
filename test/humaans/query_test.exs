@@ -41,6 +41,11 @@ defmodule Humaans.QueryTest do
       assert params == [{:"createdAt[$gt]", "2025-01-01"}]
     end
 
+    test "eq accepts string field names" do
+      params = Query.new() |> Query.eq("companyId", "abc") |> Query.to_params()
+      assert params == [companyId: "abc"]
+    end
+
     test "preserves insertion order" do
       params =
         Query.new()
