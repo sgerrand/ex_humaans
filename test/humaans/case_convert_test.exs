@@ -70,6 +70,14 @@ defmodule Humaans.CaseConvertTest do
     test "non-string/atom keys pass through" do
       assert CaseConvert.to_camel_case_keys(%{1 => "x"}) == %{1 => "x"}
     end
+
+    test "preserves non-lowercase segments after underscore" do
+      assert CaseConvert.to_camel_case_keys(%{foo_BAR: "x"}) == %{fooBAR: "x"}
+    end
+
+    test "handles consecutive underscores" do
+      assert CaseConvert.to_camel_case_keys(%{foo__bar: "x"}) == %{fooBar: "x"}
+    end
   end
 
   describe "Client integration" do
