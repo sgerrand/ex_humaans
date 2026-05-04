@@ -211,7 +211,8 @@ defmodule Humaans do
   Access the query builder.
 
   Returns `Humaans.Query`, which provides `eq/3`, `in_/3`, `nin/3`, `gt/3`,
-  `gte/3`, `lt/3`, `lte/3`, and `to_params/1` for building filter queries.
+  `gte/3`, `lt/3`, `lte/3`, `merge/2`, and `to_params/1` for building
+  filter queries.
   """
   def query, do: Humaans.Query
 end
