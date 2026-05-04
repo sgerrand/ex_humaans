@@ -44,7 +44,7 @@ Humaans.new/1
 
 **Resource modules** — Each resource (`People`, `Companies`, `BankAccounts`, `Compensations`, `CompensationTypes`, `TimesheetEntries`, `TimesheetSubmissions`) exposes whichever of `list/2`, `create/2`, `retrieve/2`, `update/3`, `delete/2` the API supports. All return `{:ok, struct}` or `{:error, reason}`.
 
-**Resource structs** — Live in `lib/humaans/resources/`. Use `ExConstructor` for automatic camelCase→snake_case JSON mapping. `Humaans.Response` holds raw HTTP responses (`status`, `headers`, `body`).
+**Resource structs** — Live in `lib/humaans/resources/`. Use `ExConstructor` for automatic camelCase→snake_case JSON mapping. The HTTP-layer response (`status`, `headers`, `body`) is the raw map returned by `Req.Response`; `Humaans.ResponseHandler` consumes it directly.
 
 **Response handling** — `Humaans.ResponseHandler` unwraps `{"data": [...]}` envelopes and converts payloads to typed structs. On non-2xx responses it builds a `Humaans.Error` via `Humaans.Error.from_api_response/2`, which extracts the API's structured error fields onto the struct as `code`, `name`, `api_message` (from the API's `message`), and `issues`, while retaining the raw `body`.
 
