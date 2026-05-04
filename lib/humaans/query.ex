@@ -94,6 +94,9 @@ defmodule Humaans.Query do
 
   Useful for combining filters with pagination params. Atom keys in the
   keyword list are normalized to strings so the result is uniform.
+
+  Raises `ArgumentError` when given a list that is not a proper keyword
+  list (e.g. contains non-tuple elements or non-atom keys).
   """
   @spec merge(t(), keyword() | t()) :: t()
   def merge(%__MODULE__{params: params} = query, %__MODULE__{params: more}) do
@@ -101,6 +104,11 @@ defmodule Humaans.Query do
   end
 
   def merge(%__MODULE__{params: params} = query, more) when is_list(more) do
+    unless Keyword.keyword?(more) do
+      raise ArgumentError,
+            "Humaans.Query.merge/2 expects a keyword list, got: #{inspect(more)}"
+    end
+
     normalized = Enum.map(more, fn {k, v} -> {Atom.to_string(k), v} end)
     %{query | params: params ++ normalized}
   end

@@ -91,5 +91,17 @@ defmodule Humaans.QueryTest do
                {"createdAt[$gt]", "2025-01-01"}
              ]
     end
+
+    test "raises when given a non-keyword list" do
+      assert_raise ArgumentError, ~r/expects a keyword list/, fn ->
+        Query.merge(Query.new(), [1, 2, 3])
+      end
+    end
+
+    test "raises when list contains non-atom keys" do
+      assert_raise ArgumentError, ~r/expects a keyword list/, fn ->
+        Query.merge(Query.new(), [{"$limit", 50}])
+      end
+    end
   end
 end
