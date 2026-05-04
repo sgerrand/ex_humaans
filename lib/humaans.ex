@@ -192,6 +192,41 @@ defmodule Humaans do
   def timesheet_submissions, do: Humaans.TimesheetSubmissions
 
   @doc """
+  Access the Time Away API.
+
+  Returns the module that contains functions for working with time away resources.
+  """
+  def time_away, do: Humaans.TimeAway
+
+  @doc """
+  Access the Time Away Allocations API.
+
+  Returns the module that contains functions for working with time away allocation resources.
+  """
+  def time_away_allocations, do: Humaans.TimeAwayAllocations
+
+  @doc """
+  Access the Time Away Adjustments API.
+
+  Returns the module that contains functions for working with time away adjustment resources.
+  """
+  def time_away_adjustments, do: Humaans.TimeAwayAdjustments
+
+  @doc """
+  Access the Time Away Policies API.
+
+  Returns the module that contains functions for working with time away policy resources.
+  """
+  def time_away_policies, do: Humaans.TimeAwayPolicies
+
+  @doc """
+  Access the Time Away Types API.
+
+  Returns the module that contains functions for working with time away type resources.
+  """
+  def time_away_types, do: Humaans.TimeAwayTypes
+
+  @doc """
   Access pagination helpers.
 
   Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific

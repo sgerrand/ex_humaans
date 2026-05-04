@@ -121,6 +121,26 @@ defmodule HumaansTest do
     assert Humaans.timesheet_submissions() == Humaans.TimesheetSubmissions
   end
 
+  test "time_away/0 returns the TimeAway module" do
+    assert Humaans.time_away() == Humaans.TimeAway
+  end
+
+  test "time_away_allocations/0 returns the TimeAwayAllocations module" do
+    assert Humaans.time_away_allocations() == Humaans.TimeAwayAllocations
+  end
+
+  test "time_away_adjustments/0 returns the TimeAwayAdjustments module" do
+    assert Humaans.time_away_adjustments() == Humaans.TimeAwayAdjustments
+  end
+
+  test "time_away_policies/0 returns the TimeAwayPolicies module" do
+    assert Humaans.time_away_policies() == Humaans.TimeAwayPolicies
+  end
+
+  test "time_away_types/0 returns the TimeAwayTypes module" do
+    assert Humaans.time_away_types() == Humaans.TimeAwayTypes
+  end
+
   test "pagination/0 returns the Pagination module" do
     assert Humaans.pagination() == Humaans.Pagination
   end
