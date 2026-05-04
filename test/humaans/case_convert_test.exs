@@ -41,6 +41,18 @@ defmodule Humaans.CaseConvertTest do
     test "returns empty map unchanged" do
       assert CaseConvert.to_camel_case_keys(%{}) == %{}
     end
+
+    test "raises when two input keys normalize to the same camelCase key" do
+      assert_raise ArgumentError, ~r/normalize to "firstName"/, fn ->
+        CaseConvert.to_camel_case_keys(%{first_name: 1, firstName: 2})
+      end
+    end
+
+    test "raises on string/atom snake/camel collision" do
+      assert_raise ArgumentError, ~r/normalize to "firstName"/, fn ->
+        CaseConvert.to_camel_case_keys(%{"first_name" => 1, "firstName" => 2})
+      end
+    end
   end
 
   describe "to_camel_case_keys/1 with keyword lists" do

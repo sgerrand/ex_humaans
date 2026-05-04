@@ -22,12 +22,21 @@ defmodule Humaans.CaseConvert do
 
   Keyword list inputs are converted to string-keyed maps for the same
   reason and because keyword lists structurally require atom keys.
+
+  ## Collisions
+
+  When two distinct input keys normalize to the same camelCase string
+  (e.g. `%{first_name: 1, firstName: 2}`), `ArgumentError` is raised
+  rather than silently dropping a field.
   """
 
   @doc """
   Converts top-level keys of a map or keyword list from snake_case to
   camelCase. Output keys are always strings (see module doc).
   Non-map, non-list values are returned unchanged.
+
+  Raises `ArgumentError` when two distinct input keys normalize to the
+  same camelCase string.
   """
   @spec to_camel_case_keys(any()) :: any()
   def to_camel_case_keys(map) when is_map(map) and not is_struct(map) do
@@ -45,11 +54,22 @@ defmodule Humaans.CaseConvert do
   def to_camel_case_keys(other), do: other
 
   defp map_to_camel(map) do
-    Map.new(map, fn {k, v} -> {to_camel_key(k), v} end)
+    Enum.reduce(map, %{}, fn {k, v}, acc ->
+      new_k = to_camel_key(k)
+
+      if convertible?(k) and Map.has_key?(acc, new_k) do
+        raise ArgumentError,
+              "Humaans.CaseConvert: multiple input keys normalize to #{inspect(new_k)}"
+      end
+
+      Map.put(acc, new_k, v)
+    end)
   end
 
   defp keyword_list?([]), do: false
   defp keyword_list?(list), do: Enum.all?(list, fn el -> match?({k, _} when is_atom(k), el) end)
+
+  defp convertible?(k), do: is_atom(k) or is_binary(k)
 
   defp to_camel_key(key) when is_atom(key), do: key |> Atom.to_string() |> camelize()
   defp to_camel_key(key) when is_binary(key), do: camelize(key)
