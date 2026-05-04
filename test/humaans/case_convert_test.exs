@@ -1,7 +1,11 @@
 defmodule Humaans.CaseConvertTest do
   use ExUnit.Case, async: true
 
+  import Mox, only: [expect: 3, verify_on_exit!: 1]
+
   alias Humaans.CaseConvert
+
+  setup :verify_on_exit!
 
   describe "to_camel_case_keys/1 with maps" do
     test "converts snake_case atom keys to camelCase atoms" do
@@ -82,13 +86,11 @@ defmodule Humaans.CaseConvertTest do
 
   describe "Client integration" do
     setup do
-      client = Humaans.new(access_token: "tok", http_client: Humaans.MockHTTPClient)
-      Mox.verify_on_exit!(client)
-      [client: client]
+      [client: Humaans.new(access_token: "tok", http_client: Humaans.MockHTTPClient)]
     end
 
     test "POST converts snake_case body keys to camelCase", %{client: client} do
-      Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
         body = Keyword.fetch!(opts, :body)
         assert body == %{firstName: "Jane", lastName: "Doe"}
         {:ok, %{status: 201, body: %{"id" => "abc", "firstName" => "Jane"}}}
@@ -98,7 +100,7 @@ defmodule Humaans.CaseConvertTest do
     end
 
     test "PATCH converts snake_case body keys to camelCase", %{client: client} do
-      Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
         body = Keyword.fetch!(opts, :body)
         assert body == %{firstName: "Janet"}
         {:ok, %{status: 200, body: %{"id" => "abc", "firstName" => "Janet"}}}
