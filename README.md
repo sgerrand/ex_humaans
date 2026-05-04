@@ -125,6 +125,15 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.Compensations` - Work with compensation resources
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
+- `Humaans.IdentityDocuments` - Work with identity document resources
+- `Humaans.IdentityDocumentTypes` - List identity document types (read-only)
+- `Humaans.EmergencyContacts` - Work with emergency contact resources
+- `Humaans.Equipment` - Work with equipment resources
+- `Humaans.EquipmentTypes` - List equipment types (read-only)
+- `Humaans.EquipmentNames` - List equipment names (read-only)
+- `Humaans.PublicHolidayCalendars` - List public holiday calendars (read-only)
+- `Humaans.PublicHolidayCalendarDays` - Work with public holiday calendar day resources
+- `Humaans.PublicHolidays` - List public holidays (read-only)
 
 ## Development
 
