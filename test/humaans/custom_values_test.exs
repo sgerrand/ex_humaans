@@ -16,6 +16,7 @@ defmodule Humaans.CustomValuesTest do
     test "returns a list of custom values", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/custom-values"
 
@@ -63,8 +64,9 @@ defmodule Humaans.CustomValuesTest do
     end
 
     test "returns error when resource is not found", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         {:ok, %{status: 404, body: %{"error" => "Not found"}}}
       end)
 
@@ -73,8 +75,9 @@ defmodule Humaans.CustomValuesTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         {:error, "boom"}
       end)
 
@@ -94,6 +97,7 @@ defmodule Humaans.CustomValuesTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/custom-values"
 
@@ -110,6 +114,7 @@ defmodule Humaans.CustomValuesTest do
     test "retrieves a custom value", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/custom-values/cv_abc"
 
@@ -120,6 +125,7 @@ defmodule Humaans.CustomValuesTest do
              "id" => "cv_abc",
              "personId" => "person_abc",
              "customFieldId" => "cf_abc",
+             "resourceId" => "res_abc",
              "value" => "M",
              "createdAt" => "2025-01-01T08:44:42.000Z",
              "updatedAt" => "2025-01-01T14:52:21.000Z"
@@ -128,7 +134,13 @@ defmodule Humaans.CustomValuesTest do
       end)
 
       assert {:ok, response} = Humaans.CustomValues.retrieve(client, "cv_abc")
+      assert response.id == "cv_abc"
+      assert response.person_id == "person_abc"
+      assert response.custom_field_id == "cf_abc"
+      assert response.resource_id == "res_abc"
       assert response.value == "M"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
   end
 
@@ -139,6 +151,7 @@ defmodule Humaans.CustomValuesTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/custom-values/cv_abc"
 
@@ -147,6 +160,9 @@ defmodule Humaans.CustomValuesTest do
            status: 200,
            body: %{
              "id" => "cv_abc",
+             "personId" => "person_abc",
+             "customFieldId" => "cf_abc",
+             "resourceId" => "res_abc",
              "value" => "L",
              "createdAt" => "2025-01-01T08:44:42.000Z",
              "updatedAt" => "2025-01-02T08:44:42.000Z"
@@ -155,7 +171,13 @@ defmodule Humaans.CustomValuesTest do
       end)
 
       assert {:ok, response} = Humaans.CustomValues.update(client, "cv_abc", params)
+      assert response.id == "cv_abc"
+      assert response.person_id == "person_abc"
+      assert response.custom_field_id == "cf_abc"
+      assert response.resource_id == "res_abc"
       assert response.value == "L"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-02 08:44:42.000Z]
     end
   end
 
@@ -163,6 +185,7 @@ defmodule Humaans.CustomValuesTest do
     test "deletes a custom value", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :delete
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/custom-values/cv_abc"
 

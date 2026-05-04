@@ -8,7 +8,7 @@ defmodule Humaans.CustomValues do
     path: "/custom-values",
     struct: Humaans.Resources.CustomValue,
     doc_params: [
-      create: ~s(%{personId: "person_abc", customFieldId: "field_abc", value: "M"}),
+      create: ~s(%{personId: "person_abc", customFieldId: "cf_abc", value: "M"}),
       update: ~s(%{value: "L"})
     ]
 

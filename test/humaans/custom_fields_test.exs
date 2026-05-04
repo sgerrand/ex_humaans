@@ -112,8 +112,10 @@ defmodule Humaans.CustomFieldsTest do
            status: 200,
            body: %{
              "id" => "cf_abc",
+             "companyId" => "company_abc",
              "name" => "T-shirt size",
              "section" => "basics",
+             "resourceId" => "res_abc",
              "type" => "select",
              "config" => %{"choices" => ["S", "M", "L"]},
              "createdAt" => "2025-01-01T08:44:42.000Z",
@@ -123,7 +125,12 @@ defmodule Humaans.CustomFieldsTest do
       end)
 
       assert {:ok, response} = Humaans.CustomFields.retrieve(client, "cf_abc")
+      assert response.id == "cf_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "T-shirt size"
+      assert response.resource_id == "res_abc"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
   end
 
@@ -142,8 +149,10 @@ defmodule Humaans.CustomFieldsTest do
            status: 200,
            body: %{
              "id" => "cf_abc",
+             "companyId" => "company_abc",
              "name" => "Shirt size",
              "section" => "basics",
+             "resourceId" => "res_abc",
              "type" => "select",
              "config" => %{"choices" => ["S", "M", "L"]},
              "createdAt" => "2025-01-01T08:44:42.000Z",
@@ -153,7 +162,12 @@ defmodule Humaans.CustomFieldsTest do
       end)
 
       assert {:ok, response} = Humaans.CustomFields.update(client, "cf_abc", params)
+      assert response.id == "cf_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "Shirt size"
+      assert response.resource_id == "res_abc"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-02 08:44:42.000Z]
     end
   end
 
