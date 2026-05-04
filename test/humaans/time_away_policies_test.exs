@@ -16,6 +16,7 @@ defmodule Humaans.TimeAwayPoliciesTest do
     test "returns a list of time away policies", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/time-away-policies"
 
@@ -75,6 +76,7 @@ defmodule Humaans.TimeAwayPoliciesTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/time-away-policies"
 
@@ -91,6 +93,7 @@ defmodule Humaans.TimeAwayPoliciesTest do
     test "retrieves a time away policy", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
 
         assert Keyword.fetch!(opts, :url) ==
@@ -121,6 +124,7 @@ defmodule Humaans.TimeAwayPoliciesTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
 
         assert Keyword.fetch!(opts, :url) ==
@@ -148,6 +152,7 @@ defmodule Humaans.TimeAwayPoliciesTest do
     test "deletes a time away policy", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :delete
 
         assert Keyword.fetch!(opts, :url) ==
