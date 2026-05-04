@@ -55,7 +55,11 @@ defmodule Humaans.ClientTest do
         assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/test-path"
-        assert Keyword.fetch!(opts, :body) == params
+
+        assert Keyword.fetch!(opts, :body) == %{
+                 "name" => "Test Name",
+                 "email" => "test@example.com"
+               }
 
         {:ok, %{status: 201, body: %{"id" => "123", "name" => "Test Name"}}}
       end)
@@ -88,7 +92,7 @@ defmodule Humaans.ClientTest do
         assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/test-path"
-        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :body) == %{"name" => "Updated Name"}
 
         {:ok, %{status: 200, body: %{"id" => "123", "name" => "Updated Name"}}}
       end)

@@ -98,7 +98,16 @@ defmodule Humaans.CompensationsTest do
 
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert Keyword.fetch!(opts, :body) == params
+
+        assert Keyword.fetch!(opts, :body) == %{
+                 "personId" => "IL3vneCYhIx0xrR6um2sy2nW",
+                 "compensationTypeId" => "aejf1oD4bZWNtEEnbFwrYGVg",
+                 "amount" => "70000",
+                 "currency" => "EUR",
+                 "period" => "annual",
+                 "effectiveDate" => "2020-02-15"
+               }
+
         assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/compensations"
@@ -198,7 +207,16 @@ defmodule Humaans.CompensationsTest do
 
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert Keyword.fetch!(opts, :body) == params
+
+        assert Keyword.fetch!(opts, :body) == %{
+                 "compensationTypeId" => "aejf1oD4bZWNtEEnbFwrYGVg",
+                 "amount" => "70000",
+                 "currency" => "EUR",
+                 "period" => "annual",
+                 "note" => "Promotion",
+                 "effectiveDate" => "2020-02-15"
+               }
+
         assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
 

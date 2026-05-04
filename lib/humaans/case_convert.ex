@@ -8,35 +8,52 @@ defmodule Humaans.CaseConvert do
   the request side: callers can write `%{first_name: "Jane"}` instead of
   `%{firstName: "Jane"}` and have the value reach the wire correctly.
 
-  Already-camelCase keys are passed through unchanged, so existing code
-  that uses camelCase keys continues to work.
+  Already-camelCase keys are passed through unchanged (post-conversion to
+  string keys, see below).
+
+  ## Output keys are always strings
+
+  Input atom keys are converted to string keys in the output. This avoids
+  creating new atoms at runtime — atoms are not garbage-collected and
+  untrusted, high-cardinality keys could otherwise exhaust the atom table.
+  The same guidance applies in `Humaans.Query`. Req JSON-encodes
+  string-keyed maps transparently, so callers don't need to do anything
+  different.
+
+  Keyword list inputs are converted to string-keyed maps for the same
+  reason and because keyword lists structurally require atom keys.
   """
 
   @doc """
   Converts top-level keys of a map or keyword list from snake_case to
-  camelCase. Atom keys produce atom keys; string keys produce string keys.
+  camelCase. Output keys are always strings (see module doc).
   Non-map, non-list values are returned unchanged.
   """
   @spec to_camel_case_keys(any()) :: any()
   def to_camel_case_keys(map) when is_map(map) and not is_struct(map) do
-    Map.new(map, fn {k, v} -> {to_camel(k), v} end)
+    map_to_camel(map)
   end
 
   def to_camel_case_keys(list) when is_list(list) do
-    Enum.map(list, fn
-      {k, v} -> {to_camel(k), v}
-      other -> other
-    end)
+    if keyword_list?(list) do
+      list |> Map.new() |> map_to_camel()
+    else
+      list
+    end
   end
 
   def to_camel_case_keys(other), do: other
 
-  defp to_camel(key) when is_atom(key) do
-    key |> Atom.to_string() |> camelize() |> String.to_atom()
+  defp map_to_camel(map) do
+    Map.new(map, fn {k, v} -> {to_camel_key(k), v} end)
   end
 
-  defp to_camel(key) when is_binary(key), do: camelize(key)
-  defp to_camel(other), do: other
+  defp keyword_list?([]), do: false
+  defp keyword_list?(list), do: Enum.all?(list, fn el -> match?({k, _} when is_atom(k), el) end)
+
+  defp to_camel_key(key) when is_atom(key), do: key |> Atom.to_string() |> camelize()
+  defp to_camel_key(key) when is_binary(key), do: camelize(key)
+  defp to_camel_key(other), do: other
 
   defp camelize(string) do
     [head | tail] = String.split(string, "_")
