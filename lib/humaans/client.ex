@@ -128,9 +128,9 @@ defmodule Humaans.Client do
   * `{:ok, response}` - Successful response with created resource data
   * `{:error, reason}` - Error response
   """
-  @spec post(client :: map(), path :: String.t(), params :: keyword()) :: response()
+  @spec post(client :: map(), path :: String.t(), params :: keyword() | map()) :: response()
   def post(client, path, params \\ []) do
-    request(:post, path, client, body: params)
+    request(:post, path, client, body: Humaans.CaseConvert.to_camel_case_keys(params))
   end
 
   @doc """
@@ -149,9 +149,9 @@ defmodule Humaans.Client do
   * `{:ok, response}` - Successful response with updated resource data
   * `{:error, reason}` - Error response
   """
-  @spec patch(client :: map(), path :: String.t(), params :: keyword()) :: response()
+  @spec patch(client :: map(), path :: String.t(), params :: keyword() | map()) :: response()
   def patch(client, path, params \\ []) do
-    request(:patch, path, client, body: params)
+    request(:patch, path, client, body: Humaans.CaseConvert.to_camel_case_keys(params))
   end
 
   defp build_headers, do: [{"Accept", "application/json"}]

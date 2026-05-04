@@ -101,7 +101,12 @@ defmodule Humaans.TimesheetSubmissionsTest do
 
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert Keyword.fetch!(opts, :body) == params
+
+        assert Keyword.fetch!(opts, :body) == %{
+                 "personId" => "IL3vneCYhIx0xrR6um2sy2nW",
+                 "startDate" => "2020-04-01"
+               }
+
         assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/timesheet-submissions"
@@ -190,7 +195,7 @@ defmodule Humaans.TimesheetSubmissionsTest do
 
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
-        assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :body) == %{"status" => "pending"}
         assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
 
