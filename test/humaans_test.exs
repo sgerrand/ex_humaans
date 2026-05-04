@@ -124,4 +124,8 @@ defmodule HumaansTest do
   test "pagination/0 returns the Pagination module" do
     assert Humaans.pagination() == Humaans.Pagination
   end
+
+  test "webhooks/0 returns the Webhooks module" do
+    assert Humaans.webhooks() == Humaans.Webhooks
+  end
 end

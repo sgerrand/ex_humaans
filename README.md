@@ -75,6 +75,19 @@ client = Humaans.new(access_token: "YOUR_ACCESS_TOKEN")
 
 The default HTTP client retries transient failures (status 408, 429, 500, 502, 503, 504) up to 3 times with exponential backoff, honouring the `Retry-After` header. To opt out, pass `req_options: [retry: false]` to `Humaans.new/1`.
 
+### Webhooks
+
+Verify HMAC-SHA256 signatures on incoming webhook deliveries with `Humaans.Webhooks.verify_signature/3`. Pass the **raw** request body (not the re-encoded JSON):
+
+```elixir
+case Humaans.Webhooks.verify_signature(raw_body, signature_header, secret) do
+  :ok -> handle_event(raw_body)
+  {:error, :invalid_signature} -> {:error, :unauthorized}
+  {:error, :missing_signature} -> {:error, :unauthorized}
+  {:error, :missing_secret} -> {:error, :misconfigured}
+end
+```
+
 ### Available resources
 
 - `Humaans.People` - Work with people resources

@@ -198,4 +198,12 @@ defmodule Humaans do
   page and `stream/3` for lazily iterating all results.
   """
   def pagination, do: Humaans.Pagination
+
+  @doc """
+  Access webhook helpers.
+
+  Returns `Humaans.Webhooks`, which provides `verify_signature/3` for
+  verifying HMAC-SHA256 webhook signatures.
+  """
+  def webhooks, do: Humaans.Webhooks
 end
