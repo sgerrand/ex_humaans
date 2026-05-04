@@ -192,6 +192,13 @@ defmodule Humaans do
   def timesheet_submissions, do: Humaans.TimesheetSubmissions
 
   @doc """
+  Access the Webhooks API.
+
+  Returns the module that contains functions for working with webhook resources.
+  """
+  def webhooks, do: Humaans.Webhooks
+
+  @doc """
   Access pagination helpers.
 
   Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific

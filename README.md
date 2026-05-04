@@ -125,6 +125,7 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.Compensations` - Work with compensation resources
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
+- `Humaans.Webhooks` - Work with webhook subscription resources
 
 ## Development
 
