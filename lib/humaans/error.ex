@@ -57,7 +57,7 @@ defmodule Humaans.Error do
   @type t :: %__MODULE__{
           type: error_type(),
           status: non_neg_integer() | nil,
-          body: map() | nil,
+          body: any(),
           reason: any(),
           code: String.t() | nil,
           name: String.t() | nil,
@@ -111,8 +111,11 @@ defmodule Humaans.Error do
 
   defp extract_issues(body) do
     case Map.get(body, "issues") do
-      v when is_list(v) -> v
-      _ -> nil
+      v when is_list(v) ->
+        if Enum.all?(v, &is_map/1), do: v, else: nil
+
+      _ ->
+        nil
     end
   end
 end
