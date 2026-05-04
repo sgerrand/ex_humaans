@@ -84,6 +84,9 @@ The default HTTP client retries transient failures (status 408, 429, 500, 502, 5
 - `Humaans.Compensations` - Work with compensation resources
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
+- `Humaans.JobRoles` - Work with job role resources
+- `Humaans.Locations` - Work with location resources
+- `Humaans.Spaces` - Work with space (team/department) resources
 
 ## Development
 
