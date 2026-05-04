@@ -125,6 +125,13 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.Compensations` - Work with compensation resources
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
+- `Humaans.AuditEvents` - Retrieve audit event resources (read-only)
+- `Humaans.Roles` - List and retrieve role resources (read-only)
+- `Humaans.RoleMembers` - List and retrieve role member resources (read-only)
+- `Humaans.RolePermissions` - List and retrieve role permission resources (read-only)
+- `Humaans.Tasks` - List and retrieve task resources (read-only)
+- `Humaans.OKRs` - List and retrieve OKR resources (read-only)
+- `Humaans.WebhookEvents` - List and retrieve webhook event resources (read-only)
 
 ## Development
 

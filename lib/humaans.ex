@@ -192,6 +192,55 @@ defmodule Humaans do
   def timesheet_submissions, do: Humaans.TimesheetSubmissions
 
   @doc """
+  Access the Audit Events API.
+
+  Returns the module that contains functions for working with audit event resources.
+  """
+  def audit_events, do: Humaans.AuditEvents
+
+  @doc """
+  Access the Roles API.
+
+  Returns the module that contains functions for working with role resources.
+  """
+  def roles, do: Humaans.Roles
+
+  @doc """
+  Access the Role Members API.
+
+  Returns the module that contains functions for working with role member resources.
+  """
+  def role_members, do: Humaans.RoleMembers
+
+  @doc """
+  Access the Role Permissions API.
+
+  Returns the module that contains functions for working with role permission resources.
+  """
+  def role_permissions, do: Humaans.RolePermissions
+
+  @doc """
+  Access the Tasks API.
+
+  Returns the module that contains functions for working with task resources.
+  """
+  def tasks, do: Humaans.Tasks
+
+  @doc """
+  Access the OKRs API.
+
+  Returns the module that contains functions for working with OKR resources.
+  """
+  def okrs, do: Humaans.OKRs
+
+  @doc """
+  Access the Webhook Events API.
+
+  Returns the module that contains functions for working with webhook event resources.
+  """
+  def webhook_events, do: Humaans.WebhookEvents
+
+  @doc """
   Access pagination helpers.
 
   Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
