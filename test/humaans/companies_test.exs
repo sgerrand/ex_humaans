@@ -138,8 +138,9 @@ defmodule Humaans.CompaniesTest do
          }}
       end)
 
-      assert {:ok, %Humaans.Resources.Company{id: "uoWtfpDIMI2IZ8doGK7kkCwS"}} =
-               apply(Humaans.Companies, :get, [client, "123"])
+      # credo:disable-for-next-line Credo.Check.Refactor.Apply
+      result = apply(Humaans.Companies, :get, [client, "123"])
+      assert {:ok, %Humaans.Resources.Company{id: "uoWtfpDIMI2IZ8doGK7kkCwS"}} = result
     end
   end
 
