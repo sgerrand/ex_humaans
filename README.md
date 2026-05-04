@@ -125,6 +125,13 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.Compensations` - Work with compensation resources
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
+- `Humaans.PerformanceCycles` - List and retrieve performance cycle resources (read-only)
+- `Humaans.PerformanceTemplates` - List and retrieve performance template resources (read-only)
+- `Humaans.PerformanceReviews` - List and retrieve performance review resources (read-only)
+- `Humaans.PerformanceInstances` - List and retrieve performance instance resources (read-only)
+- `Humaans.PerformanceRatings` - Retrieve performance rating resources (read-only)
+- `Humaans.PerformanceSummaries` - Retrieve performance summary resources (read-only)
+- `Humaans.PerformanceCyclePeerNominations` - Retrieve peer nomination resources (read-only)
 
 ## Development
 
