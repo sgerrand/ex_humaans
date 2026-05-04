@@ -119,6 +119,7 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 ### Available resources
 
 - `Humaans.People` - Work with people resources
+- `Humaans.AuditEvents` - Retrieve audit event resources (read-only)
 - `Humaans.BankAccounts` - Work with bank account resources
 - `Humaans.Companies` - Work with company resources
 - `Humaans.CompensationTypes` - Work with compensation type resources
@@ -137,10 +138,15 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.JobRoles` - Work with job role resources
 - `Humaans.Locations` - Work with location resources
 - `Humaans.Me` - Retrieve the authenticated user's profile (`GET /me`)
+- `Humaans.OKRs` - List and retrieve OKR resources (read-only)
 - `Humaans.PublicHolidayCalendarDays` - Work with public holiday calendar day resources
 - `Humaans.PublicHolidayCalendars` - List public holiday calendars (read-only)
 - `Humaans.PublicHolidays` - List public holidays (read-only)
+- `Humaans.RoleMembers` - List and retrieve role member resources (read-only)
+- `Humaans.RolePermissions` - List and retrieve role permission resources (read-only)
+- `Humaans.Roles` - List and retrieve role resources (read-only)
 - `Humaans.Spaces` - Work with space (team/department) resources
+- `Humaans.Tasks` - List and retrieve task resources (read-only)
 - `Humaans.TimeAwayAdjustments` - Work with time away adjustment resources
 - `Humaans.TimeAwayAllocations` - Work with time away allocation resources
 - `Humaans.TimeAwayPolicies` - Work with time away policy resources
@@ -149,6 +155,7 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
 - `Humaans.TokenInfo` - Retrieve metadata about the current access token (`GET /token-info`)
+- `Humaans.WebhookEvents` - List and retrieve webhook event resources (read-only)
 - `Humaans.Webhooks` - Work with webhook subscription resources
 - `Humaans.WorkingPatternAllocations` - Work with working pattern allocation resources
 - `Humaans.WorkingPatterns` - Work with working pattern resources
