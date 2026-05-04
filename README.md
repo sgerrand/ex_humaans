@@ -130,6 +130,8 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.TimeAwayAdjustments` - Work with time away adjustment resources
 - `Humaans.TimeAwayPolicies` - Work with time away policy resources
 - `Humaans.TimeAwayTypes` - Work with time away type resources
+- `Humaans.CustomFields` - Work with custom field definitions
+- `Humaans.CustomValues` - Work with custom value records
 
 ## Development
 

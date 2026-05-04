@@ -227,6 +227,20 @@ defmodule Humaans do
   def time_away_types, do: Humaans.TimeAwayTypes
 
   @doc """
+  Access the Custom Fields API.
+
+  Returns the module that contains functions for working with custom field resources.
+  """
+  def custom_fields, do: Humaans.CustomFields
+
+  @doc """
+  Access the Custom Values API.
+
+  Returns the module that contains functions for working with custom value resources.
+  """
+  def custom_values, do: Humaans.CustomValues
+
+  @doc """
   Access pagination helpers.
 
   Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
