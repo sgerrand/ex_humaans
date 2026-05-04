@@ -192,6 +192,27 @@ defmodule Humaans do
   def timesheet_submissions, do: Humaans.TimesheetSubmissions
 
   @doc """
+  Access the Documents API.
+
+  Returns the module that contains functions for working with document resources.
+  """
+  def documents, do: Humaans.Documents
+
+  @doc """
+  Access the Document Types API.
+
+  Returns the module that contains functions for working with document type resources.
+  """
+  def document_types, do: Humaans.DocumentTypes
+
+  @doc """
+  Access the Document Folders API.
+
+  Returns the module that contains functions for working with document folder resources.
+  """
+  def document_folders, do: Humaans.DocumentFolders
+
+  @doc """
   Access pagination helpers.
 
   Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
