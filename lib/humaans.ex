@@ -200,10 +200,11 @@ defmodule Humaans do
   def pagination, do: Humaans.Pagination
 
   @doc """
-  Access webhook helpers.
+  Access the Webhooks API.
 
-  Returns `Humaans.Webhooks`, which provides `verify_signature/3` for
-  verifying HMAC-SHA256 webhook signatures.
+  Returns `Humaans.Webhooks`, which provides standard CRUD over
+  `/api/webhooks` plus `verify_signature/3` for verifying HMAC-SHA256
+  signatures on incoming deliveries.
   """
   def webhooks, do: Humaans.Webhooks
 
