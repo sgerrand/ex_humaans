@@ -141,6 +141,20 @@ defmodule Humaans.PaginationTest do
       assert results == []
     end
 
+    test "uses default page size when not specified", %{client: client} do
+      Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
+        assert opts[:params] == ["$limit": 100, "$skip": 0]
+        {:ok, %{status: 200, body: %{"data" => []}}}
+      end)
+
+      results =
+        client
+        |> Humaans.Pagination.stream(&Humaans.People.list/2)
+        |> Enum.to_list()
+
+      assert results == []
+    end
+
     test "is lazy and only fetches pages on demand", %{client: client} do
       # Only one request should be made because we only take 1 item
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, _opts ->
