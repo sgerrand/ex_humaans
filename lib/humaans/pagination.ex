@@ -40,7 +40,7 @@ defmodule Humaans.Pagination do
 
   """
 
-  @default_page_size 20
+  @default_page_size 100
 
   @type page_result(resource) :: %{
           data: [resource],

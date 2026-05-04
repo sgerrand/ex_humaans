@@ -44,12 +44,12 @@ defmodule Humaans.PaginationTest do
 
     test "uses default page size when not specified", %{client: client} do
       Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
-        assert opts[:params] == ["$limit": 20, "$skip": 0]
+        assert opts[:params] == ["$limit": 100, "$skip": 0]
         {:ok, %{status: 200, body: %{"data" => []}}}
       end)
 
       assert {:ok, result} = Humaans.Pagination.page(client, &Humaans.People.list/2, 1)
-      assert result.page_size == 20
+      assert result.page_size == 100
     end
 
     test "passes extra options as query params", %{client: client} do
@@ -136,6 +136,20 @@ defmodule Humaans.PaginationTest do
       results =
         client
         |> Humaans.Pagination.stream(&Humaans.People.list/2, page_size: 10)
+        |> Enum.to_list()
+
+      assert results == []
+    end
+
+    test "uses default page size when not specified", %{client: client} do
+      Mox.expect(Humaans.MockHTTPClient, :request, fn _client, opts ->
+        assert opts[:params] == ["$limit": 100, "$skip": 0]
+        {:ok, %{status: 200, body: %{"data" => []}}}
+      end)
+
+      results =
+        client
+        |> Humaans.Pagination.stream(&Humaans.People.list/2)
         |> Enum.to_list()
 
       assert results == []
