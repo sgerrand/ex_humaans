@@ -192,6 +192,20 @@ defmodule Humaans do
   def timesheet_submissions, do: Humaans.TimesheetSubmissions
 
   @doc """
+  Access the Working Patterns API.
+
+  Returns the module that contains functions for working with working pattern resources.
+  """
+  def working_patterns, do: Humaans.WorkingPatterns
+
+  @doc """
+  Access the Working Pattern Allocations API.
+
+  Returns the module that contains functions for working with working pattern allocation resources.
+  """
+  def working_pattern_allocations, do: Humaans.WorkingPatternAllocations
+
+  @doc """
   Access pagination helpers.
 
   Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
