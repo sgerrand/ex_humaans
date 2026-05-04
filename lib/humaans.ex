@@ -192,6 +192,69 @@ defmodule Humaans do
   def timesheet_submissions, do: Humaans.TimesheetSubmissions
 
   @doc """
+  Access the Identity Documents API.
+
+  Returns the module that contains functions for working with identity document resources.
+  """
+  def identity_documents, do: Humaans.IdentityDocuments
+
+  @doc """
+  Access the Identity Document Types API.
+
+  Returns the module that contains functions for working with identity document type resources.
+  """
+  def identity_document_types, do: Humaans.IdentityDocumentTypes
+
+  @doc """
+  Access the Emergency Contacts API.
+
+  Returns the module that contains functions for working with emergency contact resources.
+  """
+  def emergency_contacts, do: Humaans.EmergencyContacts
+
+  @doc """
+  Access the Equipment API.
+
+  Returns the module that contains functions for working with equipment resources.
+  """
+  def equipment, do: Humaans.Equipment
+
+  @doc """
+  Access the Equipment Types API.
+
+  Returns the module that contains functions for working with equipment type resources.
+  """
+  def equipment_types, do: Humaans.EquipmentTypes
+
+  @doc """
+  Access the Equipment Names API.
+
+  Returns the module that contains functions for working with equipment name resources.
+  """
+  def equipment_names, do: Humaans.EquipmentNames
+
+  @doc """
+  Access the Public Holiday Calendars API.
+
+  Returns the module that contains functions for working with public holiday calendar resources.
+  """
+  def public_holiday_calendars, do: Humaans.PublicHolidayCalendars
+
+  @doc """
+  Access the Public Holiday Calendar Days API.
+
+  Returns the module that contains functions for working with public holiday calendar day resources.
+  """
+  def public_holiday_calendar_days, do: Humaans.PublicHolidayCalendarDays
+
+  @doc """
+  Access the Public Holidays API.
+
+  Returns the module that contains functions for working with public holiday resources.
+  """
+  def public_holidays, do: Humaans.PublicHolidays
+
+  @doc """
   Access pagination helpers.
 
   Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
