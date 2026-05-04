@@ -113,6 +113,9 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.Compensations` - Work with compensation resources
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
+- `Humaans.JobRoles` - Work with job role resources
+- `Humaans.Locations` - Work with location resources
+- `Humaans.Spaces` - Work with space (team/department) resources
 
 ## Development
 
