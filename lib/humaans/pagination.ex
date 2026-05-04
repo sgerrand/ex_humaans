@@ -2,7 +2,7 @@ defmodule Humaans.Pagination do
   @moduledoc """
   Helpers for paginating through Humaans API list endpoints.
 
-  The Humaans API uses offset-based pagination via `limit` and `skip`
+  The Humaans API uses offset-based pagination via `$limit` and `$skip`
   parameters. All list endpoints support these parameters.
 
   ## Page-by-page iteration
@@ -78,7 +78,7 @@ defmodule Humaans.Pagination do
     extra_params = Keyword.drop(opts, [:page_size])
 
     skip = (page_number - 1) * page_size
-    params = Keyword.merge(extra_params, limit: page_size, skip: skip)
+    params = Keyword.merge(extra_params, "$limit": page_size, "$skip": skip)
 
     case list_fn.(client, params) do
       {:ok, data} when is_list(data) ->

@@ -94,7 +94,7 @@ defmodule Humaans.Client do
 
   * `client` - The Humaans client struct
   * `path` - API endpoint path (e.g., "/people")
-  * `params` - Query parameters as keyword list (e.g., [limit: 10, skip: 20])
+  * `params` - Query parameters as keyword list (e.g., ["$limit": 10, "$skip": 20])
 
   ## Returns
 
