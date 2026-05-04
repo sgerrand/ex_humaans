@@ -206,6 +206,20 @@ defmodule Humaans do
   def document_folders, do: Humaans.DocumentFolders
 
   @doc """
+  Access the Job Roles API.
+
+  Returns the module that contains functions for working with job role resources.
+  """
+  def job_roles, do: Humaans.JobRoles
+
+  @doc """
+  Access the Locations API.
+
+  Returns the module that contains functions for working with location resources.
+  """
+  def locations, do: Humaans.Locations
+
+  @doc """
   Access the current user's profile.
 
   Returns `Humaans.Me`, which exposes `get/1` for retrieving the
@@ -236,6 +250,13 @@ defmodule Humaans do
   filter queries.
   """
   def query, do: Humaans.Query
+
+  @doc """
+  Access the Spaces API.
+
+  Returns the module that contains functions for working with space (team/department) resources.
+  """
+  def spaces, do: Humaans.Spaces
 
   @doc """
   Access the Timesheet Entries API.

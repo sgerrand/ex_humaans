@@ -128,7 +128,10 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.DocumentFolders` - Work with document folder resources
 - `Humaans.DocumentTypes` - Work with document type resources
 - `Humaans.Documents` - Work with document resources
+- `Humaans.JobRoles` - Work with job role resources
+- `Humaans.Locations` - Work with location resources
 - `Humaans.Me` - Retrieve the authenticated user's profile (`GET /me`)
+- `Humaans.Spaces` - Work with space (team/department) resources
 - `Humaans.TimeAwayAdjustments` - Work with time away adjustment resources
 - `Humaans.TimeAwayAllocations` - Work with time away allocation resources
 - `Humaans.TimeAwayPolicies` - Work with time away policy resources
