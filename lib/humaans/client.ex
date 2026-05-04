@@ -94,14 +94,20 @@ defmodule Humaans.Client do
 
   * `client` - The Humaans client struct
   * `path` - API endpoint path (e.g., "/people")
-  * `params` - Query parameters as keyword list (e.g., ["$limit": 10, "$skip": 20])
+  * `params` - Query parameters. Accepts a keyword list
+    (e.g. `["$limit": 10, "$skip": 20]`), a list of `{string, value}` tuples
+    (as produced by `Humaans.Query.to_params/1`), or a map.
 
   ## Returns
 
   * `{:ok, response}` - Successful response with retrieved data
   * `{:error, reason}` - Error response
   """
-  @spec get(client :: map(), path :: String.t(), params :: keyword()) :: response()
+  @spec get(
+          client :: map(),
+          path :: String.t(),
+          params :: keyword() | [{String.t(), term()}] | map()
+        ) :: response()
   def get(client, path, params) do
     request(:get, path, client, params: params)
   end

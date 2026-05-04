@@ -9,6 +9,13 @@ defmodule Humaans.Query do
   `["status[$in]": ["active"]]`. This module provides a small chainable
   builder so callers can express filters readably.
 
+  Field names and operator suffixes are stored as **strings** in the
+  resulting params list. This avoids creating new atoms at runtime —
+  important because atoms are not garbage-collected and untrusted or
+  high-cardinality field names could otherwise exhaust the atom table.
+  Req accepts string-keyed params transparently, so callers do not need
+  to do anything different.
+
   ## Example
 
       query =
@@ -32,8 +39,7 @@ defmodule Humaans.Query do
 
   Field names are accepted as atoms or strings. The Humaans API uses
   camelCase field names (`companyId`, `createdAt`, etc.) — pass them as
-  written. Atom keys with the `$` prefix or brackets are not required:
-  the builder produces them for you.
+  written. Operator-suffixed keys are produced for you.
 
   Use `merge/2` to combine a query with other params (e.g. pagination):
 
@@ -45,7 +51,7 @@ defmodule Humaans.Query do
 
   @type field :: atom() | String.t()
   @type value :: any()
-  @type t :: %__MODULE__{params: [{atom(), value()}]}
+  @type t :: %__MODULE__{params: [{String.t(), value()}]}
 
   defstruct params: []
 
@@ -86,7 +92,8 @@ defmodule Humaans.Query do
   @doc """
   Merges arbitrary params (keyword list or another query) into this query.
 
-  Useful for combining filters with pagination params.
+  Useful for combining filters with pagination params. Atom keys in the
+  keyword list are normalized to strings so the result is uniform.
   """
   @spec merge(t(), keyword() | t()) :: t()
   def merge(%__MODULE__{params: params} = query, %__MODULE__{params: more}) do
@@ -94,25 +101,23 @@ defmodule Humaans.Query do
   end
 
   def merge(%__MODULE__{params: params} = query, more) when is_list(more) do
-    %{query | params: params ++ more}
+    normalized = Enum.map(more, fn {k, v} -> {Atom.to_string(k), v} end)
+    %{query | params: params ++ normalized}
   end
 
   @doc """
-  Returns the query as a keyword list suitable for passing as `params` to a
-  resource list function.
+  Returns the query as a list of `{string_key, value}` tuples suitable for
+  passing as `params` to a resource list function.
   """
-  @spec to_params(t()) :: keyword()
+  @spec to_params(t()) :: [{String.t(), value()}]
   def to_params(%__MODULE__{params: params}), do: params
 
   defp append(%__MODULE__{params: params} = query, key, value) do
     %{query | params: params ++ [{key, value}]}
   end
 
-  defp key(field) when is_atom(field), do: field
-  defp key(field) when is_binary(field), do: String.to_atom(field)
+  defp key(field) when is_atom(field), do: Atom.to_string(field)
+  defp key(field) when is_binary(field), do: field
 
-  defp op_key(field, op) do
-    name = field |> to_string() |> Kernel.<>("[$#{op}]")
-    String.to_atom(name)
-  end
+  defp op_key(field, op), do: "#{key(field)}[$#{op}]"
 end
