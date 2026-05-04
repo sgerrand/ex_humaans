@@ -128,4 +128,8 @@ defmodule HumaansTest do
   test "webhooks/0 returns the Webhooks module" do
     assert Humaans.webhooks() == Humaans.Webhooks
   end
+
+  test "query/0 returns the Query module" do
+    assert Humaans.query() == Humaans.Query
+  end
 end
