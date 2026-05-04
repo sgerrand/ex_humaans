@@ -116,7 +116,7 @@ defmodule Humaans do
     access_token = Keyword.fetch!(opts, :access_token)
     base_url = Keyword.get(opts, :base_url, @base_url)
     http_client = Keyword.get(opts, :http_client, Humaans.HTTPClient.Req)
-    req_options = Keyword.get(opts, :req_options, [])
+    req_options = validate_req_options(Keyword.get(opts, :req_options, []))
 
     struct!(__MODULE__,
       access_token: access_token,
@@ -124,6 +124,22 @@ defmodule Humaans do
       http_client: http_client,
       req_options: req_options
     )
+  end
+
+  defp validate_req_options(nil), do: []
+
+  defp validate_req_options(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError,
+            ":req_options must be a keyword list, got: #{inspect(opts)}"
+    end
+  end
+
+  defp validate_req_options(other) do
+    raise ArgumentError,
+          ":req_options must be a keyword list, got: #{inspect(other)}"
   end
 
   @doc """
