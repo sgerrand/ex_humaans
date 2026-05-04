@@ -77,7 +77,7 @@ The default HTTP client retries transient failures (status 408, 429, 500, 502, 5
 
 ### Snake_case request bodies
 
-You can write request bodies in idiomatic snake_case — `Humaans.Client` converts top-level keys to camelCase before sending them to the API. Already-camelCase keys (atom or string) pass through unchanged, so existing code that uses camelCase continues to work.
+You can write request bodies in idiomatic snake_case — `Humaans.Client` converts top-level keys to camelCase before sending them to the API. Already-camelCase keys keep their casing, so existing code that uses camelCase continues to work.
 
 ```elixir
 # Both of these send {"firstName": "Jane", "lastName": "Doe"}:
@@ -85,7 +85,7 @@ Humaans.People.create(client, %{first_name: "Jane", last_name: "Doe"})
 Humaans.People.create(client, %{firstName: "Jane", lastName: "Doe"})
 ```
 
-Only top-level keys are converted; nested maps inside a body are left as-is.
+Atom and string input keys are normalized to string keys in the converted body (this avoids creating new atoms at runtime). Req JSON-encodes string-keyed maps transparently. Only top-level keys are converted; nested maps inside a body are left as-is.
 
 ### Webhooks
 

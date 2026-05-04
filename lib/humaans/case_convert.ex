@@ -8,17 +8,21 @@ defmodule Humaans.CaseConvert do
   the request side: callers can write `%{first_name: "Jane"}` instead of
   `%{firstName: "Jane"}` and have the value reach the wire correctly.
 
-  Already-camelCase keys are passed through unchanged (post-conversion to
-  string keys, see below).
+  Already-camelCase keys are passed through with their case preserved
+  (atom keys still become strings, see below).
 
-  ## Output keys are always strings
+  ## Atom and string keys are normalized to strings
 
-  Input atom keys are converted to string keys in the output. This avoids
-  creating new atoms at runtime — atoms are not garbage-collected and
-  untrusted, high-cardinality keys could otherwise exhaust the atom table.
-  The same guidance applies in `Humaans.Query`. Req JSON-encodes
-  string-keyed maps transparently, so callers don't need to do anything
-  different.
+  Input atom and string keys are emitted as string keys in the output.
+  This avoids creating new atoms at runtime — atoms are not
+  garbage-collected and untrusted, high-cardinality keys could otherwise
+  exhaust the atom table. The same guidance applies in `Humaans.Query`.
+  Req JSON-encodes string-keyed maps transparently, so callers don't
+  need to do anything different.
+
+  Keys that are neither atoms nor strings (e.g. integer keys) are passed
+  through unchanged — they aren't camelCase candidates and don't pose an
+  atom-table risk.
 
   Keyword list inputs are converted to string-keyed maps for the same
   reason and because keyword lists structurally require atom keys.
@@ -32,11 +36,12 @@ defmodule Humaans.CaseConvert do
 
   @doc """
   Converts top-level keys of a map or keyword list from snake_case to
-  camelCase. Output keys are always strings (see module doc).
-  Non-map, non-list values are returned unchanged.
+  camelCase. Atom and string keys are normalized to strings; other key
+  types pass through unchanged (see module doc). Non-map, non-list
+  values are returned unchanged.
 
-  Raises `ArgumentError` when two distinct input keys normalize to the
-  same camelCase string.
+  Raises `ArgumentError` when two distinct atom/string input keys
+  normalize to the same camelCase string.
   """
   @spec to_camel_case_keys(any()) :: any()
   def to_camel_case_keys(map) when is_map(map) and not is_struct(map) do
