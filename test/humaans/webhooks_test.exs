@@ -21,6 +21,16 @@ defmodule Humaans.WebhooksTest do
       assert Humaans.Webhooks.verify_signature(@body, sig, @secret) == :ok
     end
 
+    test "accepts an uppercase SHA256= prefixed signature" do
+      sig = "SHA256=" <> signature_for(@body, @secret)
+      assert Humaans.Webhooks.verify_signature(@body, sig, @secret) == :ok
+    end
+
+    test "accepts a mixed-case Sha256= prefixed signature" do
+      sig = "Sha256=" <> signature_for(@body, @secret)
+      assert Humaans.Webhooks.verify_signature(@body, sig, @secret) == :ok
+    end
+
     test "is case-insensitive on the hex digest" do
       sig = signature_for(@body, @secret) |> String.upcase()
       assert Humaans.Webhooks.verify_signature(@body, sig, @secret) == :ok

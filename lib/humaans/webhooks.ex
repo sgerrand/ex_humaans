@@ -66,7 +66,7 @@ defmodule Humaans.Webhooks do
   def verify_signature(payload, signature, secret)
       when is_binary(payload) and is_binary(signature) and is_binary(secret) do
     expected = :crypto.mac(:hmac, :sha256, secret, payload) |> Base.encode16(case: :lower)
-    provided = strip_prefix(signature) |> String.downcase()
+    provided = signature |> String.downcase() |> strip_prefix()
 
     if secure_compare(expected, provided) do
       :ok
