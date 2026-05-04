@@ -39,10 +39,8 @@ defmodule Humaans.CaseConvert do
   defp to_camel(other), do: other
 
   defp camelize(string) do
-    case String.split(string, "_") do
-      [head | tail] -> head <> Enum.map_join(tail, "", &capitalize_first/1)
-      [] -> string
-    end
+    [head | tail] = String.split(string, "_")
+    head <> Enum.map_join(tail, "", &capitalize_first/1)
   end
 
   defp capitalize_first(<<c, rest::binary>>) when c in ?a..?z, do: <<c - 32, rest::binary>>
