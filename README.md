@@ -83,6 +83,8 @@ Verify HMAC-SHA256 signatures on incoming webhook deliveries with `Humaans.Webho
 case Humaans.Webhooks.verify_signature(raw_body, signature_header, secret) do
   :ok -> handle_event(raw_body)
   {:error, :invalid_signature} -> {:error, :unauthorized}
+  {:error, :missing_signature} -> {:error, :unauthorized}
+  {:error, :missing_secret} -> {:error, :misconfigured}
 end
 ```
 
