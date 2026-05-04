@@ -70,9 +70,15 @@ defmodule Humaans.HTTPClient.Req do
           opts
       end
 
+    req_options =
+      (Map.get(client, :req_options) || [])
+      |> Keyword.drop([:base_url, :auth])
+
     base =
-      [base_url: client.base_url, auth: {:bearer, client.access_token}]
-      |> Keyword.merge(Map.get(client, :req_options, []))
+      Keyword.merge(req_options,
+        base_url: client.base_url,
+        auth: {:bearer, client.access_token}
+      )
 
     base
     |> Req.new()
