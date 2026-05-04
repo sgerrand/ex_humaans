@@ -71,6 +71,10 @@ client = Humaans.new(access_token: "YOUR_ACCESS_TOKEN")
 {:ok, companies} = Humaans.companies().list(client)
 ```
 
+### Rate-limit retries
+
+The default HTTP client retries transient failures (status 408, 429, 500, 502, 503, 504) up to 3 times with exponential backoff, honouring the `Retry-After` header. To opt out, pass `req_options: [retry: false]` to `Humaans.new/1`.
+
 ### Available resources
 
 - `Humaans.People` - Work with people resources
