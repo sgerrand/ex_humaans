@@ -88,6 +88,22 @@ case Humaans.Webhooks.verify_signature(raw_body, signature_header, secret) do
 end
 ```
 
+### Filtering with `Humaans.Query`
+
+Build filter queries for list endpoints using the operator helpers in `Humaans.Query`:
+
+```elixir
+query =
+  Humaans.Query.new()
+  |> Humaans.Query.in_(:status, ["active", "onboarding"])
+  |> Humaans.Query.gte(:createdAt, "2025-01-01")
+  |> Humaans.Query.to_params()
+
+{:ok, people} = Humaans.People.list(client, query)
+```
+
+Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.Query.merge/2` to combine a query with pagination params or another query.
+
 ### Available resources
 
 - `Humaans.People` - Work with people resources

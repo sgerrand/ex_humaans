@@ -187,7 +187,10 @@ defmodule Humaans.Resource do
 
       if :list in unquote(actions) do
         @doc unquote(list_doc)
-        @spec list(client :: map(), params :: map() | keyword()) ::
+        @spec list(
+                client :: map(),
+                params :: map() | keyword() | [{String.t(), term()}]
+              ) ::
                 {:ok, [unquote(struct_module).t()]} | {:error, Humaans.Error.t()}
         def list(client, params \\ %{}) do
           Client.get(client, @resource_path, params)
