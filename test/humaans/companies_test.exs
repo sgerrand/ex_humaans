@@ -81,7 +81,7 @@ defmodule Humaans.CompaniesTest do
     end
   end
 
-  describe "retrieve/1" do
+  describe "retrieve/2" do
     test "retrieves a company", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
@@ -107,7 +107,7 @@ defmodule Humaans.CompaniesTest do
          }}
       end)
 
-      assert {:ok, response} = Humaans.Companies.get(client, "123")
+      assert {:ok, response} = Humaans.Companies.retrieve(client, "123")
       assert response.id == "uoWtfpDIMI2IZ8doGK7kkCwS"
       assert response.name == "Acme"
       assert response.domains == []
@@ -118,6 +118,29 @@ defmodule Humaans.CompaniesTest do
       assert response.is_timesheet_enabled == true
       assert response.created_at == ~U[2020-01-28 08:44:42.000Z]
       assert response.updated_at == ~U[2020-01-29 14:52:21.000Z]
+    end
+  end
+
+  describe "get/2 (deprecated)" do
+    test "delegates to retrieve/2", %{client: client} do
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
+        assert client_param == client
+        assert Keyword.fetch!(opts, :method) == :get
+        assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/companies/123"
+
+        {:ok,
+         %{
+           status: 200,
+           body: %{
+             "id" => "uoWtfpDIMI2IZ8doGK7kkCwS",
+             "name" => "Acme"
+           }
+         }}
+      end)
+
+      # credo:disable-for-next-line Credo.Check.Refactor.Apply
+      result = apply(Humaans.Companies, :get, [client, "123"])
+      assert {:ok, %Humaans.Resources.Company{id: "uoWtfpDIMI2IZ8doGK7kkCwS"}} = result
     end
   end
 
