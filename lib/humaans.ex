@@ -192,6 +192,55 @@ defmodule Humaans do
   def timesheet_submissions, do: Humaans.TimesheetSubmissions
 
   @doc """
+  Access the Performance Cycles API.
+
+  Returns the module that contains functions for working with performance cycle resources.
+  """
+  def performance_cycles, do: Humaans.PerformanceCycles
+
+  @doc """
+  Access the Performance Templates API.
+
+  Returns the module that contains functions for working with performance template resources.
+  """
+  def performance_templates, do: Humaans.PerformanceTemplates
+
+  @doc """
+  Access the Performance Reviews API.
+
+  Returns the module that contains functions for working with performance review resources.
+  """
+  def performance_reviews, do: Humaans.PerformanceReviews
+
+  @doc """
+  Access the Performance Instances API.
+
+  Returns the module that contains functions for working with performance instance resources.
+  """
+  def performance_instances, do: Humaans.PerformanceInstances
+
+  @doc """
+  Access the Performance Ratings API.
+
+  Returns the module that contains functions for working with performance rating resources.
+  """
+  def performance_ratings, do: Humaans.PerformanceRatings
+
+  @doc """
+  Access the Performance Summaries API.
+
+  Returns the module that contains functions for working with performance summary resources.
+  """
+  def performance_summaries, do: Humaans.PerformanceSummaries
+
+  @doc """
+  Access the Performance Cycle Peer Nominations API.
+
+  Returns the module that contains functions for working with peer nomination resources.
+  """
+  def performance_cycle_peer_nominations, do: Humaans.PerformanceCyclePeerNominations
+
+  @doc """
   Access pagination helpers.
 
   Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
