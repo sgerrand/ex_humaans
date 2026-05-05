@@ -6,6 +6,30 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## [0.6.0](https://github.com/sgerrand/ex_humaans/compare/v0.5.1...v0.6.0) (2026-05-05)
+
+
+### Features
+
+* **client:** convert snake_case body keys to camelCase ([#94](https://github.com/sgerrand/ex_humaans/issues/94)) ([ac6b555](https://github.com/sgerrand/ex_humaans/commit/ac6b55594078b21b4c738245355f9b700aa9abfc))
+* **custom-fields:** add Custom Fields and Custom Values CRUD ([#101](https://github.com/sgerrand/ex_humaans/issues/101)) ([6ed53f1](https://github.com/sgerrand/ex_humaans/commit/6ed53f18c199b49ff4e2e58cc567783823003da3))
+* **error:** extract structured Humaans API error fields ([#88](https://github.com/sgerrand/ex_humaans/issues/88)) ([dfeb97a](https://github.com/sgerrand/ex_humaans/commit/dfeb97a59a57b3d937d702adda5627b3d4954007))
+* **http_client:** pass-through req_options on Humaans.new/1 ([#89](https://github.com/sgerrand/ex_humaans/issues/89)) ([48f9c59](https://github.com/sgerrand/ex_humaans/commit/48f9c594b1143606814af1ca08b8268e32d79797))
+* **http_client:** retry transient failures with bounded backoff ([#90](https://github.com/sgerrand/ex_humaans/issues/90)) ([158d960](https://github.com/sgerrand/ex_humaans/commit/158d9609fe55ef3cebe5c4061bb96029166c285a))
+* **query:** add chainable filter query builder ([#93](https://github.com/sgerrand/ex_humaans/issues/93)) ([3b25f52](https://github.com/sgerrand/ex_humaans/commit/3b25f52dfb1a78f2265e15dafff0f2945f6c5e9f))
+* **time-away:** add Time Away family CRUD resources ([#100](https://github.com/sgerrand/ex_humaans/issues/100)) ([ce059f2](https://github.com/sgerrand/ex_humaans/commit/ce059f2d372deaa194b4bae58042463c0fed558b))
+* **webhooks:** add HMAC-SHA256 signature verification helper ([#92](https://github.com/sgerrand/ex_humaans/issues/92)) ([9cd0c7e](https://github.com/sgerrand/ex_humaans/commit/9cd0c7ec619397a68fa4cb708f1361478decab01))
+
+
+### Bug Fixes
+
+* **pagination:** use $-prefixed limit/skip params ([#86](https://github.com/sgerrand/ex_humaans/issues/86)) ([cb6f868](https://github.com/sgerrand/ex_humaans/commit/cb6f8682ceafb6628019ed71e00e48a20eb060dc))
+
+
+### Performance Improvements
+
+* **pagination:** default page size to 100 ([#87](https://github.com/sgerrand/ex_humaans/issues/87)) ([2dfb053](https://github.com/sgerrand/ex_humaans/commit/2dfb05357e9bfabf8867d1eb4f9ff33219a77810))
+
 ## [0.5.1](https://github.com/sgerrand/ex_humaans/compare/v0.5.0...v0.5.1) (2026-04-22)
 
 
