@@ -125,6 +125,18 @@ defmodule HumaansTest do
     assert Humaans.document_folders() == Humaans.DocumentFolders
   end
 
+  test "job_roles/0 returns the JobRoles module" do
+    assert Humaans.job_roles() == Humaans.JobRoles
+  end
+
+  test "locations/0 returns the Locations module" do
+    assert Humaans.locations() == Humaans.Locations
+  end
+
+  test "spaces/0 returns the Spaces module" do
+    assert Humaans.spaces() == Humaans.Spaces
+  end
+
   test "timesheet_entries/0 returns the TimesheetEntries module" do
     assert Humaans.timesheet_entries() == Humaans.TimesheetEntries
   end
