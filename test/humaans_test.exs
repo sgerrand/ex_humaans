@@ -113,6 +113,18 @@ defmodule HumaansTest do
     assert Humaans.compensations() == Humaans.Compensations
   end
 
+  test "documents/0 returns the Documents module" do
+    assert Humaans.documents() == Humaans.Documents
+  end
+
+  test "document_types/0 returns the DocumentTypes module" do
+    assert Humaans.document_types() == Humaans.DocumentTypes
+  end
+
+  test "document_folders/0 returns the DocumentFolders module" do
+    assert Humaans.document_folders() == Humaans.DocumentFolders
+  end
+
   test "timesheet_entries/0 returns the TimesheetEntries module" do
     assert Humaans.timesheet_entries() == Humaans.TimesheetEntries
   end
