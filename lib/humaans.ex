@@ -143,13 +143,6 @@ defmodule Humaans do
   end
 
   @doc """
-  Access the People API.
-
-  Returns the module that contains functions for working with people resources.
-  """
-  def people, do: Humaans.People
-
-  @doc """
   Access the Bank Accounts API.
 
   Returns the module that contains functions for working with bank account resources.
@@ -176,6 +169,52 @@ defmodule Humaans do
   Returns the module that contains functions for working with compensation resources.
   """
   def compensations, do: Humaans.Compensations
+
+  @doc """
+  Access the Custom Fields API.
+
+  Returns the module that contains functions for working with custom field resources.
+  """
+  def custom_fields, do: Humaans.CustomFields
+
+  @doc """
+  Access the Custom Values API.
+
+  Returns the module that contains functions for working with custom value resources.
+  """
+  def custom_values, do: Humaans.CustomValues
+
+  @doc """
+  Access the current user's profile.
+
+  Returns `Humaans.Me`, which exposes `get/1` for retrieving the
+  authenticated user's profile.
+  """
+  def me, do: Humaans.Me
+
+  @doc """
+  Access pagination helpers.
+
+  Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
+  page and `stream/3` for lazily iterating all results.
+  """
+  def pagination, do: Humaans.Pagination
+
+  @doc """
+  Access the People API.
+
+  Returns the module that contains functions for working with people resources.
+  """
+  def people, do: Humaans.People
+
+  @doc """
+  Access the query builder.
+
+  Returns `Humaans.Query`, which provides `eq/3`, `in_/3`, `nin/3`, `gt/3`,
+  `gte/3`, `lt/3`, `lte/3`, `merge/2`, and `to_params/1` for building
+  filter queries.
+  """
+  def query, do: Humaans.Query
 
   @doc """
   Access the Timesheet Entries API.
@@ -227,26 +266,12 @@ defmodule Humaans do
   def time_away_types, do: Humaans.TimeAwayTypes
 
   @doc """
-  Access the Custom Fields API.
+  Access the current access token's metadata.
 
-  Returns the module that contains functions for working with custom field resources.
+  Returns `Humaans.TokenInfo`, which exposes `get/1` for retrieving
+  metadata (scopes, personId, etc.) about the current access token.
   """
-  def custom_fields, do: Humaans.CustomFields
-
-  @doc """
-  Access the Custom Values API.
-
-  Returns the module that contains functions for working with custom value resources.
-  """
-  def custom_values, do: Humaans.CustomValues
-
-  @doc """
-  Access pagination helpers.
-
-  Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
-  page and `stream/3` for lazily iterating all results.
-  """
-  def pagination, do: Humaans.Pagination
+  def token_info, do: Humaans.TokenInfo
 
   @doc """
   Access webhook helpers.
@@ -255,13 +280,4 @@ defmodule Humaans do
   verifying HMAC-SHA256 webhook signatures.
   """
   def webhooks, do: Humaans.Webhooks
-
-  @doc """
-  Access the query builder.
-
-  Returns `Humaans.Query`, which provides `eq/3`, `in_/3`, `nin/3`, `gt/3`,
-  `gte/3`, `lt/3`, `lte/3`, `merge/2`, and `to_params/1` for building
-  filter queries.
-  """
-  def query, do: Humaans.Query
 end
