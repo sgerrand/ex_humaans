@@ -16,6 +16,7 @@ defmodule Humaans.DocumentsTest do
     test "returns a list of documents", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/documents"
 
@@ -102,6 +103,7 @@ defmodule Humaans.DocumentsTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/documents"
 
@@ -118,6 +120,7 @@ defmodule Humaans.DocumentsTest do
     test "retrieves a document", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/documents/doc_abc"
 
@@ -146,6 +149,7 @@ defmodule Humaans.DocumentsTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/documents/doc_abc"
 
@@ -170,6 +174,7 @@ defmodule Humaans.DocumentsTest do
     test "deletes a document", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :delete
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/documents/doc_abc"
 

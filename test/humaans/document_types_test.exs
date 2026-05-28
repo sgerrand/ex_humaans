@@ -16,6 +16,7 @@ defmodule Humaans.DocumentTypesTest do
     test "returns a list of document types", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/document-types"
 
@@ -75,6 +76,7 @@ defmodule Humaans.DocumentTypesTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/document-types"
 
@@ -91,6 +93,7 @@ defmodule Humaans.DocumentTypesTest do
     test "retrieves a document type", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/document-types/type_abc"
 
@@ -119,6 +122,7 @@ defmodule Humaans.DocumentTypesTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/document-types/type_abc"
 

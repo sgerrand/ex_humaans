@@ -16,6 +16,7 @@ defmodule Humaans.DocumentFoldersTest do
     test "returns a list of document folders", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/document-folders"
 
@@ -80,6 +81,7 @@ defmodule Humaans.DocumentFoldersTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/document-folders"
 
@@ -96,6 +98,7 @@ defmodule Humaans.DocumentFoldersTest do
     test "retrieves a document folder", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
 
         assert Keyword.fetch!(opts, :url) ==
@@ -126,6 +129,7 @@ defmodule Humaans.DocumentFoldersTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
 
         assert Keyword.fetch!(opts, :url) ==
@@ -152,6 +156,7 @@ defmodule Humaans.DocumentFoldersTest do
     test "deletes a document folder", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :delete
 
         assert Keyword.fetch!(opts, :url) ==
