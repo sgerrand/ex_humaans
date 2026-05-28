@@ -123,16 +123,19 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.Companies` - Work with company resources
 - `Humaans.CompensationTypes` - Work with compensation type resources
 - `Humaans.Compensations` - Work with compensation resources
-- `Humaans.TimesheetEntries` - Work with timesheet entry resources
-- `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
-- `Humaans.TimeAway` - Work with time away resources
-- `Humaans.TimeAwayAllocations` - Work with time away allocation resources
-- `Humaans.TimeAwayAdjustments` - Work with time away adjustment resources
-- `Humaans.TimeAwayPolicies` - Work with time away policy resources
-- `Humaans.TimeAwayTypes` - Work with time away type resources
 - `Humaans.CustomFields` - Work with custom field definitions
 - `Humaans.CustomValues` - Work with custom value records
+- `Humaans.DocumentFolders` - Work with document folder resources
+- `Humaans.DocumentTypes` - Work with document type resources
+- `Humaans.Documents` - Work with document resources
 - `Humaans.Me` - Retrieve the authenticated user's profile (`GET /me`)
+- `Humaans.TimeAwayAdjustments` - Work with time away adjustment resources
+- `Humaans.TimeAwayAllocations` - Work with time away allocation resources
+- `Humaans.TimeAwayPolicies` - Work with time away policy resources
+- `Humaans.TimeAwayTypes` - Work with time away type resources
+- `Humaans.TimeAway` - Work with time away resources
+- `Humaans.TimesheetEntries` - Work with timesheet entry resources
+- `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
 - `Humaans.TokenInfo` - Retrieve metadata about the current access token (`GET /token-info`)
 
 ## Development

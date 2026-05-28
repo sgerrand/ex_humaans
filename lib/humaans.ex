@@ -185,6 +185,27 @@ defmodule Humaans do
   def custom_values, do: Humaans.CustomValues
 
   @doc """
+  Access the Documents API.
+
+  Returns the module that contains functions for working with document resources.
+  """
+  def documents, do: Humaans.Documents
+
+  @doc """
+  Access the Document Types API.
+
+  Returns the module that contains functions for working with document type resources.
+  """
+  def document_types, do: Humaans.DocumentTypes
+
+  @doc """
+  Access the Document Folders API.
+
+  Returns the module that contains functions for working with document folder resources.
+  """
+  def document_folders, do: Humaans.DocumentFolders
+
+  @doc """
   Access the current user's profile.
 
   Returns `Humaans.Me`, which exposes `get/1` for retrieving the
