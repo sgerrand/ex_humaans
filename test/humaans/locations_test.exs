@@ -42,8 +42,10 @@ defmodule Humaans.LocationsTest do
 
       assert {:ok, [response]} = Humaans.Locations.list(client)
       assert response.id == "loc_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "London HQ"
       assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do

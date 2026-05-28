@@ -42,7 +42,10 @@ defmodule Humaans.SpacesTest do
 
       assert {:ok, [response]} = Humaans.Spaces.list(client)
       assert response.id == "space_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "Engineering"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do
