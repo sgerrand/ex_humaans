@@ -176,6 +176,11 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.WorkflowStats` - Retrieve workflow stat resources (read-only)
 - `Humaans.WorkingPatternAllocations` - Work with working pattern allocation resources
 - `Humaans.WorkingPatterns` - Work with working pattern resources
+- `Humaans.EsignTemplates` - List and retrieve e-signature template resources (read-only)
+- `Humaans.EsignInstances` - List and retrieve e-signature instance resources (read-only)
+- `Humaans.EsignBulks` - List and retrieve e-signature bulk resources (read-only)
+- `Humaans.EsignBulkRecipients` - List and retrieve e-signature bulk recipient resources (read-only)
+- `Humaans.EsignBulkTokens` - List and retrieve e-signature bulk token resources (read-only)
 
 ## Development
 
