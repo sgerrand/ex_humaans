@@ -378,6 +378,41 @@ defmodule Humaans do
   def query, do: Humaans.Query
 
   @doc """
+  Access the Requests API.
+
+  Returns the module that contains functions for working with request resources.
+  """
+  def requests, do: Humaans.Requests
+
+  @doc """
+  Access the Request Types API.
+
+  Returns the module that contains functions for working with request type resources.
+  """
+  def request_types, do: Humaans.RequestTypes
+
+  @doc """
+  Access the Request Reviews API.
+
+  Returns the module that contains functions for working with request review resources.
+  """
+  def request_reviews, do: Humaans.RequestReviews
+
+  @doc """
+  Access the Request Comments API.
+
+  Returns the module that contains functions for working with request comment resources.
+  """
+  def request_comments, do: Humaans.RequestComments
+
+  @doc """
+  Access the Request Activity Logs API.
+
+  Returns the module that contains functions for working with request activity log resources.
+  """
+  def request_activity_logs, do: Humaans.RequestActivityLogs
+
+  @doc """
   Access the Roles API.
 
   Returns the module that contains functions for working with role resources.
@@ -482,6 +517,41 @@ defmodule Humaans do
   Returns the module that contains functions for working with webhook event resources.
   """
   def webhook_events, do: Humaans.WebhookEvents
+
+  @doc """
+  Access the Workflow Dependencies API.
+
+  Returns the module that contains functions for working with workflow dependency resources.
+  """
+  def workflow_dependencies, do: Humaans.WorkflowDependencies
+
+  @doc """
+  Access the Workflow Form Responses API.
+
+  Returns the module that contains functions for working with workflow form response resources.
+  """
+  def workflow_form_responses, do: Humaans.WorkflowFormResponses
+
+  @doc """
+  Access the Workflow Publications API.
+
+  Returns the module that contains functions for working with workflow publication resources.
+  """
+  def workflow_publications, do: Humaans.WorkflowPublications
+
+  @doc """
+  Access the Workflow Slack Actions API.
+
+  Returns the module that contains functions for working with workflow Slack action resources.
+  """
+  def workflow_slack_actions, do: Humaans.WorkflowSlackActions
+
+  @doc """
+  Access the Workflow Stats API.
+
+  Returns the module that contains functions for working with workflow stat resources.
+  """
+  def workflow_stats, do: Humaans.WorkflowStats
 
   @doc """
   Access the Working Patterns API.

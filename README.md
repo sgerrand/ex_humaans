@@ -149,6 +149,11 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.PublicHolidayCalendarDays` - Work with public holiday calendar day resources
 - `Humaans.PublicHolidayCalendars` - List public holiday calendars (read-only)
 - `Humaans.PublicHolidays` - List public holidays (read-only)
+- `Humaans.RequestActivityLogs` - List and retrieve request activity log resources (read-only)
+- `Humaans.RequestComments` - List and retrieve request comment resources (read-only)
+- `Humaans.RequestReviews` - List and retrieve request review resources (read-only)
+- `Humaans.RequestTypes` - List and retrieve request type resources (read-only)
+- `Humaans.Requests` - List and retrieve request resources (read-only)
 - `Humaans.RoleMembers` - List and retrieve role member resources (read-only)
 - `Humaans.RolePermissions` - List and retrieve role permission resources (read-only)
 - `Humaans.Roles` - List and retrieve role resources (read-only)
@@ -164,6 +169,11 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.TokenInfo` - Retrieve metadata about the current access token (`GET /token-info`)
 - `Humaans.WebhookEvents` - List and retrieve webhook event resources (read-only)
 - `Humaans.Webhooks` - Work with webhook subscription resources
+- `Humaans.WorkflowDependencies` - Retrieve workflow dependency resources (read-only)
+- `Humaans.WorkflowFormResponses` - Retrieve workflow form response resources (read-only)
+- `Humaans.WorkflowPublications` - Retrieve workflow publication resources (read-only)
+- `Humaans.WorkflowSlackActions` - Retrieve workflow Slack action resources (read-only)
+- `Humaans.WorkflowStats` - Retrieve workflow stat resources (read-only)
 - `Humaans.WorkingPatternAllocations` - Work with working pattern allocation resources
 - `Humaans.WorkingPatterns` - Work with working pattern resources
 
