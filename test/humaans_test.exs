@@ -176,4 +176,12 @@ defmodule HumaansTest do
   test "query/0 returns the Query module" do
     assert Humaans.query() == Humaans.Query
   end
+
+  test "working_patterns/0 returns the WorkingPatterns module" do
+    assert Humaans.working_patterns() == Humaans.WorkingPatterns
+  end
+
+  test "working_pattern_allocations/0 returns the WorkingPatternAllocations module" do
+    assert Humaans.working_pattern_allocations() == Humaans.WorkingPatternAllocations
+  end
 end
