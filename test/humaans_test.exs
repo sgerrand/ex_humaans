@@ -129,6 +129,18 @@ defmodule HumaansTest do
     assert Humaans.emergency_contacts() == Humaans.EmergencyContacts
   end
 
+  test "equipment/0 returns the Equipment module" do
+    assert Humaans.equipment() == Humaans.Equipment
+  end
+
+  test "equipment_types/0 returns the EquipmentTypes module" do
+    assert Humaans.equipment_types() == Humaans.EquipmentTypes
+  end
+
+  test "equipment_names/0 returns the EquipmentNames module" do
+    assert Humaans.equipment_names() == Humaans.EquipmentNames
+  end
+
   test "job_roles/0 returns the JobRoles module" do
     assert Humaans.job_roles() == Humaans.JobRoles
   end
