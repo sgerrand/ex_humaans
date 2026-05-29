@@ -16,6 +16,7 @@ defmodule Humaans.WorkingPatternAllocationsTest do
     test "returns a list of working pattern allocations", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
 
         assert Keyword.fetch!(opts, :url) ==
@@ -50,6 +51,7 @@ defmodule Humaans.WorkingPatternAllocationsTest do
       assert response.start_date == ~D[2025-01-01]
       assert response.end_date == ~D[2025-12-31]
       assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do
@@ -84,6 +86,7 @@ defmodule Humaans.WorkingPatternAllocationsTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
 
         assert Keyword.fetch!(opts, :url) ==
@@ -102,6 +105,7 @@ defmodule Humaans.WorkingPatternAllocationsTest do
     test "retrieves a working pattern allocation", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
 
         assert Keyword.fetch!(opts, :url) ==
@@ -134,6 +138,7 @@ defmodule Humaans.WorkingPatternAllocationsTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
 
         assert Keyword.fetch!(opts, :url) ==
@@ -165,6 +170,7 @@ defmodule Humaans.WorkingPatternAllocationsTest do
     test "deletes a working pattern allocation", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :delete
 
         assert Keyword.fetch!(opts, :url) ==

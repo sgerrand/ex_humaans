@@ -16,6 +16,7 @@ defmodule Humaans.WorkingPatternsTest do
     test "returns a list of working patterns", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/working-patterns"
 
@@ -41,7 +42,10 @@ defmodule Humaans.WorkingPatternsTest do
 
       assert {:ok, [response]} = Humaans.WorkingPatterns.list(client)
       assert response.id == "wp_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "Mon-Fri 9-5"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
 
     test "returns error when resource is not found", %{client: client} do
@@ -72,14 +76,29 @@ defmodule Humaans.WorkingPatternsTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :post
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/working-patterns"
 
-        {:ok, %{status: 201, body: Map.put(params, "id", "wp_new")}}
+        {:ok,
+         %{
+           status: 201,
+           body:
+             Map.merge(params, %{
+               "id" => "wp_new",
+               "companyId" => "company_abc",
+               "createdAt" => "2025-01-01T08:44:42.000Z",
+               "updatedAt" => "2025-01-01T14:52:21.000Z"
+             })
+         }}
       end)
 
       assert {:ok, response} = Humaans.WorkingPatterns.create(client, params)
       assert response.id == "wp_new"
+      assert response.company_id == "company_abc"
+      assert response.name == "Mon-Fri 9-5"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
   end
 
@@ -87,6 +106,7 @@ defmodule Humaans.WorkingPatternsTest do
     test "retrieves a working pattern", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/working-patterns/wp_abc"
 
@@ -104,7 +124,11 @@ defmodule Humaans.WorkingPatternsTest do
       end)
 
       assert {:ok, response} = Humaans.WorkingPatterns.retrieve(client, "wp_abc")
+      assert response.id == "wp_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "Mon-Fri 9-5"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
   end
 
@@ -115,6 +139,7 @@ defmodule Humaans.WorkingPatternsTest do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
         assert Keyword.fetch!(opts, :body) == params
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :patch
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/working-patterns/wp_abc"
 
@@ -123,6 +148,7 @@ defmodule Humaans.WorkingPatternsTest do
            status: 200,
            body: %{
              "id" => "wp_abc",
+             "companyId" => "company_abc",
              "name" => "Mon-Thu 9-5",
              "createdAt" => "2025-01-01T08:44:42.000Z",
              "updatedAt" => "2025-01-02T08:44:42.000Z"
@@ -131,7 +157,11 @@ defmodule Humaans.WorkingPatternsTest do
       end)
 
       assert {:ok, response} = Humaans.WorkingPatterns.update(client, "wp_abc", params)
+      assert response.id == "wp_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "Mon-Thu 9-5"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-02 08:44:42.000Z]
     end
   end
 
@@ -139,6 +169,7 @@ defmodule Humaans.WorkingPatternsTest do
     test "deletes a working pattern", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :delete
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/working-patterns/wp_abc"
 
