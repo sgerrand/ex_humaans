@@ -1,12 +1,18 @@
 defmodule Humaans.Webhooks do
   @moduledoc """
-  Helpers for working with Humaans webhooks.
+  Functions for managing Humaans webhook subscriptions and verifying
+  incoming webhook deliveries.
+
+  ## Managing webhook subscriptions
+
+  Standard CRUD on the `/api/webhooks` endpoint via the generated `list/2`,
+  `create/2`, `retrieve/2`, `update/3`, and `delete/2` functions.
+
+  ## Verifying a delivery
 
   Humaans signs webhook payloads with HMAC-SHA256 using your endpoint's
   signing secret. Verifying the signature on every delivery is required —
   treat any unverified payload as untrusted input.
-
-  ## Verifying a delivery
 
       defp verify(conn, secret) do
         {:ok, raw_body, conn} = Plug.Conn.read_body(conn)
@@ -22,6 +28,18 @@ defmodule Humaans.Webhooks do
   JSON will not match because byte-level differences (key ordering,
   whitespace) change the HMAC.
   """
+
+  use Humaans.Resource,
+    path: "/webhooks",
+    struct: Humaans.Resources.Webhook,
+    doc_params: [
+      create: ~s(%{url: "https://example.com/hooks", events: ["person.created"]}),
+      update: ~s(%{events: ["person.created", "person.updated"]})
+    ]
+
+  @type delete_response :: {:ok, %{id: String.t(), deleted: bool()}} | {:error, Humaans.Error.t()}
+  @type list_response :: {:ok, [%Humaans.Resources.Webhook{}]} | {:error, Humaans.Error.t()}
+  @type response :: {:ok, %Humaans.Resources.Webhook{}} | {:error, Humaans.Error.t()}
 
   @doc """
   Verifies a webhook signature against the raw request body.
@@ -84,8 +102,6 @@ defmodule Humaans.Webhooks do
 
   import Bitwise, only: [bor: 2, bxor: 2]
 
-  # Constant-time comparison over equal-length binaries. The length check has
-  # to happen first (and discloses length, which is unavoidable).
   defp secure_compare(a, b) when byte_size(a) == byte_size(b) do
     compare_bytes(a, b, 0) === 0
   end

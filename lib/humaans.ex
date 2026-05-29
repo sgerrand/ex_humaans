@@ -316,10 +316,9 @@ defmodule Humaans do
   def token_info, do: Humaans.TokenInfo
 
   @doc """
-  Access webhook helpers.
+  Access the Webhooks API.
 
-  Returns `Humaans.Webhooks`, which provides `verify_signature/3` for
-  verifying HMAC-SHA256 webhook signatures.
+  Returns the module that contains functions for working with webhook resources.
   """
   def webhooks, do: Humaans.Webhooks
 
