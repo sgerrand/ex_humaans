@@ -125,12 +125,48 @@ defmodule HumaansTest do
     assert Humaans.document_folders() == Humaans.DocumentFolders
   end
 
+  test "emergency_contacts/0 returns the EmergencyContacts module" do
+    assert Humaans.emergency_contacts() == Humaans.EmergencyContacts
+  end
+
+  test "equipment/0 returns the Equipment module" do
+    assert Humaans.equipment() == Humaans.Equipment
+  end
+
+  test "equipment_types/0 returns the EquipmentTypes module" do
+    assert Humaans.equipment_types() == Humaans.EquipmentTypes
+  end
+
+  test "equipment_names/0 returns the EquipmentNames module" do
+    assert Humaans.equipment_names() == Humaans.EquipmentNames
+  end
+
+  test "identity_documents/0 returns the IdentityDocuments module" do
+    assert Humaans.identity_documents() == Humaans.IdentityDocuments
+  end
+
+  test "identity_document_types/0 returns the IdentityDocumentTypes module" do
+    assert Humaans.identity_document_types() == Humaans.IdentityDocumentTypes
+  end
+
   test "job_roles/0 returns the JobRoles module" do
     assert Humaans.job_roles() == Humaans.JobRoles
   end
 
   test "locations/0 returns the Locations module" do
     assert Humaans.locations() == Humaans.Locations
+  end
+
+  test "public_holiday_calendars/0 returns the PublicHolidayCalendars module" do
+    assert Humaans.public_holiday_calendars() == Humaans.PublicHolidayCalendars
+  end
+
+  test "public_holiday_calendar_days/0 returns the PublicHolidayCalendarDays module" do
+    assert Humaans.public_holiday_calendar_days() == Humaans.PublicHolidayCalendarDays
+  end
+
+  test "public_holidays/0 returns the PublicHolidays module" do
+    assert Humaans.public_holidays() == Humaans.PublicHolidays
   end
 
   test "spaces/0 returns the Spaces module" do
