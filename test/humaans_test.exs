@@ -125,6 +125,10 @@ defmodule HumaansTest do
     assert Humaans.document_folders() == Humaans.DocumentFolders
   end
 
+  test "emergency_contacts/0 returns the EmergencyContacts module" do
+    assert Humaans.emergency_contacts() == Humaans.EmergencyContacts
+  end
+
   test "job_roles/0 returns the JobRoles module" do
     assert Humaans.job_roles() == Humaans.JobRoles
   end
