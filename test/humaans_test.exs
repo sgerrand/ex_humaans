@@ -157,6 +157,18 @@ defmodule HumaansTest do
     assert Humaans.locations() == Humaans.Locations
   end
 
+  test "public_holiday_calendars/0 returns the PublicHolidayCalendars module" do
+    assert Humaans.public_holiday_calendars() == Humaans.PublicHolidayCalendars
+  end
+
+  test "public_holiday_calendar_days/0 returns the PublicHolidayCalendarDays module" do
+    assert Humaans.public_holiday_calendar_days() == Humaans.PublicHolidayCalendarDays
+  end
+
+  test "public_holidays/0 returns the PublicHolidays module" do
+    assert Humaans.public_holidays() == Humaans.PublicHolidays
+  end
+
   test "spaces/0 returns the Spaces module" do
     assert Humaans.spaces() == Humaans.Spaces
   end
