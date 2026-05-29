@@ -141,6 +141,14 @@ defmodule HumaansTest do
     assert Humaans.equipment_names() == Humaans.EquipmentNames
   end
 
+  test "identity_documents/0 returns the IdentityDocuments module" do
+    assert Humaans.identity_documents() == Humaans.IdentityDocuments
+  end
+
+  test "identity_document_types/0 returns the IdentityDocumentTypes module" do
+    assert Humaans.identity_document_types() == Humaans.IdentityDocumentTypes
+  end
+
   test "job_roles/0 returns the JobRoles module" do
     assert Humaans.job_roles() == Humaans.JobRoles
   end
