@@ -220,4 +220,32 @@ defmodule HumaansTest do
   test "working_pattern_allocations/0 returns the WorkingPatternAllocations module" do
     assert Humaans.working_pattern_allocations() == Humaans.WorkingPatternAllocations
   end
+
+  test "audit_events/0 returns the AuditEvents module" do
+    assert Humaans.audit_events() == Humaans.AuditEvents
+  end
+
+  test "roles/0 returns the Roles module" do
+    assert Humaans.roles() == Humaans.Roles
+  end
+
+  test "role_members/0 returns the RoleMembers module" do
+    assert Humaans.role_members() == Humaans.RoleMembers
+  end
+
+  test "role_permissions/0 returns the RolePermissions module" do
+    assert Humaans.role_permissions() == Humaans.RolePermissions
+  end
+
+  test "tasks/0 returns the Tasks module" do
+    assert Humaans.tasks() == Humaans.Tasks
+  end
+
+  test "okrs/0 returns the OKRs module" do
+    assert Humaans.okrs() == Humaans.OKRs
+  end
+
+  test "webhook_events/0 returns the WebhookEvents module" do
+    assert Humaans.webhook_events() == Humaans.WebhookEvents
+  end
 end

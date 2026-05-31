@@ -143,6 +143,13 @@ defmodule Humaans do
   end
 
   @doc """
+  Access the Audit Events API.
+
+  Returns the module that contains functions for working with audit event resources.
+  """
+  def audit_events, do: Humaans.AuditEvents
+
+  @doc """
   Access the Bank Accounts API.
 
   Returns the module that contains functions for working with bank account resources.
@@ -270,6 +277,13 @@ defmodule Humaans do
   def me, do: Humaans.Me
 
   @doc """
+  Access the OKRs API.
+
+  Returns the module that contains functions for working with OKR resources.
+  """
+  def okrs, do: Humaans.OKRs
+
+  @doc """
   Access pagination helpers.
 
   Returns `Humaans.Pagination`, which provides `page/4` for fetching a specific
@@ -315,11 +329,39 @@ defmodule Humaans do
   def query, do: Humaans.Query
 
   @doc """
+  Access the Roles API.
+
+  Returns the module that contains functions for working with role resources.
+  """
+  def roles, do: Humaans.Roles
+
+  @doc """
+  Access the Role Members API.
+
+  Returns the module that contains functions for working with role member resources.
+  """
+  def role_members, do: Humaans.RoleMembers
+
+  @doc """
+  Access the Role Permissions API.
+
+  Returns the module that contains functions for working with role permission resources.
+  """
+  def role_permissions, do: Humaans.RolePermissions
+
+  @doc """
   Access the Spaces API.
 
   Returns the module that contains functions for working with space (team/department) resources.
   """
   def spaces, do: Humaans.Spaces
+
+  @doc """
+  Access the Tasks API.
+
+  Returns the module that contains functions for working with task resources.
+  """
+  def tasks, do: Humaans.Tasks
 
   @doc """
   Access the Timesheet Entries API.
@@ -384,6 +426,13 @@ defmodule Humaans do
   Returns the module that contains functions for working with webhook resources.
   """
   def webhooks, do: Humaans.Webhooks
+
+  @doc """
+  Access the Webhook Events API.
+
+  Returns the module that contains functions for working with webhook event resources.
+  """
+  def webhook_events, do: Humaans.WebhookEvents
 
   @doc """
   Access the Working Patterns API.
