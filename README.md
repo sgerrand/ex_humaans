@@ -139,6 +139,13 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.Locations` - Work with location resources
 - `Humaans.Me` - Retrieve the authenticated user's profile (`GET /me`)
 - `Humaans.OKRs` - List and retrieve OKR resources (read-only)
+- `Humaans.PerformanceCyclePeerNominations` - Retrieve peer nomination resources (read-only)
+- `Humaans.PerformanceCycles` - List and retrieve performance cycle resources (read-only)
+- `Humaans.PerformanceInstances` - List and retrieve performance instance resources (read-only)
+- `Humaans.PerformanceRatings` - Retrieve performance rating resources (read-only)
+- `Humaans.PerformanceReviews` - List and retrieve performance review resources (read-only)
+- `Humaans.PerformanceSummaries` - Retrieve performance summary resources (read-only)
+- `Humaans.PerformanceTemplates` - List and retrieve performance template resources (read-only)
 - `Humaans.PublicHolidayCalendarDays` - Work with public holiday calendar day resources
 - `Humaans.PublicHolidayCalendars` - List public holiday calendars (read-only)
 - `Humaans.PublicHolidays` - List public holidays (read-only)
