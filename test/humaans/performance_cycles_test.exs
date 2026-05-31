@@ -14,7 +14,10 @@ defmodule Humaans.PerformanceCyclesTest do
 
   describe "list/1" do
     test "returns a list of performance cycles", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
+        assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/performance-cycles"
 
         {:ok,
@@ -42,14 +45,18 @@ defmodule Humaans.PerformanceCyclesTest do
 
       assert {:ok, [response]} = Humaans.PerformanceCycles.list(client)
       assert response.id == "pc_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "Q1 2025"
       assert response.status == "open"
       assert response.start_date == ~D[2025-01-01]
       assert response.end_date == ~D[2025-03-31]
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
 
     test "returns error when not found", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Not found"}}}
       end)
 
@@ -58,7 +65,10 @@ defmodule Humaans.PerformanceCyclesTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ -> {:error, "boom"} end)
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
+        {:error, "boom"}
+      end)
 
       assert {:error, %Humaans.Error{type: :network_error, reason: "boom"}} =
                Humaans.PerformanceCycles.list(client)
@@ -67,7 +77,11 @@ defmodule Humaans.PerformanceCyclesTest do
 
   describe "retrieve/2" do
     test "retrieves a performance cycle", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
+        assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+
         assert Keyword.fetch!(opts, :url) ==
                  "https://app.humaans.io/api/performance-cycles/pc_abc"
 
@@ -76,7 +90,11 @@ defmodule Humaans.PerformanceCyclesTest do
            status: 200,
            body: %{
              "id" => "pc_abc",
+             "companyId" => "company_abc",
              "name" => "Q1 2025",
+             "status" => "open",
+             "startDate" => "2025-01-01",
+             "endDate" => "2025-03-31",
              "createdAt" => "2025-01-01T08:44:42.000Z",
              "updatedAt" => "2025-01-01T14:52:21.000Z"
            }
@@ -84,7 +102,14 @@ defmodule Humaans.PerformanceCyclesTest do
       end)
 
       assert {:ok, response} = Humaans.PerformanceCycles.retrieve(client, "pc_abc")
+      assert response.id == "pc_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "Q1 2025"
+      assert response.status == "open"
+      assert response.start_date == ~D[2025-01-01]
+      assert response.end_date == ~D[2025-03-31]
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
   end
 

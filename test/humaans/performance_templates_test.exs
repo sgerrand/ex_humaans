@@ -14,7 +14,10 @@ defmodule Humaans.PerformanceTemplatesTest do
 
   describe "list/1" do
     test "returns a list of performance templates", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
+        assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/performance-templates"
 
         {:ok,
@@ -38,11 +41,16 @@ defmodule Humaans.PerformanceTemplatesTest do
       end)
 
       assert {:ok, [response]} = Humaans.PerformanceTemplates.list(client)
+      assert response.id == "pt_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "Engineering Review"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
 
     test "returns error when not found", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Not found"}}}
       end)
 
@@ -51,7 +59,10 @@ defmodule Humaans.PerformanceTemplatesTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ -> {:error, "boom"} end)
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
+        {:error, "boom"}
+      end)
 
       assert {:error, %Humaans.Error{type: :network_error, reason: "boom"}} =
                Humaans.PerformanceTemplates.list(client)
@@ -60,7 +71,11 @@ defmodule Humaans.PerformanceTemplatesTest do
 
   describe "retrieve/2" do
     test "retrieves a performance template", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
+        assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
+
         assert Keyword.fetch!(opts, :url) ==
                  "https://app.humaans.io/api/performance-templates/pt_abc"
 
@@ -69,6 +84,7 @@ defmodule Humaans.PerformanceTemplatesTest do
            status: 200,
            body: %{
              "id" => "pt_abc",
+             "companyId" => "company_abc",
              "name" => "Engineering Review",
              "createdAt" => "2025-01-01T08:44:42.000Z",
              "updatedAt" => "2025-01-01T14:52:21.000Z"
@@ -77,7 +93,11 @@ defmodule Humaans.PerformanceTemplatesTest do
       end)
 
       assert {:ok, response} = Humaans.PerformanceTemplates.retrieve(client, "pt_abc")
+      assert response.id == "pt_abc"
+      assert response.company_id == "company_abc"
       assert response.name == "Engineering Review"
+      assert response.created_at == ~U[2025-01-01 08:44:42.000Z]
+      assert response.updated_at == ~U[2025-01-01 14:52:21.000Z]
     end
   end
 
