@@ -14,7 +14,10 @@ defmodule Humaans.OKRsTest do
 
   describe "list/1" do
     test "returns a list of OKRs", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
+        assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/okrs"
 
         {:ok,
@@ -49,7 +52,8 @@ defmodule Humaans.OKRsTest do
     end
 
     test "returns error when resource is not found", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Not found"}}}
       end)
 
@@ -58,7 +62,10 @@ defmodule Humaans.OKRsTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ -> {:error, "boom"} end)
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
+        {:error, "boom"}
+      end)
 
       assert {:error, %Humaans.Error{type: :network_error, reason: "boom"}} =
                Humaans.OKRs.list(client)
@@ -67,7 +74,10 @@ defmodule Humaans.OKRsTest do
 
   describe "retrieve/2" do
     test "retrieves an OKR", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
+        assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/okrs/okr_abc"
 
         {:ok,

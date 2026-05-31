@@ -16,6 +16,7 @@ defmodule Humaans.AuditEventsTest do
     test "retrieves an audit event", %{client: client} do
       expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
         assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
         assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/audit-events/ae_abc"
 
@@ -52,7 +53,8 @@ defmodule Humaans.AuditEventsTest do
     end
 
     test "returns error when not found", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Not found"}}}
       end)
 
@@ -61,7 +63,8 @@ defmodule Humaans.AuditEventsTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
         {:error, "boom"}
       end)
 

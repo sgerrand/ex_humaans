@@ -14,7 +14,10 @@ defmodule Humaans.RolePermissionsTest do
 
   describe "list/1" do
     test "returns a list of role permissions", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
+        assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/role-permissions"
 
         {:ok,
@@ -36,7 +39,8 @@ defmodule Humaans.RolePermissionsTest do
     end
 
     test "returns error when resource is not found", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
         {:ok, %{status: 404, body: %{"error" => "Not found"}}}
       end)
 
@@ -45,7 +49,10 @@ defmodule Humaans.RolePermissionsTest do
     end
 
     test "returns error when request fails", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, _ -> {:error, "boom"} end)
+      expect(Humaans.MockHTTPClient, :request, fn client_param, _opts ->
+        assert client_param == client
+        {:error, "boom"}
+      end)
 
       assert {:error, %Humaans.Error{type: :network_error, reason: "boom"}} =
                Humaans.RolePermissions.list(client)
@@ -54,7 +61,10 @@ defmodule Humaans.RolePermissionsTest do
 
   describe "retrieve/2" do
     test "retrieves a role permission", %{client: client} do
-      expect(Humaans.MockHTTPClient, :request, fn _, opts ->
+      expect(Humaans.MockHTTPClient, :request, fn client_param, opts ->
+        assert client_param == client
+        assert Keyword.fetch!(opts, :headers) == [{"Accept", "application/json"}]
+        assert Keyword.fetch!(opts, :method) == :get
         assert Keyword.fetch!(opts, :url) == "https://app.humaans.io/api/role-permissions/rp_abc"
 
         {:ok,
