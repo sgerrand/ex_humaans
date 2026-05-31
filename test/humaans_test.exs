@@ -248,4 +248,33 @@ defmodule HumaansTest do
   test "webhook_events/0 returns the WebhookEvents module" do
     assert Humaans.webhook_events() == Humaans.WebhookEvents
   end
+
+  test "performance_cycles/0 returns the PerformanceCycles module" do
+    assert Humaans.performance_cycles() == Humaans.PerformanceCycles
+  end
+
+  test "performance_templates/0 returns the PerformanceTemplates module" do
+    assert Humaans.performance_templates() == Humaans.PerformanceTemplates
+  end
+
+  test "performance_reviews/0 returns the PerformanceReviews module" do
+    assert Humaans.performance_reviews() == Humaans.PerformanceReviews
+  end
+
+  test "performance_instances/0 returns the PerformanceInstances module" do
+    assert Humaans.performance_instances() == Humaans.PerformanceInstances
+  end
+
+  test "performance_ratings/0 returns the PerformanceRatings module" do
+    assert Humaans.performance_ratings() == Humaans.PerformanceRatings
+  end
+
+  test "performance_summaries/0 returns the PerformanceSummaries module" do
+    assert Humaans.performance_summaries() == Humaans.PerformanceSummaries
+  end
+
+  test "performance_cycle_peer_nominations/0 returns the PerformanceCyclePeerNominations module" do
+    assert Humaans.performance_cycle_peer_nominations() ==
+             Humaans.PerformanceCyclePeerNominations
+  end
 end
