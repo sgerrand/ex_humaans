@@ -133,11 +133,15 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.EquipmentNames` - List equipment names (read-only)
 - `Humaans.EquipmentTypes` - List equipment types (read-only)
 - `Humaans.Equipment` - Work with equipment resources
+- `Humaans.EsignBulkRecipients` - List and retrieve e-signature bulk recipient resources (read-only)
+- `Humaans.EsignBulkTokens` - List and retrieve e-signature bulk token resources (read-only)
+- `Humaans.EsignBulks` - List and retrieve e-signature bulk resources (read-only)
+- `Humaans.EsignInstances` - List and retrieve e-signature instance resources (read-only)
+- `Humaans.EsignTemplates` - List and retrieve e-signature template resources (read-only)
 - `Humaans.IdentityDocumentTypes` - List identity document types (read-only)
 - `Humaans.IdentityDocuments` - Work with identity document resources
 - `Humaans.JobRoles` - Work with job role resources
 - `Humaans.Locations` - Work with location resources
-- `Humaans.Me` - Retrieve the authenticated user's profile (`GET /me`)
 - `Humaans.OKRs` - List and retrieve OKR resources (read-only)
 - `Humaans.PerformanceCyclePeerNominations` - Retrieve peer nomination resources (read-only)
 - `Humaans.PerformanceCycles` - List and retrieve performance cycle resources (read-only)
@@ -166,7 +170,6 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.TimeAway` - Work with time away resources
 - `Humaans.TimesheetEntries` - Work with timesheet entry resources
 - `Humaans.TimesheetSubmissions` - Work with timesheet submission resources
-- `Humaans.TokenInfo` - Retrieve metadata about the current access token (`GET /token-info`)
 - `Humaans.WebhookEvents` - List and retrieve webhook event resources (read-only)
 - `Humaans.Webhooks` - Work with webhook subscription resources
 - `Humaans.WorkflowDependencies` - Retrieve workflow dependency resources (read-only)
@@ -176,6 +179,8 @@ Supported operators: `eq`, `in_`, `nin`, `gt`, `gte`, `lt`, `lte`. Use `Humaans.
 - `Humaans.WorkflowStats` - Retrieve workflow stat resources (read-only)
 - `Humaans.WorkingPatternAllocations` - Work with working pattern allocation resources
 - `Humaans.WorkingPatterns` - Work with working pattern resources
+- `Humaans.Me` - Retrieve the authenticated user's profile (`GET /me`)
+- `Humaans.TokenInfo` - Retrieve metadata about the current access token (`GET /token-info`)
 
 ## Development
 

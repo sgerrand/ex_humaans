@@ -241,6 +241,41 @@ defmodule Humaans do
   def equipment_names, do: Humaans.EquipmentNames
 
   @doc """
+  Access the Esign Templates API.
+
+  Returns the module that contains functions for working with esign template resources.
+  """
+  def esign_templates, do: Humaans.EsignTemplates
+
+  @doc """
+  Access the Esign Instances API.
+
+  Returns the module that contains functions for working with esign instance resources.
+  """
+  def esign_instances, do: Humaans.EsignInstances
+
+  @doc """
+  Access the Esign Bulks API.
+
+  Returns the module that contains functions for working with esign bulk resources.
+  """
+  def esign_bulks, do: Humaans.EsignBulks
+
+  @doc """
+  Access the Esign Bulk Recipients API.
+
+  Returns the module that contains functions for working with esign bulk recipient resources.
+  """
+  def esign_bulk_recipients, do: Humaans.EsignBulkRecipients
+
+  @doc """
+  Access the Esign Bulk Tokens API.
+
+  Returns the module that contains functions for working with esign bulk token resources.
+  """
+  def esign_bulk_tokens, do: Humaans.EsignBulkTokens
+
+  @doc """
   Access the Identity Documents API.
 
   Returns the module that contains functions for working with identity document resources.

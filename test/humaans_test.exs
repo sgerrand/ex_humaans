@@ -317,4 +317,24 @@ defmodule HumaansTest do
   test "workflow_stats/0 returns the WorkflowStats module" do
     assert Humaans.workflow_stats() == Humaans.WorkflowStats
   end
+
+  test "esign_templates/0 returns the EsignTemplates module" do
+    assert Humaans.esign_templates() == Humaans.EsignTemplates
+  end
+
+  test "esign_instances/0 returns the EsignInstances module" do
+    assert Humaans.esign_instances() == Humaans.EsignInstances
+  end
+
+  test "esign_bulks/0 returns the EsignBulks module" do
+    assert Humaans.esign_bulks() == Humaans.EsignBulks
+  end
+
+  test "esign_bulk_recipients/0 returns the EsignBulkRecipients module" do
+    assert Humaans.esign_bulk_recipients() == Humaans.EsignBulkRecipients
+  end
+
+  test "esign_bulk_tokens/0 returns the EsignBulkTokens module" do
+    assert Humaans.esign_bulk_tokens() == Humaans.EsignBulkTokens
+  end
 end
