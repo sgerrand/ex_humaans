@@ -277,4 +277,44 @@ defmodule HumaansTest do
     assert Humaans.performance_cycle_peer_nominations() ==
              Humaans.PerformanceCyclePeerNominations
   end
+
+  test "requests/0 returns the Requests module" do
+    assert Humaans.requests() == Humaans.Requests
+  end
+
+  test "request_types/0 returns the RequestTypes module" do
+    assert Humaans.request_types() == Humaans.RequestTypes
+  end
+
+  test "request_reviews/0 returns the RequestReviews module" do
+    assert Humaans.request_reviews() == Humaans.RequestReviews
+  end
+
+  test "request_comments/0 returns the RequestComments module" do
+    assert Humaans.request_comments() == Humaans.RequestComments
+  end
+
+  test "request_activity_logs/0 returns the RequestActivityLogs module" do
+    assert Humaans.request_activity_logs() == Humaans.RequestActivityLogs
+  end
+
+  test "workflow_dependencies/0 returns the WorkflowDependencies module" do
+    assert Humaans.workflow_dependencies() == Humaans.WorkflowDependencies
+  end
+
+  test "workflow_form_responses/0 returns the WorkflowFormResponses module" do
+    assert Humaans.workflow_form_responses() == Humaans.WorkflowFormResponses
+  end
+
+  test "workflow_publications/0 returns the WorkflowPublications module" do
+    assert Humaans.workflow_publications() == Humaans.WorkflowPublications
+  end
+
+  test "workflow_slack_actions/0 returns the WorkflowSlackActions module" do
+    assert Humaans.workflow_slack_actions() == Humaans.WorkflowSlackActions
+  end
+
+  test "workflow_stats/0 returns the WorkflowStats module" do
+    assert Humaans.workflow_stats() == Humaans.WorkflowStats
+  end
 end
