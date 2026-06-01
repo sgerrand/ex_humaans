@@ -113,6 +113,14 @@ defmodule HumaansTest do
     assert Humaans.compensations() == Humaans.Compensations
   end
 
+  test "custom_fields/0 returns the CustomFields module" do
+    assert Humaans.custom_fields() == Humaans.CustomFields
+  end
+
+  test "custom_values/0 returns the CustomValues module" do
+    assert Humaans.custom_values() == Humaans.CustomValues
+  end
+
   test "documents/0 returns the Documents module" do
     assert Humaans.documents() == Humaans.Documents
   end
@@ -157,6 +165,10 @@ defmodule HumaansTest do
     assert Humaans.locations() == Humaans.Locations
   end
 
+  test "me/0 returns the Me module" do
+    assert Humaans.me() == Humaans.Me
+  end
+
   test "public_holiday_calendars/0 returns the PublicHolidayCalendars module" do
     assert Humaans.public_holiday_calendars() == Humaans.PublicHolidayCalendars
   end
@@ -199,6 +211,10 @@ defmodule HumaansTest do
 
   test "time_away_types/0 returns the TimeAwayTypes module" do
     assert Humaans.time_away_types() == Humaans.TimeAwayTypes
+  end
+
+  test "token_info/0 returns the TokenInfo module" do
+    assert Humaans.token_info() == Humaans.TokenInfo
   end
 
   test "pagination/0 returns the Pagination module" do
