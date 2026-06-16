@@ -43,7 +43,7 @@ defmodule Humaans.MixProject do
   defp deps do
     [
       {:exconstructor, "~> 1.3.0"},
-      {:req, "~> 0.5.6"},
+      {:req, "~> 0.6.1"},
       {:telemetry, "~> 1.0"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
