@@ -2,7 +2,7 @@ defmodule Humaans.MixProject do
   use Mix.Project
 
   @repo_url "https://github.com/sgerrand/ex_humaans"
-  @version "0.5.1"
+  @version "0.6.0"
 
   def project do
     [
