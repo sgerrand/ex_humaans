@@ -6,6 +6,13 @@ adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- %% CHANGELOG_ENTRIES %% -->
 
+## [0.6.2](https://github.com/sgerrand/ex_humaans/compare/v0.6.1...v0.6.2) (2026-10-16)
+
+
+### Bug Fixes
+
+* **deps:** bump req from 0.7.4 to 0.7.5 ([#137](https://github.com/sgerrand/ex_humaans/issues/137)) ([097aea2](https://github.com/sgerrand/ex_humaans/commit/097aea2dc0fc359f0179809dd6d49391fe5742d6))
+
 ## [0.6.1](https://github.com/sgerrand/ex_humaans/compare/v0.6.0...v0.6.1) (2026-09-14)
 
 
